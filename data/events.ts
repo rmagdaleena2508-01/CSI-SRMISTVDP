@@ -74,11 +74,11 @@ export const events: ChapterEvent[] = [
       },
       {
         src: "/images/events/entrespark-10.jpg",
-        caption: "The entrepreneurship session in progress",
+        caption: "Ms. Ranjitha R leading the entrepreneurship session",
       },
       {
         src: "/images/events/entrespark-8.jpg",
-        caption: "Taking questions from the room",
+        caption: "Ms. Ranjitha R taking questions from the room",
       },
       {
         src: "/images/events/entrespark-7.jpg",
