@@ -50,7 +50,7 @@ export const events: ChapterEvent[] = [
       name: "Ms. Ranjitha R",
       role: "Founder and CEO, Trouvaille Eunoia",
     },
-    venue: "9:00 AM onwards",
+    venue: "SRM IST Vadapalani Campus, 9:00 AM onwards",
     image: "/images/events/entrespark-2026.jpg",
     explored: [
       "What entrepreneurship, innovation, incubation and marketing actually involve",
