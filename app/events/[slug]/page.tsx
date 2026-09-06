@@ -141,6 +141,35 @@ export default async function EventPage({
           </Reveal>
         ) : null}
 
+        {event.feedback?.length ? (
+          <section
+            aria-labelledby="feedback-heading"
+            className="border-t border-navy/12 py-section"
+          >
+            <h2
+              id="feedback-heading"
+              className="display-serif text-headline font-normal text-navy"
+            >
+              What students said
+            </h2>
+
+            <ul className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+              {event.feedback.map((note, i) => (
+                <Reveal as="li" key={note.text} index={i} className="h-full">
+                  <figure className="metal-frame flex h-full flex-col justify-between gap-6 rounded-[1.75rem] bg-cream p-8">
+                    <blockquote className="text-lead text-navy/85 text-pretty">
+                      &ldquo;{note.text}&rdquo;
+                    </blockquote>
+                    <figcaption className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
+                      {note.attribution}
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
         <EventGallery images={event.gallery ?? []} title={event.title} />
 
         <Reveal>

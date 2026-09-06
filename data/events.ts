@@ -23,6 +23,8 @@ export type ChapterEvent = {
   takeaways?: string[];
   gallery?: { src: string; caption?: string }[];
   quote?: { text: string; attribution: string };
+  /** Short verbatim responses collected after the session. */
+  feedback?: { text: string; attribution: string }[];
   reportUrl?: string;
   /** The one shown under "Happening this month". */
   featured?: boolean;
@@ -36,6 +38,81 @@ export type ChapterEvent = {
  * copy is hardcoded in components.
  */
 export const events: ChapterEvent[] = [
+  {
+    slug: "entrespark-2026",
+    title: "ENTRESPARK 2026",
+    date: "2026-09-02",
+    category: "Workshop",
+    description: "Entrepreneurship orientation and an interactive pitching activity.",
+    summary:
+      "Run jointly with the Entrepreneurship Development Cell for first-year CSE students: a session on entrepreneurship, innovation, incubation and marketing, followed by InnoVenture, a pitching activity where teams had fifteen minutes to research a problem, shape an idea and present it. One team built a full presentation inside that window. Team VDK won, Team Nexus were runners-up, and Team Byte Club took a special mention.",
+    speaker: {
+      name: "Ms. Ranjitha R",
+      role: "Founder and CEO, Trouvaille Eunoia",
+    },
+    venue: "9:00 AM onwards",
+    image: "/images/events/entrespark-2026.jpg",
+    explored: [
+      "What entrepreneurship, innovation, incubation and marketing actually involve",
+      "How CSI and the EDC work, and what students can take part in",
+      "Turning a problem you have noticed into an idea worth pitching",
+      "Researching, shaping and presenting that idea in fifteen minutes",
+      "Pitching to coordinators and judges, and answering for the idea afterwards",
+    ],
+    gallery: [
+      {
+        src: "/images/events/entrespark-4.jpg",
+        caption: "Opening with the department's E-Cell activities for the year",
+      },
+      {
+        src: "/images/events/entrespark-2.jpg",
+        caption: "A student coordinator walking through past programmes",
+      },
+      {
+        src: "/images/events/entrespark-6.jpg",
+        caption: "Introducing the E-Summit to the first-year students",
+      },
+      {
+        src: "/images/events/entrespark-10.jpg",
+        caption: "The entrepreneurship session in progress",
+      },
+      {
+        src: "/images/events/entrespark-8.jpg",
+        caption: "Taking questions from the room",
+      },
+      {
+        src: "/images/events/entrespark-7.jpg",
+        caption: "A first-year student putting a question to the speaker",
+      },
+      {
+        src: "/images/events/entrespark-3.jpg",
+        caption: "A team pitching during InnoVenture",
+      },
+      {
+        src: "/images/events/entrespark-5.jpg",
+        caption: "Teams presenting their ideas to the coordinators and judges",
+      },
+      {
+        src: "/images/events/entrespark-9.jpg",
+        caption: "At the judging table between pitches",
+      },
+    ],
+    feedback: [
+      {
+        text: "The session helped me understand that entrepreneurship begins with identifying real problems and turning them into practical opportunities and solutions.",
+        attribution: "Student participant",
+      },
+      {
+        text: "I learned that building something new can start with the knowledge we already have and the challenges we have personally experienced.",
+        attribution: "Student participant",
+      },
+      {
+        text: "The session encouraged me to follow my passion, believe in myself, and take the first step towards turning my ideas into action.",
+        attribution: "Student participant",
+      },
+    ],
+    highlight: true,
+  },
   {
     slug: "skillshone-orientation",
     title: "SKILLSHONE Orientation Programme",
@@ -88,7 +165,6 @@ export const events: ChapterEvent[] = [
       text: "Your eyes are brightened up with questions. Do ask them.",
       attribution: "Mr. Malaya Rout, encouraging students to speak up",
     },
-    highlight: true,
   },
   {
     slug: "beyond-the-cgpa",
@@ -205,10 +281,7 @@ export const events: ChapterEvent[] = [
 ];
 
 /** Categories with nothing published yet — their filter shows a notice. */
-export const upcomingCategories: readonly EventCategory[] = [
-  "Workshop",
-  "Discussion",
-];
+export const upcomingCategories: readonly EventCategory[] = ["Discussion"];
 
 export const eventCategories: readonly ("All" | EventCategory)[] = [
   "All",
