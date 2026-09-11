@@ -38,8 +38,7 @@ export function CollegeCard({
 
   // Closing runs longer than opening and settles back toward the seal in the
   // navigation, so the card reads as returning to where it came from rather
-  // than being cut. No filter animation — blurring a whole layer per frame is
-  // what made the dismissal stutter.
+  // than being cut.
   const cardMotion = reduced
     ? {}
     : {
@@ -63,14 +62,35 @@ export function CollegeCard({
     <AnimatePresence>
       {open ? (
         <div className="fixed inset-0 z-100 grid place-items-center px-5">
+          {/* The blur has to animate on its own. Fading the layer's opacity
+              leaves backdrop-filter at full strength until the element is
+              removed, so the page behind snapped from blurred to sharp on the
+              last frame — that snap was the abrupt close. */}
           <motion.div
-            className="absolute inset-0 bg-navy/45 backdrop-blur-sm"
+            className="absolute inset-0 bg-navy/45"
             onClick={onClose}
             aria-hidden
-            initial={reduced ? undefined : { opacity: 0 }}
-            animate={reduced ? undefined : { opacity: 1 }}
-            exit={reduced ? undefined : { opacity: 0 }}
-            transition={{ duration: 0.42, ease }}
+            style={
+              reduced
+                ? { backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }
+                : undefined
+            }
+            initial={
+              reduced
+                ? undefined
+                : { opacity: 0, backdropFilter: "blur(0px)" }
+            }
+            animate={
+              reduced
+                ? undefined
+                : { opacity: 1, backdropFilter: "blur(8px)" }
+            }
+            exit={
+              reduced
+                ? undefined
+                : { opacity: 0, backdropFilter: "blur(0px)" }
+            }
+            transition={{ duration: 0.5, ease }}
           />
 
           <motion.div
