@@ -28,17 +28,28 @@ export function CollegeCard({
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
     document.documentElement.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.documentElement.style.overflow = "";
-    };
+    return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  const ease = [0.32, 0.72, 0, 1] as const;
+  // The scroll lock is released once the exit has finished (onExitComplete),
+  // not when close is clicked; releasing it mid-fade let the scrollbar pop back
+  // in and nudge the hero while the card was still leaving.
+  useEffect(
+    () => () => {
+      document.documentElement.style.overflow = "";
+    },
+    []
+  );
 
-  // Closing runs longer than opening and settles back toward the seal in the
-  // navigation, so the card reads as returning to where it came from rather
-  // than being cut.
+  const ease = [0.32, 0.72, 0, 1] as const;
+  // Closing uses an in-out curve. The opening curve front-loads its change, so
+  // on the way out the blur was mostly gone in the first few frames and the
+  // hero snapped back into focus instead of easing into it.
+  const exitEase = [0.45, 0, 0.2, 1] as const;
+
+  // The card leaves first and settles back toward the seal in the navigation;
+  // the backdrop follows a beat behind, so the hero comes back into focus
+  // after the card has gone rather than at the same instant.
   const cardMotion = reduced
     ? {}
     : {
@@ -51,15 +62,19 @@ export function CollegeCard({
         },
         exit: {
           opacity: 0,
-          scale: 0.9,
+          scale: 0.92,
           y: -6,
           x: -10,
-          transition: { duration: 0.42, ease },
+          transition: { duration: 0.38, ease: exitEase },
         },
       };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence
+      onExitComplete={() => {
+        document.documentElement.style.overflow = "";
+      }}
+    >
       {open ? (
         <div className="fixed inset-0 z-100 grid place-items-center px-5">
           {/* The blur has to animate on its own. Fading the layer's opacity
@@ -88,7 +103,11 @@ export function CollegeCard({
             exit={
               reduced
                 ? undefined
-                : { opacity: 0, backdropFilter: "blur(0px)" }
+                : {
+                    opacity: 0,
+                    backdropFilter: "blur(0px)",
+                    transition: { duration: 0.6, delay: 0.1, ease: exitEase },
+                  }
             }
             transition={{ duration: 0.5, ease }}
           />
