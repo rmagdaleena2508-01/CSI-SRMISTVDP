@@ -67,7 +67,7 @@ export function EventsExplorer({ events }: { events: ChapterEvent[] }) {
             <span className="grid size-12 place-items-center rounded-full bg-sky-100 text-navy">
               <CalendarClock size={20} strokeWidth={1.6} aria-hidden />
             </span>
-            <h3 className="display-serif text-title font-normal text-navy">
+            <h3 className="display-heading text-title font-semibold text-navy">
               Coming soon
             </h3>
             <p className="text-lead max-w-[46ch] text-slate-blue text-pretty">

@@ -1,16 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Great_Vibes,
-  Instrument_Sans,
-  Inter,
-  Playfair_Display,
-} from "next/font/google";
+import { Great_Vibes, Instrument_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ShineDriver } from "@/components/ui/ShineDriver";
 import { site } from "@/data/site";
 
+// Only the hero headline is set in this face now.
 const instrument = Instrument_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -18,19 +14,13 @@ const instrument = Instrument_Sans({
   display: "swap",
 });
 
-// Accent faces, both used only in the hero headline.
+// Headings and body copy. Loaded as the variable font with its optical-size
+// axis, so large headings pick up the tighter display cut and body text keeps
+// the open text cut from the same family.
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  axes: ["opsz"],
   variable: "--font-inter",
-  display: "swap",
-});
-
-// Section headings below the hero.
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -97,7 +87,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" className={`${instrument.variable} ${inter.variable} ${playfair.variable} ${script.variable}`}>
+    <html lang="en-IN" className={`${instrument.variable} ${inter.variable} ${script.variable}`}>
       <body className="grain antialiased">
         <a
           href="#main"

@@ -65,7 +65,7 @@ export function MomentsGallery() {
         <Reveal className="lg:col-span-5 lg:self-end">
           <h2
             id="moments-heading"
-            className="display-serif text-headline max-w-[13ch] font-normal text-navy text-balance"
+            className="display-heading text-headline max-w-[13ch] font-semibold text-navy text-balance"
           >
             Learning looks better in action.
           </h2>

@@ -148,7 +148,7 @@ export default async function EventPage({
           >
             <h2
               id="feedback-heading"
-              className="display-serif text-headline font-normal text-navy"
+              className="display-heading text-headline font-semibold text-navy"
             >
               What students said
             </h2>

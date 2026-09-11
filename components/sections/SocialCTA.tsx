@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { InstagramIcon, LinkedinIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/data/site";
+import { asset } from "@/lib/asset";
 
 const channels = [
   {
@@ -40,7 +41,12 @@ export function SocialCTA() {
         <Reveal>
           <h2
             id="social-heading"
-            className="display-serif text-display max-w-[11ch] font-normal text-cream text-balance"
+            className="display-heading sky-text text-display max-w-[11ch] font-semibold text-balance"
+            style={
+              {
+                "--sky": `url(${asset("/images/brand/sky-wide.jpg")})`,
+              } as React.CSSProperties
+            }
           >
             Keep learning with CSI
           </h2>

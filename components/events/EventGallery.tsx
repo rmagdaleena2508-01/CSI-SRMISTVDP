@@ -16,7 +16,7 @@ export function EventGallery({
     <section aria-labelledby="gallery-heading" className="py-section">
       <h2
         id="gallery-heading"
-        className="display-serif text-headline font-normal text-navy"
+        className="display-heading text-headline font-semibold text-navy"
       >
         Event gallery
       </h2>

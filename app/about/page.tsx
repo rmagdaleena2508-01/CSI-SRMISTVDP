@@ -44,7 +44,7 @@ export default function AboutPage() {
         <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
           About
         </p>
-        <h1 className="display-serif text-display mt-6 max-w-[15ch] font-normal text-navy text-balance">
+        <h1 className="display-heading text-display mt-6 max-w-[15ch] font-semibold text-navy text-balance">
           Be curious out loud.
         </h1>
         <p className="text-lead mt-8 max-w-[56ch] text-slate-blue text-pretty">
@@ -64,7 +64,7 @@ export default function AboutPage() {
                   {block.label}
                 </p>
                 <div className="lg:col-span-9">
-                  <h2 className="display-serif text-title max-w-[22ch] font-normal text-navy text-balance">
+                  <h2 className="display-heading text-title max-w-[22ch] font-semibold text-navy text-balance">
                     {block.title}
                   </h2>
                   <p className="text-lead mt-5 max-w-[58ch] text-slate-blue text-pretty">

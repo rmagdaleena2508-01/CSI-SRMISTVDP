@@ -13,7 +13,7 @@ export function Hero() {
 
       <div className="container-editorial flex flex-1 flex-col justify-center pt-[clamp(5.25rem,11vh,7rem)] pb-[clamp(1rem,2vh,2rem)]">
         <div className="flex justify-center">
-          <h1 className="text-hero max-w-[16ch] text-center font-normal text-balance text-white sm:max-w-[24ch]">
+          <h1 className="font-display text-hero max-w-[16ch] text-center font-normal text-balance text-white sm:max-w-[24ch]">
             Where curious <span className="inter-accent">students</span>{" "}
             <span>
               build <span className="script-accent text-white">community</span>{" "}

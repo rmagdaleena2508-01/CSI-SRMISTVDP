@@ -25,7 +25,7 @@
   --color-forest: #2f4a3c;
 
   --font-display: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   /* Editorial display scale — fluid, no breakpoint jumps */
   --text-display: clamp(2.6rem, 6.9vw, 7.5rem);
@@ -196,9 +196,61 @@ body {
   mask-composite: exclude;
 }
 
-.display-serif {
-  font-family: var(--font-playfair), ui-serif, Georgia, serif;
-  letter-spacing: -0.018em;
+/* Section headings: Inter semibold, tightly tracked. Optical sizing picks the
+   display cut at these sizes, which is what gives the compact, dense look. */
+.display-heading {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-optical-sizing: auto;
+  letter-spacing: -0.032em;
+}
+
+/* Headline filled with the hero's sky. The photo alone has deep saturated blue
+   in one corner that sinks into a navy section, so a white sheen is laid over
+   the top of the letters and the crop is set on the sun and the cloud line,
+   the brightest parts of the image. The crop is wider than the text so it can
+   drift slowly sideways, like the clouds moving. --sky is set inline so the
+   URL carries the deployment base path. */
+.sky-text {
+  color: var(--color-cream);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .sky-text {
+    color: transparent;
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.42) 0%,
+        rgba(255, 255, 255, 0.1) 48%,
+        rgba(255, 255, 255, 0) 70%
+      ),
+      var(--sky);
+    background-size:
+      100% 100%,
+      170% auto;
+    background-position:
+      0 0,
+      18% 58%;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* A soft sky-coloured glow so the letters lift off the navy instead of
+       sitting flat on it. */
+    filter: drop-shadow(0 14px 42px rgba(107, 163, 202, 0.3));
+    animation: sky-drift 28s ease-in-out infinite alternate;
+  }
+}
+@keyframes sky-drift {
+  to {
+    background-position:
+      0 0,
+      62% 52%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky-text {
+    animation: none;
+  }
 }
 
 /* Small circular controls need a different light model than a wide pill: a
