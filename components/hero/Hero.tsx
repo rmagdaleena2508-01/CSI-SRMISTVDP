@@ -11,9 +11,9 @@ export function Hero() {
     <section className="relative isolate flex min-h-svh flex-col overflow-hidden">
       <SkyBackdrop />
 
-      <div className="container-editorial flex flex-1 flex-col pt-[clamp(5.25rem,11vh,8rem)] pb-[clamp(1rem,2vh,2rem)]">
+      <div className="container-editorial flex flex-1 flex-col justify-center pt-[clamp(5.25rem,11vh,7rem)] pb-[clamp(1rem,2vh,2rem)]">
         <div className="flex justify-center">
-          <h1 className="text-display max-w-[16ch] text-center font-normal text-balance text-white sm:max-w-[20ch]">
+          <h1 className="text-hero max-w-[16ch] text-center font-normal text-balance text-white sm:max-w-[24ch]">
             Where curious <span className="inter-accent">students</span>{" "}
             <span>
               build <span className="script-accent text-white">community</span>{" "}
@@ -52,7 +52,7 @@ export function Hero() {
           </a>
         </div>
 
-        <div className="relative mt-4 min-h-[7rem] flex-1">
+        <div className="relative mt-10">
           <div className="flex h-full items-center justify-center">
             <CSIMark />
           </div>

@@ -32,6 +32,12 @@
   --text-display--line-height: 1;
   --text-display--letter-spacing: -0.035em;
 
+  /* Hero headline: large on phones, restrained on laptops so the whole stack
+     sits in the middle of the screen instead of filling it. */
+  --text-hero: clamp(2.5rem, 4.4vw, 4.6rem);
+  --text-hero--line-height: 1.04;
+  --text-hero--letter-spacing: -0.03em;
+
   --text-headline: clamp(1.9rem, 4.4vw, 3.9rem);
   --text-headline--line-height: 0.98;
   --text-headline--letter-spacing: -0.03em;
@@ -329,6 +335,7 @@ body {
 @media (max-height: 740px) and (max-width: 640px) {
   :root {
     --text-display: clamp(2rem, 7vw, 3.25rem);
+    --text-hero: clamp(2rem, 7vw, 3.25rem);
   }
 }
 
