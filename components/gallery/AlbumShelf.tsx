@@ -80,7 +80,14 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
             slidesPerView={2.9}
             spaceBetween={-96}
             speed={520}
-            mousewheel={{ forceToAxis: true, sensitivity: 0.5 }}
+            mousewheel={{
+              forceToAxis: true,
+              sensitivity: 0.5,
+              // Hands the wheel back to the page once the stack is at its
+              // first or last case, so reaching the end of the albums does
+              // not trap the page.
+              releaseOnEdges: true,
+            }}
             keyboard={{ enabled: true }}
             a11y={{ enabled: true }}
             coverflowEffect={{
@@ -94,7 +101,7 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
               scale: 1,
               slideShadows: false,
             }}
-            className="h-[46rem] w-full [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-center [&_.swiper-slide]:transition-[opacity,filter] [&_.swiper-slide]:duration-500 [&_.swiper-slide:not(.swiper-slide-active)]:opacity-80 [&_.swiper-slide:not(.swiper-slide-active)]:brightness-90"
+            className="h-[46rem] w-[32rem] max-w-full [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-start [&_.swiper-slide]:transition-[opacity,filter] [&_.swiper-slide]:duration-500 [&_.swiper-slide:not(.swiper-slide-active)]:opacity-80 [&_.swiper-slide:not(.swiper-slide-active)]:brightness-90"
           >
             {albums.map((album, i) => (
               <SwiperSlide key={album.slug}>
