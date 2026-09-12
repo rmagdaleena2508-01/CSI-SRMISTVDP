@@ -10,6 +10,7 @@ import Counter from "yet-another-react-lightbox/plugins/counter";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { ArrowUpRight } from "lucide-react";
+import { ArcScroller } from "@/components/gallery/ArcScroller";
 import { Img as Image } from "@/components/ui/Img";
 import { asset } from "@/lib/asset";
 import { formatEventDate, type PhotoAlbum } from "@/data/events";
@@ -45,6 +46,12 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
   const [active, setActive] = useState(0);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const swiperRef = useRef<SwiperClass | null>(null);
+
+  // Both stacks are in the document at once and only hidden by CSS, so the
+  // phone one keeps its own index and instance rather than writing over the
+  // laptop one's.
+  const [phoneActive, setPhoneActive] = useState(0);
+  const phoneSwiperRef = useRef<SwiperClass | null>(null);
 
   // The wheel listener is added to Swiper's own element in onSwiper, so it is
   // taken off again when this leaves the page.
@@ -179,35 +186,99 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
         </div>
       </div>
 
-      {/* Phones and tablets: the same albums as covers you can tap. */}
-      <ul className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:hidden">
-        {albums.map((album, i) => (
-          <li key={album.slug}>
-            <button
-              type="button"
-              onClick={() => openAlbum(i)}
-              className="w-full text-left"
+      {/* Phones and tablets: the stack on the left, the curved scroller down
+          the right edge. A plain grid of covers gave a thumb nothing to work,
+          so the albums are driven the same way here as on a laptop. */}
+      <div data-phone-shelf className="lg:hidden">
+        <div className="flex h-[22rem] items-stretch gap-2">
+          <div className="min-w-0 flex-1">
+            <Swiper
+              modules={[EffectCoverflow, A11y]}
+              onSwiper={(s) => {
+                phoneSwiperRef.current = s;
+              }}
+              onSlideChange={(s) => setPhoneActive(s.activeIndex)}
+              direction="vertical"
+              effect="coverflow"
+              grabCursor
+              centeredSlides
+              slidesPerView={2.1}
+              spaceBetween={-40}
+              speed={480}
+              a11y={{ enabled: true }}
+              coverflowEffect={{
+                rotate: 0,
+                stretch: 40,
+                depth: 90,
+                modifier: 1,
+                scale: 1,
+                slideShadows: false,
+              }}
+              className="h-full w-full [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-start [&_.swiper-slide]:transition-[opacity,filter] [&_.swiper-slide]:duration-500 [&_.swiper-slide:not(.swiper-slide-active)]:opacity-80 [&_.swiper-slide:not(.swiper-slide-active)]:brightness-90"
             >
-              <div className="relative aspect-square overflow-hidden rounded-[0.4rem] shadow-[0_20px_40px_-28px_rgba(18,38,92,0.8)]">
-                <Image
-                  src={album.cover}
-                  alt={`${album.title} album cover`}
-                  fill
-                  sizes="(min-width: 640px) 30vw, 44vw"
-                  loading="lazy"
-                  className="object-cover"
-                />
-              </div>
-              <p className="mt-3 text-[0.9375rem] leading-snug text-navy">
-                {album.title}
-              </p>
-              <p className="mt-1 text-[0.8125rem] text-slate-blue">
-                {countLabel(album.photos.length)}
-              </p>
-            </button>
-          </li>
-        ))}
-      </ul>
+              {albums.map((album, i) => (
+                <SwiperSlide key={album.slug}>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      i === phoneActive
+                        ? openAlbum(i)
+                        : phoneSwiperRef.current?.slideTo(i)
+                    }
+                    aria-label={
+                      i === phoneActive
+                        ? `Open the album for ${album.title}`
+                        : `Bring ${album.title} to the front`
+                    }
+                    className="block aspect-square h-full rounded-[0.4rem] focus-visible:outline-none"
+                  >
+                    <span className="relative block size-full overflow-hidden rounded-[0.4rem] shadow-[0_24px_44px_-28px_rgba(18,38,92,0.85)]">
+                      <Image
+                        src={album.cover}
+                        alt={`${album.title} album cover`}
+                        fill
+                        sizes="60vw"
+                        loading="lazy"
+                        className="object-cover"
+                      />
+                    </span>
+                  </button>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <ArcScroller
+            count={albums.length}
+            index={phoneActive}
+            onIndexChange={(i) => {
+              setPhoneActive(i);
+              phoneSwiperRef.current?.slideTo(i);
+            }}
+          />
+        </div>
+
+        <div className="mt-6">
+          <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
+            {albums[phoneActive].category}
+          </p>
+          <h2 className="display-heading mt-3 text-[1.375rem] leading-tight font-semibold text-navy text-balance">
+            {albums[phoneActive].title}
+          </h2>
+          <p className="mt-2 text-[0.875rem] text-slate-blue">
+            {formatEventDate(albums[phoneActive].date)} ·{" "}
+            {countLabel(albums[phoneActive].photos.length)}
+          </p>
+          <button
+            type="button"
+            onClick={() => openAlbum(phoneActive)}
+            className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-navy px-6 text-[0.9375rem] font-medium tracking-[-0.01em] text-cream"
+          >
+            Open this album
+            <ArrowUpRight size={16} strokeWidth={1.7} aria-hidden />
+          </button>
+        </div>
+      </div>
 
       <Lightbox
         open={openIndex !== null}
