@@ -319,6 +319,45 @@ export function relatedEvents(slug: string, limit = 3) {
   return [...sameCategory, ...rest].slice(0, limit);
 }
 
+export type PhotoAlbum = {
+  slug: string;
+  title: string;
+  date: string;
+  category: EventCategory;
+  /** The poster, used as the album cover and as the disc label. */
+  cover: string;
+  photos: { src: string; caption?: string }[];
+};
+
+/**
+ * Album artwork: the session drawn as a CD case. Anything without one falls
+ * back to its poster, so a new session works before its cover is designed.
+ */
+const albumCovers: Record<string, string> = {
+  "entrespark-2026": "/images/albums/entrespark-2026.jpg",
+  "beyond-the-cgpa": "/images/albums/beyond-the-cgpa.jpg",
+  "vibe-coding": "/images/albums/vibe-coding.jpg",
+  "gsoc-roadmap": "/images/albums/gsoc-roadmap.jpg",
+  "community-led-innovation": "/images/albums/community-led-innovation.jpg",
+  "communication-side-hustles": "/images/albums/communication-side-hustles.jpg",
+  "decode-the-interview": "/images/albums/decode-the-interview.jpg",
+  "skillshone-orientation": "/images/albums/skillshone-orientation.jpg",
+};
+
+/**
+ * The photo library's albums, newest first — one per event. An event whose
+ * photographs have not been added yet still gets an album; it opens on the
+ * cover alone.
+ */
+export const photoAlbums: PhotoAlbum[] = allEvents.map((e) => ({
+  slug: e.slug,
+  title: e.title,
+  date: e.date,
+  category: e.category,
+  cover: albumCovers[e.slug] ?? e.image,
+  photos: e.gallery ?? [],
+}));
+
 /** "August 2026", used for the highlight heading so it stays right on its own. */
 export function formatEventMonth(iso: string) {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {

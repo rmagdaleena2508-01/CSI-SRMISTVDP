@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowUpRight, Disc3 } from "lucide-react";
 import { Img as Image } from "@/components/ui/Img";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -58,9 +60,28 @@ function Frame({
 export function MomentsGallery() {
   return (
     <section
+      id="moments"
       aria-labelledby="moments-heading"
       className="container-editorial pt-section pb-[clamp(4rem,8vw,7rem)]"
     >
+      {/* The way into the photo library, set at the top right where a section
+          label would sit. */}
+      <div className="mb-8 flex justify-end">
+        <Link
+          href="/gallery"
+          className="group inline-flex items-center gap-2 rounded-full bg-navy/6 py-2 pr-3 pl-4 text-[0.8125rem] tracking-[-0.005em] text-navy transition-colors duration-300 hover:bg-navy/12"
+        >
+          <Disc3
+            size={15}
+            strokeWidth={1.7}
+            aria-hidden
+            className="transition-transform duration-700 ease-[var(--ease-editorial)] group-hover:rotate-180"
+          />
+          Photo library
+          <ArrowUpRight size={14} strokeWidth={1.7} aria-hidden />
+        </Link>
+      </div>
+
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-12">
         <Reveal className="lg:col-span-5 lg:self-end">
           <h2
