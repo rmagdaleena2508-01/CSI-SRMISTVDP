@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local tooling — launch.json only tells a local preview how to start the dev
+# server, so it stays on the machine that wrote it
+.claude/
