@@ -20,7 +20,6 @@ const R_OUT = 356;
 const BAND = 34;
 const R_IN = R_OUT - BAND;
 const SWEEP = 28;
-const HINT_KEY = "csi-album-scroller-hint";
 
 const rad = (deg: number) => (deg * Math.PI) / 180;
 
@@ -53,34 +52,21 @@ export function ArcScroller({
   const [dragging, setDragging] = useState(false);
   const [hint, setHint] = useState(false);
 
-  // Shown once per device. A hint that returns on every visit stops being a
-  // hint and becomes clutter.
+  // Raised on every arrival at the page, a click through from the home page
+  // included. It was remembered per device at first, which meant one dismissal
+  // silenced it for good; the scroller is the only way to move the stack here,
+  // so the invitation is worth repeating. The timer keeps it out of the effect
+  // body and lets the albums land first.
   useEffect(() => {
-    let seen = false;
-    try {
-      seen = localStorage.getItem(HINT_KEY) === "seen";
-    } catch {
-      seen = false;
-    }
-    if (seen) return;
-    // Raised from a timer rather than from the effect body: the albums land
-    // first, then the hint arrives to point at the scroller.
-    const show = window.setTimeout(() => setHint(true), 700);
-    const hide = window.setTimeout(() => setHint(false), 7200);
+    const show = window.setTimeout(() => setHint(true), 400);
+    const hide = window.setTimeout(() => setHint(false), 6900);
     return () => {
       window.clearTimeout(show);
       window.clearTimeout(hide);
     };
   }, []);
 
-  const dismissHint = useCallback(() => {
-    setHint(false);
-    try {
-      localStorage.setItem(HINT_KEY, "seen");
-    } catch {
-      // A browser with storage blocked simply sees the hint again next time.
-    }
-  }, []);
+  const dismissHint = useCallback(() => setHint(false), []);
 
   const pick = useCallback(
     (clientY: number) => {
