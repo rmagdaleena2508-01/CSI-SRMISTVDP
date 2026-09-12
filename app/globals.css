@@ -234,9 +234,10 @@ body {
     background-repeat: no-repeat;
     -webkit-background-clip: text;
     background-clip: text;
-    /* A soft sky-coloured glow so the letters lift off the navy instead of
-       sitting flat on it. */
-    filter: drop-shadow(0 14px 42px rgba(107, 163, 202, 0.3));
+    /* A tight navy shadow keeps the pale letters legible over a photograph's
+       sky; the wide sky-coloured glow lifts them off the page. */
+    filter: drop-shadow(0 2px 18px rgba(18, 38, 92, 0.4))
+      drop-shadow(0 14px 42px rgba(107, 163, 202, 0.3));
     animation: sky-drift 28s ease-in-out infinite alternate;
   }
 }
@@ -341,6 +342,131 @@ body {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     0 14px 38px -22px rgba(18, 38, 92, 0.6);
+}
+
+/* Liquid glass cards over a photograph. Three layers make it read as a thick
+   pane rather than a frosted sticker: only a light blur, so the photograph
+   stays readable through it, a clear body with a brighter lit corner, and a rim that is bright
+   where light enters and exits and nearly clear in between. The rim angle
+   follows --shine, so the light moves around the edge while the page scrolls.
+   The tint is held at a level where navy text keeps its contrast even with
+   bright grass behind it. */
+.liquid-glass {
+  position: relative;
+  isolation: isolate;
+  background-color: rgba(255, 255, 255, 0.2);
+  background-image:
+    radial-gradient(
+      120% 80% at 12% 0%,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0) 55%
+    ),
+    linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.06) 45%,
+      rgba(255, 255, 255, 0.18)
+    );
+  -webkit-backdrop-filter: blur(6px) saturate(130%) brightness(1.04);
+  backdrop-filter: blur(6px) saturate(130%) brightness(1.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 18px 36px -24px rgba(255, 255, 255, 0.9),
+    inset 0 -24px 40px -30px rgba(18, 38, 92, 0.18),
+    0 30px 60px -32px rgba(18, 38, 92, 0.5);
+  transition:
+    background-color 0.5s var(--ease-editorial),
+    transform 0.5s var(--ease-editorial),
+    box-shadow 0.5s var(--ease-editorial);
+}
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1.25px;
+  pointer-events: none;
+  background: conic-gradient(
+    from calc(var(--shine) * 1deg + 200deg) at 50% 50%,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.18) 22%,
+    rgba(255, 255, 255, 0.08) 38%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0.14) 72%,
+    rgba(255, 255, 255, 0.08) 88%,
+    rgba(255, 255, 255, 0.95)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+.liquid-glass:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 18px 36px -24px rgba(255, 255, 255, 1),
+    inset 0 -24px 40px -30px rgba(18, 38, 92, 0.18),
+    0 40px 70px -34px rgba(18, 38, 92, 0.55);
+}
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass:hover {
+    transform: none;
+  }
+}
+
+/* Phones keep the navy section, so the same pane is tinted dark instead of
+   light — a white tint over navy turns milky and loses the glass read, and
+   the text inside is cream there rather than navy. */
+@media (width < 768px) {
+  .liquid-glass {
+    background-color: rgba(255, 255, 255, 0.07);
+    background-image:
+      radial-gradient(
+        120% 80% at 12% 0%,
+        rgba(255, 255, 255, 0.22),
+        rgba(255, 255, 255, 0) 55%
+      ),
+      linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0.02) 45%,
+        rgba(255, 255, 255, 0.08)
+      );
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.14),
+      0 30px 60px -32px rgba(0, 0, 0, 0.55);
+  }
+  .liquid-glass::after {
+    background: conic-gradient(
+      from calc(var(--shine) * 1deg + 200deg) at 50% 50%,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.1) 22%,
+      rgba(255, 255, 255, 0.04) 38%,
+      rgba(255, 255, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0.08) 72%,
+      rgba(255, 255, 255, 0.04) 88%,
+      rgba(255, 255, 255, 0.7)
+    );
+  }
+  .liquid-glass:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.18),
+      0 40px 70px -34px rgba(0, 0, 0, 0.6);
+  }
 }
 
 /* Continuous hover for the one filter with sessions behind it. The shadow
