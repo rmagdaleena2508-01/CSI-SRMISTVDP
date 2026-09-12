@@ -529,3 +529,30 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Crushed paper behind the album heading. The sheet itself never changes as
+   the stack moves from album to album, so it reads as one piece of paper the
+   titles are printed on rather than part of the artwork. It rocks by a third
+   of a degree, the least that still feels alive. --paper is set inline so the
+   URL carries the deployment base path. */
+.paper-panel {
+  background-color: var(--color-cream);
+  background-image: var(--paper);
+  background-size: cover;
+  background-position: 50% 45%;
+  transform-origin: 50% 65%;
+  animation: paper-seesaw 11s ease-in-out infinite alternate;
+}
+@keyframes paper-seesaw {
+  from {
+    transform: rotate(-0.35deg) translateY(-1px);
+  }
+  to {
+    transform: rotate(0.35deg) translateY(1px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paper-panel {
+    animation: none;
+  }
+}

@@ -161,7 +161,21 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
           </Swiper>
         </div>
 
-        <div className="lg:col-span-5">
+        <div className="relative isolate overflow-hidden rounded-3xl px-8 py-9 lg:col-span-5">
+          {/* One sheet of crushed paper, fixed behind the titles. It stays
+              put as the stack moves from album to album — it belongs to the
+              page, not to the artwork — and rocks a third of a degree so it
+              reads as paper rather than a flat panel. Inset past the edges so
+              the corners never swing into view. */}
+          <span
+            aria-hidden
+            className="paper-panel absolute -inset-8 -z-10"
+            style={
+              {
+                "--paper": `url(${asset("/images/brand/crushed-paper.jpg")})`,
+              } as React.CSSProperties
+            }
+          />
           <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
             {current.category}
           </p>
@@ -258,7 +272,21 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
           />
         </div>
 
-        <div className="mt-6">
+        <div className="relative isolate mt-6 overflow-hidden rounded-2xl px-5 py-6">
+          {/* One sheet of crushed paper, fixed behind the titles. It stays
+              put as the stack moves from album to album — it belongs to the
+              page, not to the artwork — and rocks a third of a degree so it
+              reads as paper rather than a flat panel. Inset past the edges so
+              the corners never swing into view. */}
+          <span
+            aria-hidden
+            className="paper-panel absolute -inset-8 -z-10"
+            style={
+              {
+                "--paper": `url(${asset("/images/brand/crushed-paper.jpg")})`,
+              } as React.CSSProperties
+            }
+          />
           <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
             {albums[phoneActive].category}
           </p>
