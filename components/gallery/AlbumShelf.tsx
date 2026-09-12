@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperClass } from "swiper";
 import { A11y, EffectCoverflow, Keyboard, Mousewheel } from "swiper/modules";
@@ -25,6 +25,14 @@ const countLabel = (n: number) =>
   n === 1 ? "1 photograph" : `${n} photographs`;
 
 /**
+ * Held apart from the page's own scrolling: while the pointer is over the
+ * stack, the wheel belongs to the albums and nothing else moves. React
+ * registers its onWheel passively at the root, so preventDefault there is
+ * ignored — this has to be attached to the element itself with passive:false.
+ */
+const stopPageScroll = (e: WheelEvent) => e.preventDefault();
+
+/**
  * The photo library.
  *
  * The stack is Swiper's coverflow effect rather than hand-written pointer
@@ -37,6 +45,15 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
   const [active, setActive] = useState(0);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const swiperRef = useRef<SwiperClass | null>(null);
+
+  // The wheel listener is added to Swiper's own element in onSwiper, so it is
+  // taken off again when this leaves the page.
+  useEffect(
+    () => () => {
+      swiperRef.current?.el?.removeEventListener("wheel", stopPageScroll);
+    },
+    []
+  );
 
   const current = albums[active];
   const open = openIndex === null ? null : albums[openIndex];
@@ -71,6 +88,9 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
             modules={[EffectCoverflow, Mousewheel, Keyboard, A11y]}
             onSwiper={(s) => {
               swiperRef.current = s;
+              s.el.addEventListener("wheel", stopPageScroll, {
+                passive: false,
+              });
             }}
             onSlideChange={(s) => setActive(s.activeIndex)}
             direction="vertical"
@@ -83,10 +103,12 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
             mousewheel={{
               forceToAxis: true,
               sensitivity: 0.5,
-              // Hands the wheel back to the page once the stack is at its
-              // first or last case, so reaching the end of the albums does
-              // not trap the page.
-              releaseOnEdges: true,
+              // Deliberately off. Releasing at the ends handed the wheel back
+              // to the page mid-gesture, so a trackpad flick scrolled the page
+              // while the stack was still moving — the two scrolls overlapped.
+              // The page is reached by moving off the stack instead, which is
+              // never more than a cover's width away.
+              releaseOnEdges: false,
             }}
             keyboard={{ enabled: true }}
             a11y={{ enabled: true }}
