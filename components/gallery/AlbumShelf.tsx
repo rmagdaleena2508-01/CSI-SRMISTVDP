@@ -190,7 +190,7 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
           the right edge. A plain grid of covers gave a thumb nothing to work,
           so the albums are driven the same way here as on a laptop. */}
       <div data-phone-shelf className="lg:hidden">
-        <div className="flex h-[22rem] items-stretch gap-2">
+        <div className="flex h-[26rem] items-stretch gap-5 pr-3">
           <div className="min-w-0 flex-1">
             <Swiper
               modules={[EffectCoverflow, A11y]}
@@ -202,19 +202,19 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
               effect="coverflow"
               grabCursor
               centeredSlides
-              slidesPerView={2.1}
-              spaceBetween={-40}
+              slidesPerView={1.95}
+              spaceBetween={-56}
               speed={480}
               a11y={{ enabled: true }}
               coverflowEffect={{
                 rotate: 0,
-                stretch: 40,
+                stretch: 56,
                 depth: 90,
                 modifier: 1,
                 scale: 1,
                 slideShadows: false,
               }}
-              className="h-full w-full [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-start [&_.swiper-slide]:transition-[opacity,filter] [&_.swiper-slide]:duration-500 [&_.swiper-slide:not(.swiper-slide-active)]:opacity-80 [&_.swiper-slide:not(.swiper-slide-active)]:brightness-90"
+              className="h-full w-full [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-center [&_.swiper-slide]:transition-[opacity,filter] [&_.swiper-slide]:duration-500 [&_.swiper-slide:not(.swiper-slide-active)]:opacity-80 [&_.swiper-slide:not(.swiper-slide-active)]:brightness-90"
             >
               {albums.map((album, i) => (
                 <SwiperSlide key={album.slug}>
@@ -237,7 +237,7 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
                         src={album.cover}
                         alt={`${album.title} album cover`}
                         fill
-                        sizes="60vw"
+                        sizes="78vw"
                         loading="lazy"
                         className="object-cover"
                       />

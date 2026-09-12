@@ -86,7 +86,7 @@ export function ArcScroller({
   return (
     <div
       className="relative flex h-full shrink-0 items-center"
-      style={{ width: 64 }}
+      style={{ width: 56 }}
     >
       {hint ? (
         <div className="pointer-events-none absolute top-1/2 right-full z-10 mr-3 w-44 -translate-y-1/2">
