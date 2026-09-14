@@ -180,6 +180,34 @@ export const events: ChapterEvent[] = [
     },
     venue: "CSE Lab 2, 2:00 to 3:00 PM",
     image: "/images/events/beyond-the-cgpa.jpg",
+    gallery: [
+      {
+        src: "/images/events/beyond-the-cgpa-1.jpg",
+        caption: "The student host opening the session",
+      },
+      {
+        src: "/images/events/beyond-the-cgpa-2.jpg",
+        caption:
+          "HOD of CSE, Dr. Golda Dilip ma'am, addressing the speaker and students",
+      },
+      {
+        src: "/images/events/beyond-the-cgpa-3.jpg",
+        caption: "Hameed Salihu speaking to the room",
+      },
+      {
+        src: "/images/events/beyond-the-cgpa-4.jpg",
+        caption:
+          "A former office bearer of the chapter, who joined exclusively for this session, speaking to the students",
+      },
+      {
+        src: "/images/events/beyond-the-cgpa-5.jpg",
+        caption: "Students at the session in CSE Lab 2",
+      },
+      {
+        src: "/images/events/beyond-the-cgpa-6.jpg",
+        caption: "The speaker, faculty and students together after the session",
+      },
+    ],
     featured: true,
   },
   {
