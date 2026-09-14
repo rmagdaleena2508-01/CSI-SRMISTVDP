@@ -16,8 +16,13 @@ export default function HomePage() {
       {highlightEvent ? (
         <FeatureEvent
           id="highlight"
-          heading={`Highlight of ${formatEventMonth(highlightEvent.date)}`}
+          heading={
+            <>
+              Highlight of <em>{formatEventMonth(highlightEvent.date)}</em>
+            </>
+          }
           event={highlightEvent}
+          backdrop="/images/brand/highlight-canopy.jpg"
         />
       ) : null}
 

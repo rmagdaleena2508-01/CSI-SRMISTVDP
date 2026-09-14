@@ -1,8 +1,5 @@
 export type EventCategory =
-  | "Workshop"
-  | "Discussion"
-  | "Industry"
-  | "Knowledge Session";
+  "Workshop" | "Discussion" | "Industry" | "Knowledge Session";
 
 export type ChapterEvent = {
   slug: string;
@@ -14,6 +11,10 @@ export type ChapterEvent = {
   description: string;
   /** Two or three sentences, used on the event page. */
   summary: string;
+  /** Short line under the title on the home page's highlight card. */
+  tagline?: string;
+  /** Bullets that replace the summary on the highlight card. */
+  highlights?: string[];
   speaker?: { name: string; role: string };
   venue?: string;
   image: string;
@@ -43,7 +44,8 @@ export const events: ChapterEvent[] = [
     title: "ENTRESPARK 2026",
     date: "2026-09-02",
     category: "Workshop",
-    description: "Entrepreneurship orientation and an interactive pitching activity.",
+    description:
+      "Entrepreneurship orientation and an interactive pitching activity.",
     summary:
       "Run jointly with the Entrepreneurship Development Cell for first-year CSE students: a session on entrepreneurship, innovation, incubation and marketing, followed by InnoVenture, a pitching activity where teams had fifteen minutes to research a problem, shape an idea and present it. One team built a full presentation inside that window. Team VDK won, Team Nexus were runners-up, and Team Byte Club took a special mention.",
     speaker: {
@@ -51,6 +53,17 @@ export const events: ChapterEvent[] = [
       role: "Founder and CEO, Trouvaille Eunoia",
     },
     venue: "SRM IST Vadapalani Campus, 9:00 AM onwards",
+    tagline: "From bold ideas to bold ventures.",
+    highlights: [
+      "Jointly organized with the Entrepreneurship Development Cell (EDC) for first-year CSE students.",
+      "Explored entrepreneurship, innovation, incubation, and marketing through an interactive session.",
+      "Students then took on InnoVenture — a rapid pitching challenge.",
+      "Teams had just 15 minutes to identify a problem, develop an idea, and pitch their solution.",
+      "One team built their entire presentation within the 15-minute challenge window.",
+      "Team VDK emerged as the winners.",
+      "Team Nexus finished as runners-up.",
+      "Team Byte Club received a special mention.",
+    ],
     image: "/images/events/entrespark-2026.jpg",
     explored: [
       "What entrepreneurship, innovation, incubation and marketing actually involve",
@@ -118,7 +131,8 @@ export const events: ChapterEvent[] = [
     title: "SKILLSHONE Orientation Programme",
     date: "2026-08-25",
     category: "Industry",
-    description: "Industry-oriented learning and real-time project opportunities.",
+    description:
+      "Industry-oriented learning and real-time project opportunities.",
     summary:
       "An orientation on industry-oriented learning and real-time project work with industry mentors, held with IEEE CS. The session ranged over how generative AI is reshaping hiring, why domain knowledge matters as much as technical skill, and how to build proof of your work before graduating.",
     speaker: { name: "Mr. Malaya Rout", role: "Director, Exafluence" },
@@ -324,8 +338,7 @@ const byDateDesc = (a: ChapterEvent, b: ChapterEvent) =>
 
 export const allEvents = [...events].sort(byDateDesc);
 
-export const featuredEvent =
-  allEvents.find((e) => e.featured) ?? allEvents[0];
+export const featuredEvent = allEvents.find((e) => e.featured) ?? allEvents[0];
 
 export const highlightEvent = allEvents.find((e) => e.highlight);
 
@@ -339,10 +352,10 @@ export function relatedEvents(slug: string, limit = 3) {
   const current = getEvent(slug);
   if (!current) return [];
   const sameCategory = allEvents.filter(
-    (e) => e.slug !== slug && e.category === current.category
+    (e) => e.slug !== slug && e.category === current.category,
   );
   const rest = allEvents.filter(
-    (e) => e.slug !== slug && e.category !== current.category
+    (e) => e.slug !== slug && e.category !== current.category,
   );
   return [...sameCategory, ...rest].slice(0, limit);
 }

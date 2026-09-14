@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Great_Vibes, Instrument_Sans, Inter } from "next/font/google";
+import {
+  Great_Vibes,
+  Instrument_Sans,
+  Instrument_Serif,
+  Inter,
+} from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -21,6 +26,16 @@ const inter = Inter({
   subsets: ["latin"],
   axes: ["opsz"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Editorial serif for the month's highlight heading. The sibling of the hero's
+// Instrument Sans, so the two read as one family rather than a borrowed accent.
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
   display: "swap",
 });
 
@@ -87,7 +102,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" className={`${instrument.variable} ${inter.variable} ${script.variable}`}>
+    <html
+      lang="en-IN"
+      className={`${instrument.variable} ${inter.variable} ${serif.variable} ${script.variable}`}
+    >
       <body className="grain antialiased">
         <a
           href="#main"
