@@ -284,6 +284,68 @@ Pixel Transition, which covers content with a grid of squares and then removes
 them. That component uses GSAP; this version is built with Motion, which the
 site already uses, so nothing extra is downloaded.
 
+### The phone menu folds open like paper
+
+On phones and tablets, the three-line button in the top right opens the quick
+navigation menu. It used to appear in one frame. It now unfolds like a strip
+of paper that was folded into a zigzag and is being let drop.
+
+Why paper? The seal card already borrows from the Mac, and a second zoom would
+have made the two feel like the same trick. A menu is a list you read from the
+top down, so it made sense for it to arrive from the top down, one line at a
+time. Paper also suits a chapter site better than a slick app transition: it
+feels handmade, and the light and shadow on each fold make the glass menu look
+like a physical object for a moment.
+
+How it opens:
+
+- The glass sheet behind the menu hangs from its top edge, tipped back about
+  28 degrees, and falls forward until it's flat. Its bottom edge travels down
+  at the same time, so the sheet grows with the rows instead of appearing
+  whole.
+- Each row (Home, About, Events, Team, Insights, then LinkedIn and Instagram)
+  is one panel of the folded strip. It hangs off the row above it and swings
+  down from edge-on to flat. Rows start 0.065 seconds apart, top to bottom,
+  so from the front the menu drops open in steps, like a staircase.
+- Each row lands with a very slight flop, the way paper falls flat, rather
+  than sliding into place.
+- Alternate rows start with a crease shadow or a catch of light, which fades
+  as the row flattens. That zigzag of light and shade is what makes it read as
+  folded paper.
+
+How it closes:
+
+- The rows fold back up from the bottom, 0.04 seconds apart.
+- The glass sheet folds up with them. Its bottom edge rises at the same pace
+  as the rows and it tips back as it goes, fading out only in the last moment.
+  The first version waited for the rows to finish and then removed the sheet
+  in one go, which looked abrupt.
+- The whole close takes under half a second, whether you tap a link, tap the
+  X or press Escape.
+
+Two details keep it smooth:
+
+- The first version's opening lurched. The sheet's growing edge was animated
+  as a `clip-path` string, and browsers rewrite `inset(0% 0% 0% 0%)` as
+  `inset(0%)`. The two strings no longer match, so the animation jumped
+  instead of tweening. The edge is now a single CSS variable inside the
+  clip-path, which always animates smoothly.
+- Page scroll is locked once the menu has landed rather than on the tap.
+  Locking scroll makes the browser re-measure the whole page, and doing it in
+  the same frame as the first step of the fold dropped that frame. The seal
+  card uses the same fix.
+
+With reduced motion turned on, the menu simply appears and disappears.
+
+References I looked at: [OriDomi](http://oridomi.com/), the best-known library
+for folding page elements, and the
+[Paper Fold 3D Accordion](https://codefronts.com/navigation/css-accordions/paper-folded/),
+[Folding Paper Menu](https://webcodeflow.com/folding-paper-menu/) and
+[CSS 3D paper fold](https://gist.github.com/2772486) demos. OriDomi works by
+slicing the element into copies, which is heavy for a menu with a blurred
+glass background, so the fold here is built with Motion using 3D rotation on
+the real rows. Nothing extra is downloaded.
+
 ## Tech stack
 
 **Next.js 16 with the App Router.** Every page is prerendered to static HTML at
