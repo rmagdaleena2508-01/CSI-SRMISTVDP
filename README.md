@@ -174,10 +174,16 @@ the scroll getting long.
 
 **Keeping the month current.** Two flags in `data/events.ts` decide what the
 top of the home page shows: `highlight` picks the month's highlight card and
-`featured` picks "Happening this month". Both now point at ENTRESPARK 2026,
-the September session. "Happening this month" had still been showing Beyond
-the CGPA from August, which made the page look out of date. When a new session
-runs, move the flags to it.
+`featured` picks "Happening this month". The highlight is ENTRESPARK 2026,
+and "Happening this month" is Cyber Security Unlocked, the second September
+session (15 September, Knowledge Updates Series #9, with IEEE CS). It had
+still been showing Beyond the CGPA from August, which made the page look out
+of date. When a new session runs, move the flags to it.
+
+Adding a session is only data: an entry in `data/events.ts` with its poster,
+details from the poster, and its photographs with captions. Its page, its
+album in the photo library and the session count in "Nine sessions. One
+chapter." all follow from that entry.
 
 The highlight card also changed in two small ways:
 
@@ -223,7 +229,8 @@ The library page itself was simplified:
   panel under the stack.
 - An album with no photos yet opens on an illustration of a duckling on a lake
   that says "Oops! No photos of this event yet", instead of showing the poster
-  again with nothing else to see.
+  again with nothing else to see. Because that picture is what you see inside,
+  the album's count reads "1 photograph" rather than "0 photographs".
 
 **Closing section.** Every page ends with the same band: "Be part of what's
 next.", the "Join the chapter" button, and the trust line again. The sky-filled

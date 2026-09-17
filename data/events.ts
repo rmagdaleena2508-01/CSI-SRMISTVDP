@@ -125,6 +125,50 @@ export const events: ChapterEvent[] = [
       },
     ],
     highlight: true,
+  },
+  {
+    slug: "cyber-security-unlocked",
+    title: "Cyber Security Unlocked: Understanding the Basics of Digital Safety",
+    date: "2026-09-15",
+    category: "Knowledge Session",
+    description: "Knowledge Updates Seminar Series #9.",
+    summary:
+      "Knowledge Updates Seminar Series #9, held with IEEE CS. The basics of staying safe online: how common attacks work, how phishing and social engineering catch people out, and what good habits around passwords and privacy look like.",
+    speaker: {
+      name: "Nilesh Jaganathan",
+      role: "Aspiring cybersecurity analyst, network security and ethical hacking",
+    },
+    venue: "Hardware Lab, 1:15 to 2:30 PM",
+    image: "/images/events/cyber-security-unlocked.jpg",
+    explored: [
+      "Cyber security fundamentals",
+      "Common cyber threats and attacks",
+      "Phishing, scams and social engineering",
+      "Passwords, privacy and digital safety",
+      "Incident prevention and response",
+    ],
+    gallery: [
+      {
+        src: "/images/events/cyber-security-unlocked-1.jpg",
+        caption: "Nilesh Jaganathan speaking to the students",
+      },
+      {
+        src: "/images/events/cyber-security-unlocked-2.jpg",
+        caption: "Nilesh Jaganathan explaining a point to the room",
+      },
+      {
+        src: "/images/events/cyber-security-unlocked-3.jpg",
+        caption: "Walking through denial-of-service attacks",
+      },
+      {
+        src: "/images/events/cyber-security-unlocked-4.jpg",
+        caption: "The student host taking questions from the audience",
+      },
+      {
+        src: "/images/events/cyber-security-unlocked-5.jpg",
+        caption: "Faculty and students during the session",
+      },
+    ],
     featured: true,
   },
   {

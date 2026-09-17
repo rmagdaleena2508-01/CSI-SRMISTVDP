@@ -119,7 +119,10 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
         {album.title}
       </h2>
       <p className="mt-2 text-[0.9375rem] text-slate-blue">
-        {formatEventDate(album.date)} · {countLabel(album.photos.length)}
+        {formatEventDate(album.date)} ·{" "}
+        {/* An empty album still opens on the "no photos yet" picture, so
+            it holds one photograph rather than none. */}
+        {countLabel(Math.max(1, album.photos.length))}
       </p>
       <button
         type="button"
