@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { TeamCard } from "@/components/team/TeamCard";
 import { Reveal } from "@/components/ui/Reveal";
-import { SocialCTA } from "@/components/sections/SocialCTA";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { team } from "@/data/team";
 
 export const metadata: Metadata = {
@@ -14,27 +15,17 @@ export const metadata: Metadata = {
 export default function TeamPage() {
   return (
     <>
-      <section className="container-editorial pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
-          Office bearers
-        </p>
-        <h1 className="inter-accent text-display mt-6 max-w-[13ch] font-normal text-navy text-balance">
-          Meet the Team
-        </h1>
-        <p className="inter-italic mt-4 text-[1.0625rem] text-navy/70">
-          of CSI SRMIST VDP Student Chapter
-        </p>
-        <p className="text-lead mt-8 max-w-[52ch] text-slate-blue text-pretty">
-          Students who plan the sessions, run the room and keep the chapter
-          moving, supported by faculty who make it possible.
-        </p>
-      </section>
+      <PageHeader
+        eyebrow="Office bearers, 2026–27"
+        title="The people behind it."
+        lead="They plan the sessions, run the room and hand the chapter on each year, guided by faculty."
+      />
 
       <section
         aria-label="Student leadership"
-        className="container-editorial pb-section"
+        className="container-editorial pt-section pb-band"
       >
-        <ul className="grid grid-cols-1 gap-x-8 gap-y-14 border-t border-navy/12 pt-14 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-x-8 gap-y-12 border-t border-navy/12 pt-10 sm:grid-cols-2 sm:gap-y-14 sm:pt-14 lg:grid-cols-3 xl:grid-cols-4">
           {team.map((member, i) => (
             <Reveal
               as="li"
@@ -48,7 +39,7 @@ export default function TeamPage() {
         </ul>
       </section>
 
-      <SocialCTA />
+      <ClosingCTA />
     </>
   );
 }

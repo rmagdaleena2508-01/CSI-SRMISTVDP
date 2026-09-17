@@ -14,9 +14,9 @@ export function EventCard({ event, priority = false }: Props) {
     <article className="group h-full">
       <Link
         href={`/events/${event.slug}`}
-        className="flex h-full flex-col rounded-3xl outline-offset-4"
+        className="flex h-full flex-col rounded-card outline-offset-4"
       >
-        <div className="metal-frame relative aspect-[3/4] overflow-hidden rounded-3xl bg-navy/5">
+        <div className="metal-frame relative aspect-[3/4] overflow-hidden rounded-card bg-navy/5 shadow-card">
           <Image
             src={event.image}
             alt={`${event.title} — session photograph`}
@@ -28,14 +28,14 @@ export function EventCard({ event, priority = false }: Props) {
           />
         </div>
 
-        <div className="flex flex-1 flex-col gap-3 px-1 pt-6">
+        <div className="flex flex-1 flex-col gap-3 px-1 pt-5">
           <span className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
             {event.category}
           </span>
-          <h3 className="text-title font-normal tracking-[-0.025em] text-navy">
+          <h3 className="text-title font-normal text-navy text-balance">
             {event.title}
           </h3>
-          <p className="text-[0.9375rem] leading-relaxed text-slate-blue">
+          <p className="text-lead text-slate-blue text-pretty">
             {event.description}
           </p>
 

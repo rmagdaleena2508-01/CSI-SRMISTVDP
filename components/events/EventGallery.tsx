@@ -18,14 +18,14 @@ export function EventGallery({
         id="gallery-heading"
         className="display-heading text-headline font-semibold text-navy"
       >
-        Event gallery
+        Inside the room.
       </h2>
 
-      <ul className="mt-12 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
+      <ul className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:mt-12 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
         {images.map(({ src, caption }, i) => (
           <Reveal as="li" key={src} index={i % 3}>
             <figure>
-              <div className="metal-frame group relative aspect-[4/3] overflow-hidden rounded-3xl bg-sky-100">
+              <div className="metal-frame group relative aspect-[4/3] overflow-hidden rounded-card bg-sky-100 shadow-card">
                 <Image
                   src={src}
                   // A caption sits beside the image for a sighted reader, so the

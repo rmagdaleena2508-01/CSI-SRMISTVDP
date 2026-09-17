@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { EventsExplorer } from "@/components/events/EventsExplorer";
-import { SocialCTA } from "@/components/sections/SocialCTA";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { allEvents } from "@/data/events";
 
 export const metadata: Metadata = {
@@ -13,24 +14,17 @@ export const metadata: Metadata = {
 export default function EventsPage() {
   return (
     <>
-      <section className="container-editorial pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
-          Archive
-        </p>
-        <h1 className="text-display mt-6 max-w-[19ch] font-normal text-navy text-balance">
-          Sessions, conversations and ideas we&rsquo;ve explored.
-        </h1>
-        <p className="text-lead mt-8 max-w-[52ch] text-slate-blue text-pretty">
-          Every session the chapter has run, kept as a record for members,
-          speakers and anyone curious about what happens here.
-        </p>
-      </section>
+      <PageHeader
+        eyebrow="Archive"
+        title="Learn from people doing the work."
+        lead="Browse every session the chapter has run. Open one to see the poster, the photos and the report."
+      />
 
-      <div className="container-editorial pb-section">
+      <div className="container-editorial pt-section pb-band">
         <EventsExplorer events={allEvents} />
       </div>
 
-      <SocialCTA />
+      <ClosingCTA />
     </>
   );
 }

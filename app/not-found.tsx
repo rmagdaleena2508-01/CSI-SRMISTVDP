@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
 export default function NotFound() {
   return (
@@ -6,26 +6,18 @@ export default function NotFound() {
       <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
         404
       </p>
-      <h1 className="text-display mt-6 max-w-[14ch] font-normal text-navy text-balance">
-        That page is not here.
+      <h1 className="display-heading text-display mt-5 max-w-[14ch] font-semibold text-navy text-balance">
+        Wrong turn. No harm done.
       </h1>
-      <p className="text-lead mt-8 max-w-[46ch] text-slate-blue">
-        The link may be old, or the session may have moved. The archive has
-        everything.
+      <p className="text-lead mt-6 max-w-[46ch] text-slate-blue text-pretty">
+        Head back home, or open the archive to find the session you were
+        after.
       </p>
-      <div className="mt-10 flex gap-3">
-        <Link
-          href="/"
-          className="rounded-full bg-navy px-6 py-3 text-[0.9375rem] text-cream transition-colors hover:bg-navy-700"
-        >
-          Back home
-        </Link>
-        <Link
-          href="/events"
-          className="rounded-full px-6 py-3 text-[0.9375rem] text-navy ring-1 ring-navy/15 transition-colors hover:bg-navy/5"
-        >
+      <div className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+        <Button href="/">Back home</Button>
+        <Button href="/events" variant="secondary">
           Browse sessions
-        </Link>
+        </Button>
       </div>
     </section>
   );

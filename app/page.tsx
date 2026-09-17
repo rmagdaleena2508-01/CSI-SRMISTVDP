@@ -1,10 +1,8 @@
 import { Hero } from "@/components/hero/Hero";
 import { FeatureEvent } from "@/components/sections/FeatureEvent";
-import { MomentsGallery } from "@/components/sections/MomentsGallery";
 import { RecentEvents } from "@/components/sections/RecentEvents";
 import { TeamSection } from "@/components/sections/TeamSection";
-import { InsightsSection } from "@/components/sections/InsightsSection";
-import { SocialCTA } from "@/components/sections/SocialCTA";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { featuredEvent, formatEventMonth, highlightEvent } from "@/data/events";
 import { site } from "@/data/site";
 
@@ -18,7 +16,7 @@ export default function HomePage() {
           id="highlight"
           heading={
             <>
-              Highlight of <em>{formatEventMonth(highlightEvent.date)}</em>
+              Highlight of <em>{formatEventMonth(highlightEvent.date)}</em>.
             </>
           }
           event={highlightEvent}
@@ -28,14 +26,12 @@ export default function HomePage() {
 
       <FeatureEvent
         id="happening"
-        heading="Happening this month"
+        heading="Happening this month."
         event={featuredEvent}
       />
-      <MomentsGallery />
       <RecentEvents />
       <TeamSection />
-      <InsightsSection />
-      <SocialCTA />
+      <ClosingCTA />
 
       <script
         type="application/ld+json"

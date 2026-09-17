@@ -1,28 +1,25 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "ghost";
-type Size = "md" | "lg";
+type Variant = "primary" | "secondary" | "light" | "glass";
 
+// Every button on the site: 48px tall, 14px corners, one shadow. Variants only
+// change colour, so a button reads the same wherever it sits.
 const base =
-  "group inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-[-0.01em] transition-[background-color,color,border-color,box-shadow,transform] duration-300 ease-[var(--ease-editorial)] active:translate-y-px";
+  "group inline-flex h-12 items-center justify-center gap-2 rounded-control px-6 text-[0.9375rem] font-medium tracking-[-0.01em] whitespace-nowrap shadow-card transition-[background-color,color,border-color,transform] duration-300 ease-[var(--ease-editorial)] active:translate-y-px";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-navy text-cream shadow-[0_1px_2px_rgba(18,38,92,0.24)] hover:bg-navy-700 hover:shadow-[0_10px_24px_-12px_rgba(18,38,92,0.55)]",
+  primary: "bg-navy text-cream hover:bg-navy-700",
   secondary:
-    "border border-navy/20 bg-cream/70 text-navy backdrop-blur-[2px] hover:border-navy/40 hover:bg-cream",
-  ghost: "text-navy hover:text-navy-700",
-};
-
-const sizes: Record<Size, string> = {
-  md: "h-11 px-5 text-[0.9375rem]",
-  lg: "h-13 px-7 text-base",
+    "bg-cream text-navy ring-1 ring-navy/15 ring-inset hover:bg-white",
+  // On photographs and navy bands.
+  light: "bg-cream text-navy hover:bg-white",
+  glass:
+    "bg-navy/80 text-cream ring-1 ring-white/25 ring-inset backdrop-blur-[2px] hover:bg-navy",
 };
 
 type Props = {
   variant?: Variant;
-  size?: Size;
   href?: string;
   children: ReactNode;
   className?: string;
@@ -30,13 +27,12 @@ type Props = {
 
 export function Button({
   variant = "primary",
-  size = "md",
   href,
   children,
   className = "",
   ...rest
 }: Props) {
-  const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+  const cls = `${base} ${variants[variant]} ${className}`;
 
   if (href) {
     const external = href.startsWith("http");

@@ -18,7 +18,7 @@ export function EventsGrid({
   }
 
   return (
-    <ul className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-14 lg:grid-cols-3">
       {events.map((event, i) => (
         <Reveal as="li" key={event.slug} index={i % 3} className="h-full">
           <EventCard event={event} priority={i < priorityCount} />

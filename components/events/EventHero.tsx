@@ -12,7 +12,7 @@ export function EventHero({ event }: { event: ChapterEvent }) {
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (
-    <header className="container-editorial pt-32 sm:pt-36">
+    <header className="container-editorial pt-32 pb-section sm:pt-40">
       <Link
         href="/events"
         className="group inline-flex items-center gap-2 text-[0.875rem] text-navy/65 transition-colors hover:text-navy"
@@ -26,24 +26,24 @@ export function EventHero({ event }: { event: ChapterEvent }) {
         <span className="link-underline">All sessions</span>
       </Link>
 
-      <h1 className="text-display mt-8 max-w-[15ch] font-normal text-navy text-balance">
+      <h1 className="display-heading text-display mt-6 max-w-[16ch] font-semibold text-navy text-balance">
         {event.title}
       </h1>
 
-      <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-7 border-t border-navy/12 pt-8 sm:grid-cols-4">
+      <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-navy/12 pt-8 sm:grid-cols-4 sm:gap-x-8">
         {meta.map((m) => (
           <div key={m.label} className="flex flex-col gap-2">
             <dt className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
               {m.label}
             </dt>
-            <dd className="text-[1.0625rem] leading-snug text-navy">
+            <dd className="text-[0.9375rem] leading-snug text-navy sm:text-[1.0625rem]">
               {m.value}
             </dd>
           </div>
         ))}
       </dl>
 
-      <div className="metal-frame relative mt-12 aspect-[4/3] overflow-hidden rounded-[2rem] bg-navy/5 sm:mt-16 sm:aspect-[16/9]">
+      <div className="metal-frame relative mt-10 aspect-[4/5] overflow-hidden rounded-panel bg-navy/5 shadow-card sm:mt-14 sm:aspect-[16/9]">
         <Image
           src={event.image}
           alt={`${event.title} — photograph from the session`}

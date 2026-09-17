@@ -161,7 +161,7 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
           </Swiper>
         </div>
 
-        <div className="relative isolate overflow-hidden rounded-3xl px-8 py-9 lg:col-span-5">
+        <div className="relative isolate overflow-hidden rounded-card px-8 py-9 lg:col-span-5">
           {/* One sheet of crushed paper, fixed behind the titles. It stays
               put as the stack moves from album to album — it belongs to the
               page, not to the artwork — and rocks a third of a degree so it
@@ -272,7 +272,7 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
           />
         </div>
 
-        <div className="relative isolate mt-6 overflow-hidden rounded-2xl px-5 py-6">
+        <div className="relative isolate mt-6 overflow-hidden rounded-card px-5 py-6">
           {/* One sheet of crushed paper, fixed behind the titles. It stays
               put as the stack moves from album to album — it belongs to the
               page, not to the artwork — and rocks a third of a degree so it

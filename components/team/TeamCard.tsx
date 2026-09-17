@@ -7,7 +7,7 @@ export function TeamCard({ member }: { member: TeamMember }) {
 
   return (
     <article className="group flex h-full flex-col">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-sky-100 ring-1 ring-navy/8">
+      <div className="metal-frame relative aspect-[4/5] overflow-hidden rounded-card bg-sky-100 shadow-card">
         {member.image ? (
           <Image
             src={member.image}
@@ -32,7 +32,7 @@ export function TeamCard({ member }: { member: TeamMember }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 px-1 pt-6">
+      <div className="flex flex-1 flex-col gap-2 px-1 pt-5">
         <span className="inter-accent text-eyebrow font-medium tracking-[0.16em] text-slate-blue uppercase">
           {member.role}
         </span>

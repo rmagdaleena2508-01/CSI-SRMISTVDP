@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { FAQ } from "@/components/sections/FAQ";
 import { Reveal } from "@/components/ui/Reveal";
-import { SocialCTA } from "@/components/sections/SocialCTA";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 
 export const metadata: Metadata = {
   title: "About",
@@ -40,26 +42,17 @@ const blocks = [
 export default function AboutPage() {
   return (
     <>
-      <section className="container-editorial pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
-          About
-        </p>
-        <h1 className="display-heading text-display mt-6 max-w-[15ch] font-semibold text-navy text-balance">
-          Be curious out loud.
-        </h1>
-        <p className="text-lead mt-8 max-w-[56ch] text-slate-blue text-pretty">
-          We&rsquo;re the Computer Society of India Student Chapter at SRMIST
-          Vadapalani. We get students together to build things, ask questions
-          and figure out tech, alongside people learning the same stuff at the
-          same time.
-        </p>
-      </section>
+      <PageHeader
+        eyebrow="About"
+        title="Be curious out loud."
+        lead="Build things, ask questions and figure out tech with students learning the same things. We are the Computer Society of India Student Chapter at SRMIST Vadapalani."
+      />
 
-      <section className="container-editorial pb-section">
+      <section className="container-editorial py-section">
         <ul className="flex flex-col">
           {blocks.map((block, i) => (
             <Reveal as="li" key={block.label} index={i % 3}>
-              <article className="grid grid-cols-1 gap-6 border-t border-navy/12 py-12 lg:grid-cols-12 lg:gap-10 lg:py-16">
+              <article className="grid grid-cols-1 gap-4 border-t border-navy/12 py-10 lg:grid-cols-12 lg:gap-10 lg:py-14">
                 <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase lg:col-span-3">
                   {block.label}
                 </p>
@@ -67,7 +60,7 @@ export default function AboutPage() {
                   <h2 className="display-heading text-title max-w-[22ch] font-semibold text-navy text-balance">
                     {block.title}
                   </h2>
-                  <p className="text-lead mt-5 max-w-[58ch] text-slate-blue text-pretty">
+                  <p className="text-lead mt-4 max-w-[60ch] text-slate-blue text-pretty">
                     {block.body}
                   </p>
                 </div>
@@ -77,7 +70,11 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <SocialCTA />
+      <div className="pb-section">
+        <FAQ />
+      </div>
+
+      <ClosingCTA />
     </>
   );
 }

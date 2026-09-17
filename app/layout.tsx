@@ -1,41 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Great_Vibes,
-  Instrument_Sans,
-  Instrument_Serif,
-  Inter,
-} from "next/font/google";
+import { Great_Vibes, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ShineDriver } from "@/components/ui/ShineDriver";
 import { site } from "@/data/site";
 
-// Only the hero headline is set in this face now.
-const instrument = Instrument_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-instrument",
-  display: "swap",
-});
-
-// Headings and body copy. Loaded as the variable font with its optical-size
-// axis, so large headings pick up the tighter display cut and body text keeps
-// the open text cut from the same family.
+// The one text face: hero, headings and body copy. Loaded as the variable
+// font with its optical-size axis, so large headings pick up the tighter
+// display cut and body text keeps the open text cut from the same family.
 const inter = Inter({
   subsets: ["latin"],
   axes: ["opsz"],
   variable: "--font-inter",
-  display: "swap",
-});
-
-// Editorial serif for the month's highlight heading. The sibling of the hero's
-// Instrument Sans, so the two read as one family rather than a borrowed accent.
-const serif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
   display: "swap",
 });
 
@@ -104,7 +81,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-IN"
-      className={`${instrument.variable} ${inter.variable} ${serif.variable} ${script.variable}`}
+      className={`${inter.variable} ${script.variable}`}
     >
       <body className="grain antialiased">
         <a

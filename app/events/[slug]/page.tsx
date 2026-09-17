@@ -6,7 +6,8 @@ import { EventHero } from "@/components/events/EventHero";
 import { EventGallery } from "@/components/events/EventGallery";
 import { EventCard } from "@/components/events/EventCard";
 import { Reveal } from "@/components/ui/Reveal";
-import { SocialCTA } from "@/components/sections/SocialCTA";
+import { Button } from "@/components/ui/Button";
+import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { events, getEvent, relatedEvents } from "@/data/events";
 import { site } from "@/data/site";
 
@@ -41,8 +42,10 @@ export async function generateMetadata({
 function List({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
-      <h2 className="text-headline font-normal text-navy">{title}</h2>
-      <ul className="mt-8 flex flex-col">
+      <h2 className="display-heading text-headline font-semibold text-navy text-balance">
+        {title}
+      </h2>
+      <ul className="mt-6 flex flex-col sm:mt-8">
         {items.map((item, i) => (
           <Reveal as="li" key={item} index={i}>
             <div className="flex gap-6 border-t border-navy/12 py-5">
@@ -76,22 +79,22 @@ export default async function EventPage({
       <EventHero event={event} />
 
       <div className="container-editorial">
-        <section className="grid grid-cols-1 gap-10 py-section lg:grid-cols-12 lg:gap-16">
+        <section className="grid grid-cols-1 gap-4 py-section lg:grid-cols-12 lg:gap-16">
           <h2 className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase lg:col-span-3">
             Summary
           </h2>
-          <p className="text-lead max-w-[62ch] text-navy/85 text-pretty lg:col-span-9 lg:text-[1.375rem] lg:leading-[1.5]">
+          <p className="text-lead max-w-[62ch] text-navy/85 text-pretty lg:col-span-9">
             {event.summary}
           </p>
         </section>
 
         {event.explored?.length || event.takeaways?.length ? (
-          <div className="grid grid-cols-1 gap-16 pb-section lg:grid-cols-2 lg:gap-20">
+          <div className="grid grid-cols-1 gap-12 py-section lg:grid-cols-2 lg:gap-20">
             {event.explored?.length ? (
-              <List title="What we explored" items={event.explored} />
+              <List title="What we explored." items={event.explored} />
             ) : null}
             {event.takeaways?.length ? (
-              <List title="Key takeaways" items={event.takeaways} />
+              <List title="What to take away." items={event.takeaways} />
             ) : null}
           </div>
         ) : null}
@@ -99,7 +102,7 @@ export default async function EventPage({
         {event.quote ? (
           <Reveal>
             <figure className="border-y border-navy/12 py-section">
-              <blockquote className="text-headline max-w-[22ch] font-normal text-navy text-balance">
+              <blockquote className="text-headline max-w-[24ch] font-normal text-navy text-balance">
                 &ldquo;{event.quote.text}&rdquo;
               </blockquote>
               <figcaption className="text-eyebrow mt-8 font-medium tracking-[0.18em] text-slate-blue uppercase">
@@ -128,13 +131,13 @@ export default async function EventPage({
                 <p className="text-title mt-4 font-normal tracking-[-0.025em] text-navy">
                   {event.speaker.name}
                 </p>
-                <p className="text-lead mt-2 text-slate-blue">
+                <p className="text-lead mt-2 text-slate-blue text-balance">
                   {event.speaker.role}
                 </p>
                 <p className="text-lead mt-6 max-w-[52ch] text-navy/75 text-pretty">
-                  Sessions at the chapter are led by people doing the work —
-                  practitioners, researchers and senior students who bring the
-                  problem, not just the slides.
+                  Learn from people doing the work: practitioners,
+                  researchers and senior students who bring the problem, not
+                  just the slides.
                 </p>
               </div>
             </section>
@@ -150,13 +153,13 @@ export default async function EventPage({
               id="feedback-heading"
               className="display-heading text-headline font-semibold text-navy"
             >
-              What students said
+              What students said.
             </h2>
 
-            <ul className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+            <ul className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 lg:grid-cols-3 lg:gap-8">
               {event.feedback.map((note, i) => (
                 <Reveal as="li" key={note.text} index={i} className="h-full">
-                  <figure className="metal-frame flex h-full flex-col justify-between gap-6 rounded-[1.75rem] bg-cream p-8">
+                  <figure className="metal-frame flex h-full flex-col justify-between gap-6 rounded-card bg-cream p-6 shadow-card sm:p-8">
                     <blockquote className="text-lead text-navy/85 text-pretty">
                       &ldquo;{note.text}&rdquo;
                     </blockquote>
@@ -173,23 +176,18 @@ export default async function EventPage({
         <EventGallery images={event.gallery ?? []} title={event.title} />
 
         <Reveal>
-          <section className="flex flex-wrap items-center justify-between gap-6 border-t border-navy/12 py-14">
+          <section className="flex flex-col items-stretch gap-6 border-t border-navy/12 py-section sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="text-title font-normal tracking-[-0.025em] text-navy">
-                Full event report
+              <h2 className="text-title font-semibold text-navy">
+                Read the full report.
               </h2>
-              <p className="text-lead mt-2 text-slate-blue">
+              <p className="text-lead mt-2 text-slate-blue text-balance">
                 {event.reportUrl
-                  ? "The complete write-up, with attendance and outcomes."
-                  : "The complete write-up is published on our LinkedIn."}
+                  ? "See the attendance, the outcomes and the complete write-up."
+                  : "Find the complete write-up on the chapter's LinkedIn."}
               </p>
             </div>
-            <a
-              href={event.reportUrl ?? site.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-[0.9375rem] text-cream transition-colors hover:bg-navy-700"
-            >
+            <Button href={event.reportUrl ?? site.socials.linkedin}>
               Read the report
               <ArrowUpRight
                 size={16}
@@ -197,7 +195,7 @@ export default async function EventPage({
                 aria-hidden
                 className="transition-transform duration-300 ease-[var(--ease-editorial)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </a>
+            </Button>
           </section>
         </Reveal>
 
@@ -209,9 +207,9 @@ export default async function EventPage({
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <h2
                 id="related-heading"
-                className="text-headline font-normal text-navy"
+                className="display-heading text-headline font-semibold text-navy"
               >
-                Related sessions
+                Keep exploring.
               </h2>
               <Link
                 href="/events"
@@ -221,7 +219,7 @@ export default async function EventPage({
               </Link>
             </div>
 
-            <ul className="mt-14 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-10 grid grid-cols-1 gap-x-8 gap-y-12 sm:mt-14 sm:grid-cols-2 sm:gap-y-14 lg:grid-cols-3">
               {related.map((e, i) => (
                 <Reveal as="li" key={e.slug} index={i} className="h-full">
                   <EventCard event={e} />
@@ -256,7 +254,7 @@ export default async function EventPage({
         }}
       />
 
-      <SocialCTA />
+      <ClosingCTA />
     </>
   );
 }

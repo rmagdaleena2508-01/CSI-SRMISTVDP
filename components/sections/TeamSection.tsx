@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Reveal } from "@/components/ui/Reveal";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { TeamCard } from "@/components/team/TeamCard";
 import { team } from "@/data/team";
 
-/** Matches the gap-8 between cards. */
+/** Matches the gap between cards from tablets up. */
 const GAP = 32;
 
 export function TeamSection({ members = team }: { members?: typeof team }) {
@@ -54,21 +54,12 @@ export function TeamSection({ members = team }: { members?: typeof team }) {
       aria-labelledby="team-heading"
       className="container-editorial py-section"
     >
-      <Reveal>
-        <div className="flex flex-wrap items-end justify-between gap-6 border-t border-navy/12 pt-8">
-          <div>
-            <h2
-              id="team-heading"
-              className="display-heading text-headline font-semibold text-navy"
-            >
-              Meet the Team
-            </h2>
-            <p className="inter-italic mt-2 text-[0.9375rem] text-navy/70">
-              of CSI SRMIST VDP Student Chapter
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
+      <SectionHeader
+        id="team-heading"
+        sub={<>Office bearers of CSI SRMIST VDP Student Chapter, 2026&ndash;27</>}
+        aside={
+          // Phones swipe the rail, so the arrows only appear from tablets up.
+          <div className="hidden items-center gap-3 sm:flex">
             <button
               type="button"
               onClick={() => step(-1)}
@@ -88,17 +79,19 @@ export function TeamSection({ members = team }: { members?: typeof team }) {
               <ArrowRight size={17} strokeWidth={1.7} aria-hidden />
             </button>
           </div>
-        </div>
-      </Reveal>
+        }
+      >
+        The people behind it.
+      </SectionHeader>
 
       <ul
         ref={rail}
-        className="no-scrollbar mt-14 flex snap-x snap-mandatory gap-8 overflow-x-auto overscroll-x-contain pb-2"
+        className="no-scrollbar -mx-[var(--spacing-gutter)] mt-10 flex snap-x snap-mandatory scroll-px-[var(--spacing-gutter)] gap-4 overflow-x-auto overscroll-x-contain px-[var(--spacing-gutter)] pb-2 sm:mx-0 sm:mt-14 sm:scroll-px-0 sm:gap-8 sm:px-0"
       >
         {members.map((member, i) => (
           <li
             key={`${member.role}-${member.name ?? i}`}
-            className="w-[76vw] shrink-0 snap-start sm:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-4rem)/3)]"
+            className="w-[78%] shrink-0 snap-start sm:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-4rem)/3)]"
           >
             <TeamCard member={member} />
           </li>

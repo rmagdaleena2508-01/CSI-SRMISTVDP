@@ -34,9 +34,9 @@ export type ChapterEvent = {
 };
 
 /**
- * TODO (chapter team): replace speaker names, venues and report links with the
- * real records. Everything the site renders comes from this file — no event
- * copy is hardcoded in components.
+ * Speakers, venues and times come from each session's poster and report.
+ * Everything the site renders comes from this file; no event copy is
+ * hardcoded in components.
  */
 export const events: ChapterEvent[] = [
   {
@@ -47,7 +47,7 @@ export const events: ChapterEvent[] = [
     description:
       "Entrepreneurship orientation and an interactive pitching activity.",
     summary:
-      "Run jointly with the Entrepreneurship Development Cell for first-year CSE students: a session on entrepreneurship, innovation, incubation and marketing, followed by InnoVenture, a pitching activity where teams had fifteen minutes to research a problem, shape an idea and present it. One team built a full presentation inside that window. Team VDK won, Team Nexus were runners-up, and Team Byte Club took a special mention.",
+      "Run jointly with the Entrepreneurship Development Cell for first-year CSE students: a session on entrepreneurship, innovation, incubation and marketing, followed by InnoVenture, a pitching activity where teams had fifteen minutes to research a problem, shape an idea and present it. One team built a full presentation inside that window. Team VDK won, Team Nexus were runners-up, and a third team took a special mention.",
     speaker: {
       name: "Ms. Ranjitha R",
       role: "Founder and CEO, Trouvaille Eunoia",
@@ -62,7 +62,7 @@ export const events: ChapterEvent[] = [
       "One team built their entire presentation within the 15-minute challenge window.",
       "Team VDK emerged as the winners.",
       "Team Nexus finished as runners-up.",
-      "Team Byte Club received a special mention.",
+      "A third team received a special mention.",
     ],
     image: "/images/events/entrespark-2026.jpg",
     explored: [
@@ -142,12 +142,12 @@ export const events: ChapterEvent[] = [
       {
         src: "/images/events/skillshone-orientation-5.jpg",
         caption:
-          "Dean FET, Dr. CV Jayakumar Sir, addressing the guest and students",
+          "Dr. CV Jayakumar, Dean FET, addressing the guest and students",
       },
       {
         src: "/images/events/skillshone-orientation-3.jpg",
         caption:
-          "HOD of CSE, Dr. Golda Dilip ma'am, addressing the guest and students",
+          "Dr. Golda Dilip, Head of CSE, addressing the guest and students",
       },
       {
         src: "/images/events/skillshone-orientation-1.jpg",
@@ -202,7 +202,7 @@ export const events: ChapterEvent[] = [
       {
         src: "/images/events/beyond-the-cgpa-2.jpg",
         caption:
-          "HOD of CSE, Dr. Golda Dilip ma'am, addressing the speaker and students",
+          "Dr. Golda Dilip, Head of CSE, addressing the speaker and students",
       },
       {
         src: "/images/events/beyond-the-cgpa-3.jpg",
@@ -322,15 +322,17 @@ export const events: ChapterEvent[] = [
   },
 ];
 
-/** Categories with nothing published yet — their filter shows a notice. */
-export const upcomingCategories: readonly EventCategory[] = ["Discussion"];
-
-export const eventCategories: readonly ("All" | EventCategory)[] = [
-  "All",
+const categoryOrder: readonly EventCategory[] = [
   "Workshop",
   "Discussion",
   "Industry",
   "Knowledge Session",
+];
+
+/** Only categories with at least one published event get a filter. */
+export const eventCategories: readonly ("All" | EventCategory)[] = [
+  "All",
+  ...categoryOrder.filter((c) => events.some((e) => e.category === c)),
 ];
 
 const byDateDesc = (a: ChapterEvent, b: ChapterEvent) =>

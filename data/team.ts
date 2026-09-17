@@ -14,8 +14,7 @@ export type TeamMember = {
 export const team: TeamMember[] = [
   {
     name: "Dr. K. Akila",
-    role: "CSI SDC",
-    detail: "Assistant Professor (Sl.Grade)",
+    role: "Assistant Professor (Sl.Grade)",
     image: "/images/team/akila.jpg",
   },
   {

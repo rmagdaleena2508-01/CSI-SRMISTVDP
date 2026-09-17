@@ -116,7 +116,7 @@ export function CollegeCard({
             role="dialog"
             aria-modal="true"
             aria-label="SRMIST Vadapalani"
-            className="relative w-full max-w-sm rounded-[1.75rem] p-[5px] shadow-[0_44px_90px_-34px_rgba(10,26,64,0.7),0_0_0_1px_rgba(18,38,92,0.14)]"
+            className="relative w-full max-w-sm rounded-panel p-[5px] shadow-[0_44px_90px_-34px_rgba(10,26,64,0.7),0_0_0_1px_rgba(18,38,92,0.14)]"
             style={{
               // Brushed-metal rim: a conic sweep so the light appears to travel
               // around the edge instead of running flat across it.
@@ -126,7 +126,7 @@ export function CollegeCard({
             }}
             {...cardMotion}
           >
-            <div className="relative overflow-hidden rounded-[1.4rem] bg-cream px-8 pt-10 pb-9 ring-1 ring-white/70">
+            <div className="relative overflow-hidden rounded-[calc(var(--radius-panel)-5px)] bg-cream px-8 pt-10 pb-9 ring-1 ring-white/70">
               {/* specular sheen across the top of the card face */}
               <div
                 aria-hidden

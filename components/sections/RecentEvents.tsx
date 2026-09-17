@@ -1,32 +1,25 @@
-import Link from "next/link";
-import { Reveal } from "@/components/ui/Reveal";
 import { EventsGrid } from "@/components/events/EventsGrid";
-import { recentEvents } from "@/data/events";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { allEvents, recentEvents } from "@/data/events";
+
+const words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
 
 export function RecentEvents() {
+  const count = words[allEvents.length] ?? String(allEvents.length);
+
   return (
     <section
       aria-labelledby="recent-heading"
       className="container-editorial py-section"
     >
-      <Reveal>
-        <div className="flex flex-wrap items-baseline justify-between gap-4 border-t border-navy/12 pt-8">
-          <h2
-            id="recent-heading"
-            className="display-heading text-headline font-semibold text-navy"
-          >
-            Recent sessions
-          </h2>
-          <Link
-            href="/events"
-            className="link-underline text-[0.9375rem] text-navy/70 hover:text-navy"
-          >
-            Browse the archive
-          </Link>
-        </div>
-      </Reveal>
+      <SectionHeader
+        id="recent-heading"
+        link={{ href: "/events", label: "Browse every session" }}
+      >
+        {count} sessions. One chapter.
+      </SectionHeader>
 
-      <div className="mt-14">
+      <div className="mt-10 sm:mt-14">
         <EventsGrid events={recentEvents} />
       </div>
     </section>
