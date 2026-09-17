@@ -14,6 +14,7 @@ export function SectionHeader({
   link,
   headingClassName = "display-heading text-headline font-semibold text-navy",
   aside,
+  titleAside,
 }: {
   id: string;
   children: ReactNode;
@@ -21,14 +22,25 @@ export function SectionHeader({
   link?: { href: string; label: string };
   headingClassName?: string;
   aside?: ReactNode;
+  /** Sits right beside the heading text, such as a small icon link. */
+  titleAside?: ReactNode;
 }) {
   return (
     <Reveal>
       <div className="flex flex-col items-center gap-4 border-t border-navy/12 pt-8 text-center sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:text-left">
         <div>
-          <h2 id={id} className={`${headingClassName} text-balance`}>
-            {children}
-          </h2>
+          {titleAside ? (
+            <div className="flex items-center justify-center gap-3 sm:justify-start">
+              <h2 id={id} className={`${headingClassName} text-balance`}>
+                {children}
+              </h2>
+              {titleAside}
+            </div>
+          ) : (
+            <h2 id={id} className={`${headingClassName} text-balance`}>
+              {children}
+            </h2>
+          )}
           {sub ? (
             <p className="inter-italic mt-2 text-[0.9375rem] text-navy/70 text-pretty">
               {sub}

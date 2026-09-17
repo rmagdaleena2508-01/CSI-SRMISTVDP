@@ -10,7 +10,6 @@ import Counter from "yet-another-react-lightbox/plugins/counter";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { ArrowUpRight } from "lucide-react";
-import { ArcScroller } from "@/components/gallery/ArcScroller";
 import { Img as Image } from "@/components/ui/Img";
 import { asset } from "@/lib/asset";
 import { formatEventDate, type PhotoAlbum } from "@/data/events";
@@ -36,6 +35,12 @@ const stopPageScroll = (e: WheelEvent) => e.preventDefault();
 /**
  * The photo library.
  *
+ * One stack, centred on the page and sized to the screen, so the covers are
+ * large enough to read without zooming. Laptops scroll it vertically, with the
+ * wheel or by dragging. Phones swipe it sideways: a vertical stack there
+ * filled the screen and swallowed the thumb that was trying to scroll the
+ * page, which is why it once needed a separate curved scroller beside it.
+ *
  * The stack is Swiper's coverflow effect rather than hand-written pointer
  * tracking. The earlier version moved the active case toward the cursor, which
  * pushed a neighbour under the pointer and flipped the selection back — the
@@ -59,13 +64,13 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
     () => () => {
       swiperRef.current?.el?.removeEventListener("wheel", stopPageScroll);
     },
-    []
+    [],
   );
 
-  const current = albums[active];
   const open = openIndex === null ? null : albums[openIndex];
 
-  // An album with no photographs yet still opens, on its cover alone.
+  // An album with no photographs yet opens on a friendly placeholder rather
+  // than an empty viewer.
   const slides = open
     ? open.photos.length
       ? open.photos.map((p) => ({
@@ -74,238 +79,174 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
         }))
       : [
           {
-            src: asset(open.cover),
-            description:
-              "Photographs from this session have not been added yet.",
+            src: asset("/images/brand/no-photos.jpg"),
+            alt: "No photos of this event yet",
           },
         ]
     : [];
 
   const openAlbum = (index: number) => setOpenIndex(index);
 
+  const details = (album: PhotoAlbum, index: number) => (
+    <div className="relative isolate mx-auto mt-8 w-full max-w-md overflow-hidden rounded-card px-6 py-7 text-center sm:mt-10 sm:px-8">
+      {/* One sheet of crushed paper, fixed behind the titles. It stays put as
+          the stack moves from album to album and rocks a third of a degree so
+          it reads as paper. Inset past the edges so the corners never swing
+          into view. */}
+      <span
+        aria-hidden
+        className="paper-panel absolute -inset-8 -z-10"
+        style={
+          {
+            "--paper": `url(${asset("/images/brand/crushed-paper.jpg")})`,
+          } as React.CSSProperties
+        }
+      />
+      <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
+        {album.category}
+      </p>
+      <h2 className="display-heading text-title mt-3 font-semibold text-navy text-balance">
+        {album.title}
+      </h2>
+      <p className="mt-2 text-[0.9375rem] text-slate-blue">
+        {formatEventDate(album.date)} · {countLabel(album.photos.length)}
+      </p>
+      <button
+        type="button"
+        onClick={() => openAlbum(index)}
+        className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-control bg-navy px-6 text-[0.9375rem] font-medium tracking-[-0.01em] text-cream shadow-card transition-colors duration-300 hover:bg-navy-700 sm:w-auto"
+      >
+        Open this album
+        <ArrowUpRight size={16} strokeWidth={1.7} aria-hidden />
+      </button>
+    </div>
+  );
+
+  const cover = (
+    album: PhotoAlbum,
+    i: number,
+    current: number,
+    ref: React.RefObject<SwiperClass | null>,
+    sizes: string,
+  ) => (
+    <button
+      type="button"
+      onClick={() => (i === current ? openAlbum(i) : ref.current?.slideTo(i))}
+      aria-label={
+        i === current
+          ? `Open the album for ${album.title}`
+          : `Bring ${album.title} to the front`
+      }
+      className="block aspect-square cursor-pointer rounded-[0.5rem] focus-visible:outline-none"
+    >
+      <span className="relative block size-full overflow-hidden rounded-[0.5rem] shadow-[0_34px_60px_-34px_rgba(18,38,92,0.85)]">
+        <Image
+          src={album.cover}
+          alt={`${album.title} album cover`}
+          fill
+          sizes={sizes}
+          loading={i < 3 ? "eager" : "lazy"}
+          className="object-cover"
+        />
+      </span>
+    </button>
+  );
+
+  const fade =
+    "[&_.swiper-slide]:transition-[opacity,filter] [&_.swiper-slide]:duration-500 [&_.swiper-slide:not(.swiper-slide-active)]:opacity-75 [&_.swiper-slide:not(.swiper-slide-active)]:brightness-90";
+
   return (
     <>
-      {/* Laptops and up: the stack. */}
-      <div className="hidden lg:grid lg:grid-cols-12 lg:items-center lg:gap-12">
-        <div className="lg:col-span-7">
-          {/* Swiper sets each slide's height itself in vertical mode, so each
-              cover takes its size from that height rather than carrying one of
-              its own. */}
+      {/* Laptops and up: a vertical stack in the middle of the screen. Its
+          height follows the window, so the front cover is as large as the
+          screen allows (up to about 26rem) and the whole stack stays in view
+          without scrolling the page. */}
+      <div className="hidden lg:block">
+        <Swiper
+          modules={[EffectCoverflow, Mousewheel, Keyboard, A11y]}
+          onSwiper={(s) => {
+            swiperRef.current = s;
+            s.el.addEventListener("wheel", stopPageScroll, { passive: false });
+          }}
+          onSlideChange={(s) => setActive(s.activeIndex)}
+          direction="vertical"
+          effect="coverflow"
+          grabCursor
+          centeredSlides
+          slidesPerView={1.85}
+          spaceBetween={-40}
+          speed={520}
+          mousewheel={{
+            forceToAxis: true,
+            sensitivity: 0.5,
+            // Off on purpose: releasing at the ends handed the wheel back to
+            // the page mid-gesture, so a trackpad flick scrolled the page while
+            // the stack was still moving.
+            releaseOnEdges: false,
+          }}
+          keyboard={{ enabled: true }}
+          a11y={{ enabled: true }}
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 60,
+            depth: 120,
+            modifier: 1,
+            // Held at 1: coverflow compounds scale per step, so anything lower
+            // shrank the far covers to chips.
+            scale: 1,
+            slideShadows: false,
+          }}
+          className={`mx-auto h-[min(46rem,calc(100svh-12rem))] w-[min(30rem,100%)] [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-center [&_.swiper-slide>button]:mx-auto [&_.swiper-slide>button]:h-full ${fade}`}
+        >
+          {albums.map((album, i) => (
+            <SwiperSlide key={album.slug}>
+              {cover(album, i, active, swiperRef, "420px")}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        {details(albums[active], active)}
+      </div>
+
+      {/* Phones and tablets: the same stack, swiped sideways, with the front
+          cover about three quarters of the screen wide. */}
+      <div className="lg:hidden">
+        {/* Clipped at the screen edges: Swiper lays the whole strip out in a
+            row, and letting it overflow widened the page on phones. */}
+        <div className="-mx-[var(--spacing-gutter)] overflow-x-clip">
           <Swiper
-            modules={[EffectCoverflow, Mousewheel, Keyboard, A11y]}
+            modules={[EffectCoverflow, A11y]}
             onSwiper={(s) => {
-              swiperRef.current = s;
-              s.el.addEventListener("wheel", stopPageScroll, {
-                passive: false,
-              });
+              phoneSwiperRef.current = s;
             }}
-            onSlideChange={(s) => setActive(s.activeIndex)}
-            direction="vertical"
+            onSlideChange={(s) => setPhoneActive(s.activeIndex)}
             effect="coverflow"
             grabCursor
             centeredSlides
-            slidesPerView={2.9}
-            spaceBetween={-96}
-            speed={520}
-            mousewheel={{
-              forceToAxis: true,
-              sensitivity: 0.5,
-              // Deliberately off. Releasing at the ends handed the wheel back
-              // to the page mid-gesture, so a trackpad flick scrolled the page
-              // while the stack was still moving — the two scrolls overlapped.
-              // The page is reached by moving off the stack instead, which is
-              // never more than a cover's width away.
-              releaseOnEdges: false,
-            }}
-            keyboard={{ enabled: true }}
+            slidesPerView={1.3}
+            spaceBetween={-24}
+            speed={460}
             a11y={{ enabled: true }}
             coverflowEffect={{
               rotate: 0,
-              stretch: 96,
+              stretch: 40,
               depth: 110,
               modifier: 1,
-              // Held at 1 deliberately: coverflow compounds scale per step
-              // away from the centre, so anything below 1 shrank the eighth
-              // case to a chip and the stack read as a tunnel.
               scale: 1,
               slideShadows: false,
             }}
-            className="h-[46rem] w-[32rem] max-w-full [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-start [&_.swiper-slide]:transition-[opacity,filter] [&_.swiper-slide]:duration-500 [&_.swiper-slide:not(.swiper-slide-active)]:opacity-80 [&_.swiper-slide:not(.swiper-slide-active)]:brightness-90"
+            className={`py-4 [&_.swiper-slide>button]:w-full ${fade}`}
           >
             {albums.map((album, i) => (
               <SwiperSlide key={album.slug}>
-                <button
-                  type="button"
-                  onClick={() =>
-                    i === active ? openAlbum(i) : swiperRef.current?.slideTo(i)
-                  }
-                  aria-label={
-                    i === active
-                      ? `Open the album for ${album.title}`
-                      : `Bring ${album.title} to the front`
-                  }
-                  className="block aspect-square h-full cursor-pointer rounded-[0.4rem] focus-visible:outline-none"
-                >
-                  <span className="relative block size-full overflow-hidden rounded-[0.4rem] shadow-[0_34px_60px_-34px_rgba(18,38,92,0.85)]">
-                    <Image
-                      src={album.cover}
-                      alt={`${album.title} album cover`}
-                      fill
-                      sizes="340px"
-                      className="object-cover"
-                    />
-                  </span>
-                </button>
+                {cover(album, i, phoneActive, phoneSwiperRef, "76vw")}
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
-
-        <div className="relative isolate overflow-hidden rounded-card px-8 py-9 lg:col-span-5">
-          {/* One sheet of crushed paper, fixed behind the titles. It stays
-              put as the stack moves from album to album — it belongs to the
-              page, not to the artwork — and rocks a third of a degree so it
-              reads as paper rather than a flat panel. Inset past the edges so
-              the corners never swing into view. */}
-          <span
-            aria-hidden
-            className="paper-panel absolute -inset-8 -z-10"
-            style={
-              {
-                "--paper": `url(${asset("/images/brand/crushed-paper.jpg")})`,
-              } as React.CSSProperties
-            }
-          />
-          <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
-            {current.category}
-          </p>
-          <h2 className="display-heading text-title mt-4 font-semibold text-navy text-balance">
-            {current.title}
-          </h2>
-          <p className="mt-3 text-[0.9375rem] text-slate-blue">
-            {formatEventDate(current.date)} · {countLabel(current.photos.length)}
-          </p>
-          <button
-            type="button"
-            onClick={() => openAlbum(active)}
-            className="mt-7 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-navy px-6 text-[0.9375rem] font-medium tracking-[-0.01em] text-cream transition-colors duration-300 hover:bg-navy-700"
-          >
-            Open this album
-            <ArrowUpRight size={16} strokeWidth={1.7} aria-hidden />
-          </button>
-          <p className="mt-5 max-w-[34ch] text-[0.875rem] leading-relaxed text-slate-blue">
-            Scroll or drag through the stack, then click the front case to look
-            inside.
-          </p>
-        </div>
-      </div>
-
-      {/* Phones and tablets: the stack on the left, the curved scroller down
-          the right edge. A plain grid of covers gave a thumb nothing to work,
-          so the albums are driven the same way here as on a laptop. */}
-      <div data-phone-shelf className="lg:hidden">
-        <div className="flex h-[26rem] items-stretch gap-5 pr-3">
-          <div className="min-w-0 flex-1">
-            <Swiper
-              modules={[EffectCoverflow, A11y]}
-              onSwiper={(s) => {
-                phoneSwiperRef.current = s;
-              }}
-              onSlideChange={(s) => setPhoneActive(s.activeIndex)}
-              direction="vertical"
-              effect="coverflow"
-              grabCursor
-              centeredSlides
-              slidesPerView={1.95}
-              spaceBetween={-56}
-              speed={480}
-              a11y={{ enabled: true }}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 56,
-                depth: 90,
-                modifier: 1,
-                scale: 1,
-                slideShadows: false,
-              }}
-              className="h-full w-full [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-center [&_.swiper-slide]:transition-[opacity,filter] [&_.swiper-slide]:duration-500 [&_.swiper-slide:not(.swiper-slide-active)]:opacity-80 [&_.swiper-slide:not(.swiper-slide-active)]:brightness-90"
-            >
-              {albums.map((album, i) => (
-                <SwiperSlide key={album.slug}>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      i === phoneActive
-                        ? openAlbum(i)
-                        : phoneSwiperRef.current?.slideTo(i)
-                    }
-                    aria-label={
-                      i === phoneActive
-                        ? `Open the album for ${album.title}`
-                        : `Bring ${album.title} to the front`
-                    }
-                    className="block aspect-square h-full rounded-[0.4rem] focus-visible:outline-none"
-                  >
-                    <span className="relative block size-full overflow-hidden rounded-[0.4rem] shadow-[0_24px_44px_-28px_rgba(18,38,92,0.85)]">
-                      <Image
-                        src={album.cover}
-                        alt={`${album.title} album cover`}
-                        fill
-                        sizes="78vw"
-                        loading="lazy"
-                        className="object-cover"
-                      />
-                    </span>
-                  </button>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-
-          <ArcScroller
-            count={albums.length}
-            index={phoneActive}
-            onIndexChange={(i) => {
-              setPhoneActive(i);
-              phoneSwiperRef.current?.slideTo(i);
-            }}
-          />
-        </div>
-
-        <div className="relative isolate mt-6 overflow-hidden rounded-card px-5 py-6">
-          {/* One sheet of crushed paper, fixed behind the titles. It stays
-              put as the stack moves from album to album — it belongs to the
-              page, not to the artwork — and rocks a third of a degree so it
-              reads as paper rather than a flat panel. Inset past the edges so
-              the corners never swing into view. */}
-          <span
-            aria-hidden
-            className="paper-panel absolute -inset-8 -z-10"
-            style={
-              {
-                "--paper": `url(${asset("/images/brand/crushed-paper.jpg")})`,
-              } as React.CSSProperties
-            }
-          />
-          <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
-            {albums[phoneActive].category}
-          </p>
-          <h2 className="display-heading mt-3 text-[1.375rem] leading-tight font-semibold text-navy text-balance">
-            {albums[phoneActive].title}
-          </h2>
-          <p className="mt-2 text-[0.875rem] text-slate-blue">
-            {formatEventDate(albums[phoneActive].date)} ·{" "}
-            {countLabel(albums[phoneActive].photos.length)}
-          </p>
-          <button
-            type="button"
-            onClick={() => openAlbum(phoneActive)}
-            className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-navy px-6 text-[0.9375rem] font-medium tracking-[-0.01em] text-cream"
-          >
-            Open this album
-            <ArrowUpRight size={16} strokeWidth={1.7} aria-hidden />
-          </button>
-        </div>
+        <p className="mt-3 text-center text-[0.8125rem] text-slate-blue">
+          Swipe through the albums, then tap the front one to look inside.
+        </p>
+        {details(albums[phoneActive], phoneActive)}
       </div>
 
       <Lightbox

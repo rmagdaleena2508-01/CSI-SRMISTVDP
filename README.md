@@ -176,6 +176,31 @@ the scroll getting long.
 the nav links there. The photos are still in the photo library, linked from
 the footer.
 
+**Photo library.** Every session has an album, shown as a stack of covers you
+scroll through, with the poster on the front and the photos inside. When the
+home page lost its photo section, the library lost its way in, so a small
+camera button now sits right beside "Eight sessions. One chapter." A camera
+says "photos" at a glance, so it can stay small without needing a label. It
+uses [Lucide](https://lucide.dev/icons/camera)'s camera icon, the same icon set
+as the rest of the site.
+
+The library page itself was simplified:
+
+- The stack is centred on the page and sized to the screen, so covers are big
+  enough to look at without zooming. On a laptop the front cover is about
+  400px and the whole stack fits in the window. On a phone it's about three
+  quarters of the screen wide.
+- Laptops still scroll the stack up and down with the wheel or by dragging.
+  Phones now swipe it sideways. A vertical stack on a phone filled the screen
+  and caught the thumb that was trying to scroll the page, which is why it used
+  to need a curved scroller down the right edge. Swiping sideways removes that
+  conflict, so the curved scroller is gone.
+- The album details and "Open this album" button sit in one centred panel
+  under the stack, on every screen size.
+- An album with no photos yet opens on an illustration of a duckling on a lake
+  that says "Oops! No photos of this event yet", instead of showing the poster
+  again with nothing else to see.
+
 **Closing section.** Every page ends with the same band: "Be part of what's
 next.", the "Join the chapter" button, and the trust line again. The sky-filled
 heading and the rolling hills photo from v1 are kept.
@@ -469,6 +494,8 @@ contrast against the cream background. Every animation is skipped under
   for phones, wide for laptops, so a phone doesn't download the desktop frame.
 - Session photographs were taken at the sessions.
 - Event posters are the chapter's own.
+- The "No photos of this event yet" illustration in the photo library was
+  created with GPT-6 Astro, at medium intensity.
 
 ---
 
