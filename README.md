@@ -226,10 +226,42 @@ scroll gets slower the further it travels, and jumping to the bottom of the page
 felt broken. Everything is disabled under `prefers-reduced-motion`.
 
 The one bigger effect is on the SRMIST seal in the top left. It opens a small
-card linking to the college site, and when you close it the card breaks into
-pixels that sweep away from top to bottom. A plain fade felt too quiet for
-something you opened on purpose; this makes closing it feel like a small
-moment instead of the card just vanishing. Here's how it works:
+card linking to the college site.
+
+Opening it works like a window coming out of its icon in the macOS Dock. The
+card starts shrunk to the size of the seal, sitting exactly on top of it, then
+travels to the middle of the screen and grows to full size on the way,
+settling without a bounce. It fades in over the first tenth of a second and
+arrives in about a third of a second, on phones and laptops alike. Because the
+seal's position is measured at the moment you tap it, the card always comes
+out of the right place.
+
+The first version of this stalled for a moment after the tap, most noticeably
+on phones. Two things caused it, and both are fixed:
+
+- The blur behind the card was animated from nothing to full strength. That
+  makes the browser redraw the whole page behind it on every frame, so the
+  first frames were dropped. The blur is now applied once, and only its fade
+  animates.
+- The page was locked from scrolling at the moment of the tap. Locking scroll
+  makes the browser re-measure the whole page, and doing that in the same
+  frame as the first step of the animation cost that frame. The lock now
+  happens once the card has arrived.
+
+The opening only moves the card's position, size and opacity. Browsers can
+animate those without redrawing anything, which is what keeps it smooth. I
+looked at genie-effect libraries such as
+[genie.js](https://github.com/hbi99/genie.js/) and
+[Genie](https://github.com/HarshilShah/Genie), but those bend a snapshot of the
+element, which is heavy on a phone, and the genie is really macOS's minimise
+animation rather than how a window opens. Motion's shared-element transitions
+were the other option; they stretch the text mid-animation, so a plain zoom
+from the seal was the better fit.
+
+When you close the card, it breaks into pixels that sweep away from top to
+bottom. A plain fade felt too quiet for something you opened on purpose; this
+makes closing it feel like a small moment instead of the card just vanishing.
+Here's how it works:
 
 - The card is divided into a grid of squares, 12 across, with the number of
   rows worked out from the card's shape so the squares stay square.

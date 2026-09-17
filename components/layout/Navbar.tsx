@@ -15,6 +15,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [collegeOpen, setCollegeOpen] = useState(false);
   const frame = useRef(0);
+  const sealRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
 
   // One passive listener, coalesced into a frame, state written only on cross.
@@ -79,6 +80,7 @@ export function Navbar() {
           }`}
         >
           <button
+            ref={sealRef}
             type="button"
             onClick={() => setCollegeOpen(true)}
             aria-haspopup="dialog"
@@ -214,7 +216,11 @@ export function Navbar() {
           </div>
         </nav>
       </div>
-      <CollegeCard open={collegeOpen} onClose={() => setCollegeOpen(false)} />
+      <CollegeCard
+        open={collegeOpen}
+        onClose={() => setCollegeOpen(false)}
+        origin={sealRef}
+      />
     </header>
   );
 }

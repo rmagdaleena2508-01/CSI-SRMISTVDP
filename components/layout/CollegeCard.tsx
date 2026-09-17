@@ -40,9 +40,12 @@ type Pixel = {
 export function CollegeCard({
   open,
   onClose,
+  origin,
 }: {
   open: boolean;
   onClose: () => void;
+  /** The seal button the card grows out of. */
+  origin?: React.RefObject<HTMLElement | null>;
 }) {
   const reduced = useReducedMotion();
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -96,7 +99,6 @@ export function CollegeCard({
     closeRef.current?.focus();
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && requestClose();
     document.addEventListener("keydown", onKey);
-    document.documentElement.style.overflow = "hidden";
     return () => document.removeEventListener("keydown", onKey);
   }, [open, requestClose]);
 
@@ -116,17 +118,44 @@ export function CollegeCard({
   // hero snapped back into focus instead of easing into it.
   const exitEase = [0.45, 0, 0.2, 1] as const;
 
-  // Opening scales the card up into place. Closing is handled by the pixel
-  // dissolve below, so by the time the dialog unmounts nothing is left to see.
+  // Where the card starts: shrunk onto the seal in the navigation, measured at
+  // the moment of the click. The card is centred in the viewport, so the offset
+  // is simply the seal's centre minus the viewport's centre. Only transform and
+  // opacity animate, which the browser hands to the compositor, so the first
+  // frame is drawn straight away instead of waiting on layout or paint.
+  const from = (() => {
+    const el = origin?.current;
+    if (!el || typeof window === "undefined") {
+      return { x: 0, y: 0, scale: 0.9 };
+    }
+    const r = el.getBoundingClientRect();
+    const cardWidth = Math.min(384, window.innerWidth - 40);
+    return {
+      x: r.left + r.width / 2 - window.innerWidth / 2,
+      y: r.top + r.height / 2 - window.innerHeight / 2,
+      scale: Math.max(0.08, r.width / cardWidth),
+    };
+  })();
+
+  // macOS opens a window out of its Dock icon with a quick zoom: it leaves the
+  // icon small and faint, travels to the centre and grows as it goes, then
+  // settles with no bounce. A critically damped spring gives that settle.
   const cardMotion = reduced
     ? {}
     : {
-        initial: { opacity: 0, scale: 0.94, y: 12 },
+        initial: { opacity: 0, ...from },
         animate: {
           opacity: 1,
-          scale: 1,
+          x: 0,
           y: 0,
-          transition: { duration: 0.32, ease },
+          scale: 1,
+          transition: {
+            type: "spring" as const,
+            stiffness: 420,
+            damping: 40,
+            mass: 0.9,
+            opacity: { duration: 0.12, ease: "linear" as const },
+          },
         },
         exit: { opacity: 0, transition: { duration: 0 } },
       };
@@ -139,32 +168,21 @@ export function CollegeCard({
     >
       {open ? (
         <div className="fixed inset-0 z-100 grid place-items-center px-5">
-          {/* The blur has to animate on its own. Fading the layer's opacity
-              leaves backdrop-filter at full strength until the element is
-              removed, so the page behind snapped from blurred to sharp on the
-              last frame — that snap was the abrupt close. */}
+          {/* The blur itself never animates. Animating backdrop-filter repaints
+              the whole page behind it on every frame, which is what made the
+              first frames of the opening stall, most of all on phones. The
+              blur is set once and only the layer's opacity moves. */}
           <motion.div
-            className="absolute inset-0 bg-navy/45"
+            className="absolute inset-0 bg-navy/45 backdrop-blur-[8px]"
             onClick={requestClose}
             aria-hidden
-            style={
-              reduced
-                ? {
-                    backdropFilter: "blur(8px)",
-                    WebkitBackdropFilter: "blur(8px)",
-                  }
-                : undefined
-            }
-            initial={
-              reduced ? undefined : { opacity: 0, backdropFilter: "blur(0px)" }
-            }
+            initial={reduced ? undefined : { opacity: 0 }}
             animate={
               reduced
                 ? undefined
                 : dissolving
                   ? {
                       opacity: 0,
-                      backdropFilter: "blur(0px)",
                       // Starts once the sweep is under way, so the page comes
                       // back into focus as the last rows fall away.
                       transition: {
@@ -173,12 +191,11 @@ export function CollegeCard({
                         ease: exitEase,
                       },
                     }
-                  : { opacity: 1, backdropFilter: "blur(8px)" }
+                  : { opacity: 1, transition: { duration: 0.28, ease } }
             }
             exit={
               reduced ? undefined : { opacity: 0, transition: { duration: 0 } }
             }
-            transition={{ duration: 0.5, ease }}
           />
 
           <motion.div
@@ -186,8 +203,16 @@ export function CollegeCard({
             role="dialog"
             aria-modal="true"
             aria-label="SRMIST Vadapalani"
-            className="relative w-full max-w-sm"
+            className="relative w-full max-w-sm will-change-transform"
             {...cardMotion}
+            // The page is locked once the card has arrived rather than on the
+            // click: toggling overflow reflows the whole document, and doing
+            // that in the same frame as the first animation step dropped it.
+            onAnimationComplete={() => {
+              if (open && !dissolving) {
+                document.documentElement.style.overflow = "hidden";
+              }
+            }}
           >
             {/* The shadow sits on its own layer: the clip that eats the card
                 would cut a box-shadow off on the first frame. */}
