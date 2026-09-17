@@ -225,6 +225,33 @@ use a fixed 520ms scroll. That last one exists because Chrome's own smooth
 scroll gets slower the further it travels, and jumping to the bottom of the page
 felt broken. Everything is disabled under `prefers-reduced-motion`.
 
+The one bigger effect is on the SRMIST seal in the top left. It opens a small
+card linking to the college site, and when you close it the card breaks into
+pixels that sweep away from top to bottom. A plain fade felt too quiet for
+something you opened on purpose; this makes closing it feel like a small
+moment instead of the card just vanishing. Here's how it works:
+
+- The card is divided into a grid of squares, 12 across, with the number of
+  rows worked out from the card's shape so the squares stay square.
+- The squares appear row by row from the top over about 0.4 seconds. Each
+  one gets a small random delay, so the edge looks ragged rather than like a
+  straight line wiping down.
+- The real card is cut away just behind the incoming rows, so it never shows
+  through a gap.
+- Each square holds for a moment, then fades, shrinks and drops a few pixels,
+  so the card seems to crumble downwards. A few squares are light blue
+  instead of cream, which makes the pixels read as pixels.
+- The blurred page behind the card comes back into focus during the sweep,
+  not after it. The whole close takes under a second.
+
+It works the same way whether you press the close button, click outside the
+card or press Escape. With reduced motion turned on, the card simply closes.
+
+The idea comes from [React Bits](https://github.com/DavidHDev/react-bits)'
+Pixel Transition, which covers content with a grid of squares and then removes
+them. That component uses GSAP; this version is built with Motion, which the
+site already uses, so nothing extra is downloaded.
+
 ## Tech stack
 
 **Next.js 16 with the App Router.** Every page is prerendered to static HTML at
