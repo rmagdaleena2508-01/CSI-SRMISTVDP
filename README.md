@@ -186,17 +186,22 @@ as the rest of the site.
 
 The library page itself was simplified:
 
-- The stack is centred on the page and sized to the screen, so covers are big
-  enough to look at without zooming. On a laptop the front cover is about
-  400px and the whole stack fits in the window. On a phone it's about three
-  quarters of the screen wide.
+- The stack is sized to the screen, so covers are big enough to look at
+  without zooming. On a laptop the front cover is about 400px and the whole
+  stack fits in the window. On a phone it's about three quarters of the screen
+  wide.
+- On a laptop the whole library is one screen: the title and the current
+  album's details sit on the left, the stack on the right. Scrolling the stack
+  updates the details beside it, and "Open this album" stays in view, so
+  nobody scrolls the page between looking at a cover and opening it. Checked
+  at 1440×900, 1366×768 and 1280×720.
 - Laptops still scroll the stack up and down with the wheel or by dragging.
   Phones now swipe it sideways. A vertical stack on a phone filled the screen
   and caught the thumb that was trying to scroll the page, which is why it used
   to need a curved scroller down the right edge. Swiping sideways removes that
   conflict, so the curved scroller is gone.
-- The album details and "Open this album" button sit in one centred panel
-  under the stack, on every screen size.
+- On phones the album details and "Open this album" button sit in one centred
+  panel under the stack.
 - An album with no photos yet opens on an illustration of a duckling on a lake
   that says "Oops! No photos of this event yet", instead of showing the poster
   again with nothing else to see.

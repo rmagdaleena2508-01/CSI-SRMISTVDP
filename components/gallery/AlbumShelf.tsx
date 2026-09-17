@@ -87,8 +87,18 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
 
   const openAlbum = (index: number) => setOpenIndex(index);
 
-  const details = (album: PhotoAlbum, index: number) => (
-    <div className="relative isolate mx-auto mt-8 w-full max-w-md overflow-hidden rounded-card px-6 py-7 text-center sm:mt-10 sm:px-8">
+  const details = (
+    album: PhotoAlbum,
+    index: number,
+    layout: "stacked" | "side",
+  ) => (
+    <div
+      className={
+        layout === "side"
+          ? "relative isolate mt-10 w-full max-w-md overflow-hidden rounded-card px-8 py-8 text-left"
+          : "relative isolate mx-auto mt-8 w-full max-w-md overflow-hidden rounded-card px-6 py-7 text-center sm:mt-10 sm:px-8"
+      }
+    >
       {/* One sheet of crushed paper, fixed behind the titles. It stays put as
           the stack moves from album to album and rocks a third of a degree so
           it reads as paper. Inset past the edges so the corners never swing
@@ -157,11 +167,26 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
 
   return (
     <>
-      {/* Laptops and up: a vertical stack in the middle of the screen. Its
-          height follows the window, so the front cover is as large as the
-          screen allows (up to about 26rem) and the whole stack stays in view
-          without scrolling the page. */}
-      <div className="hidden lg:block">
+      {/* Laptops and up: one screen. The title and the current album's
+          details sit on the left, the vertical stack on the right, sized to
+          the window, so scrolling the stack changes the details beside it
+          and "Open this album" is always in view. Nobody has to scroll the
+          page between looking at a cover and opening it. */}
+      <div className="hidden lg:grid lg:min-h-[calc(100svh-6rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:items-center lg:gap-16">
+        <div>
+          <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
+            Photo library
+          </p>
+          <h1 className="display-heading text-display mt-5 max-w-[14ch] font-semibold text-navy text-balance">
+            Every session. Its own record.
+          </h1>
+          <p className="text-lead mt-5 max-w-[42ch] text-slate-blue text-pretty">
+            Scroll the stack to pick an album, then open it. The poster is the
+            cover and the photos are inside.
+          </p>
+          {details(albums[active], active, "side")}
+        </div>
+
         <Swiper
           modules={[EffectCoverflow, Mousewheel, Keyboard, A11y]}
           onSwiper={(s) => {
@@ -196,7 +221,7 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
             scale: 1,
             slideShadows: false,
           }}
-          className={`mx-auto h-[min(46rem,calc(100svh-12rem))] w-[min(30rem,100%)] [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-center [&_.swiper-slide>button]:mx-auto [&_.swiper-slide>button]:h-full ${fade}`}
+          className={`h-[min(44rem,calc(100svh-11rem))] w-full [&_.swiper-slide]:flex [&_.swiper-slide]:items-center [&_.swiper-slide]:justify-center [&_.swiper-slide>button]:mx-auto [&_.swiper-slide>button]:h-full ${fade}`}
         >
           {albums.map((album, i) => (
             <SwiperSlide key={album.slug}>
@@ -204,7 +229,6 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
             </SwiperSlide>
           ))}
         </Swiper>
-        {details(albums[active], active)}
       </div>
 
       {/* Phones and tablets: the same stack, swiped sideways, with the front
@@ -246,7 +270,7 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
         <p className="mt-3 text-center text-[0.8125rem] text-slate-blue">
           Swipe through the albums, then tap the front one to look inside.
         </p>
-        {details(albums[phoneActive], phoneActive)}
+        {details(albums[phoneActive], phoneActive, "stacked")}
       </div>
 
       <Lightbox
