@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "light" | "glass";
+type Variant = "primary" | "secondary" | "light" | "glass" | "shimmer";
 
 // Every button on the site: 48px tall, 14px corners, one shadow. Variants only
 // change colour, so a button reads the same wherever it sits.
@@ -16,6 +16,9 @@ const variants: Record<Variant, string> = {
   light: "bg-cream text-navy hover:bg-white",
   glass:
     "bg-navy/80 text-cream ring-1 ring-white/25 ring-inset backdrop-blur-[2px] hover:bg-navy",
+  // The month's highlight only: lime pill with a spark round the rim and a
+  // glint across the face (see .shimmer in globals.css).
+  shimmer: "shimmer rounded-full bg-[#86c43a]",
 };
 
 type Props = {

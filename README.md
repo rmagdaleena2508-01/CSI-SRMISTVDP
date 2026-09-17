@@ -144,6 +144,28 @@ same metallic edge and shadow everywhere, including the team photos, which
 used to have a plain border. Before, corners ranged across six different
 values and buttons came in several heights.
 
+**The highlight button.** The month's highlight card is the one place that
+breaks the button rule, on purpose. It used to have a grass-and-cloud artwork
+button. It looked like a sticker rather than something to press, and the
+cloud clashed with the green card. I compared options from three button
+libraries, [Magic UI](https://magicui.design/docs/components/shimmer-button),
+[Aceternity UI](https://ui.aceternity.com/components/moving-border) and
+[Uiverse](https://github.com/uiverse-io/galaxy), mocked each one on the real
+card, and picked Magic UI's Shimmer Button with a sun glint added.
+
+- It's a lime pill, taken from the card's own highlight colour, so it belongs
+  to the card instead of being pasted on top.
+- A white spark keeps travelling round its edge, which echoes the metallic
+  shine that moves around the site's cards as you scroll.
+- Every few seconds a streak of light sweeps across the face, like sun on
+  glass. It passes underneath the label, so the words never wash out.
+- Hovering speeds both up, so the button answers the pointer. With reduced
+  motion turned on, both stop.
+
+It's still 48px tall like every other button, and full width on phones. The
+highlight is the one card we want people to open each month, so it's the one
+button allowed to move. Everywhere else, buttons stay still.
+
 **Home page.** It's now hero, the month's highlight, what's happening this
 month, recent sessions, the team, and a closing section. The photo collage and
 the insights list were taken off the home page. The home page should answer

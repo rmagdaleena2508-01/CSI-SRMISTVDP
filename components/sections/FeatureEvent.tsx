@@ -1,10 +1,8 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { Img as Image } from "@/components/ui/Img";
 import { ArrowRight, CalendarDays, MapPin, Mic } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { asset } from "@/lib/asset";
 import { Button } from "@/components/ui/Button";
 import { formatEventDate, type ChapterEvent } from "@/data/events";
 
@@ -147,27 +145,22 @@ export function FeatureEvent({
               </dl>
 
               {green ? (
-                // The grass-and-cloud button from the design sheet. The cloud
-                // echoes the hero's sky; the label sits clear of it on the
-                // grass, in white with a dark green shadow so it reads on the
-                // bright blades.
-                <Link
+                // Shimmer button: a lime pill in the card's highlight colour,
+                // with a spark travelling round its rim and a glint of light
+                // sweeping across it now and then, like sun on glass.
+                <Button
                   href={`/events/${event.slug}`}
-                  className="grass-button mt-2 inline-flex h-[4.25rem] w-[13.5rem] items-center justify-end gap-2 pr-7 text-[1rem] font-semibold tracking-[-0.01em] text-white"
-                  style={
-                    {
-                      "--grass": `url(${asset("/images/brand/grass-cloud-button.png")})`,
-                    } as React.CSSProperties
-                  }
+                  variant="shimmer"
+                  className="mt-2 w-full sm:w-fit"
                 >
                   View event
                   <ArrowRight
-                    size={17}
-                    strokeWidth={2}
+                    size={16}
+                    strokeWidth={1.7}
                     aria-hidden
                     className="transition-transform duration-300 ease-[var(--ease-editorial)] group-hover:translate-x-1"
                   />
-                </Link>
+                </Button>
               ) : (
                 <Button
                   href={`/events/${event.slug}`}
