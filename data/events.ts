@@ -125,6 +125,7 @@ export const events: ChapterEvent[] = [
       },
     ],
     highlight: true,
+    featured: true,
   },
   {
     slug: "skillshone-orientation",
@@ -222,7 +223,6 @@ export const events: ChapterEvent[] = [
         caption: "The speaker, faculty and students together after the session",
       },
     ],
-    featured: true,
   },
   {
     slug: "vibe-coding",
@@ -386,6 +386,11 @@ const albumCovers: Record<string, string> = {
   "decode-the-interview": "/images/albums/decode-the-interview.jpg",
   "skillshone-orientation": "/images/albums/skillshone-orientation.jpg",
 };
+
+/** The album cover for an event, falling back to its poster. */
+export function albumCoverFor(event: ChapterEvent) {
+  return albumCovers[event.slug] ?? event.image;
+}
 
 /**
  * The photo library's albums, newest first — one per event. An event whose

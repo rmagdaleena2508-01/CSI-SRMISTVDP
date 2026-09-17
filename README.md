@@ -172,6 +172,25 @@ the insights list were taken off the home page. The home page should answer
 "what is this chapter and what's it doing", and six sections do that without
 the scroll getting long.
 
+**Keeping the month current.** Two flags in `data/events.ts` decide what the
+top of the home page shows: `highlight` picks the month's highlight card and
+`featured` picks "Happening this month". Both now point at ENTRESPARK 2026,
+the September session. "Happening this month" had still been showing Beyond
+the CGPA from August, which made the page look out of date. When a new session
+runs, move the flags to it.
+
+The highlight card also changed in two small ways:
+
+- It shows the event's album cover, the same artwork as in the photo library,
+  instead of the poster. The cover is designed to be looked at; the poster is
+  mostly text. The "Happening this month" card still shows the poster, so the
+  two cards don't repeat the same image.
+- The heading "Highlight of September 2026." fills its letters with a green
+  gradient, and a gradient only paints inside the text's own box. At the tight
+  line height, the tail of the "g" hung below that box and was cut off. The
+  heading now has a little padding at the bottom, balanced by a negative
+  margin, so the letters show in full without moving anything around it.
+
 **Insights page.** The takeaways moved to their own page at `/insights`, and
 the nav links there. The photos are still in the photo library, linked from
 the footer.

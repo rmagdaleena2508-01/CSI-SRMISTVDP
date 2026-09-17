@@ -4,7 +4,11 @@ import { ArrowRight, CalendarDays, MapPin, Mic } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
-import { formatEventDate, type ChapterEvent } from "@/data/events";
+import {
+  albumCoverFor,
+  formatEventDate,
+  type ChapterEvent,
+} from "@/data/events";
 
 /**
  * The large editorial card. Used twice on the home page, for the month's
@@ -177,12 +181,21 @@ export function FeatureEvent({
               )}
             </div>
 
+            {/* The month's highlight shows the event's album cover, the same
+                artwork as in the photo library; the other card keeps the
+                poster. */}
             <div
-              className={`relative aspect-[4/5] overflow-hidden rounded-card ${tone.poster}`}
+              className={`relative overflow-hidden rounded-card ${
+                green ? "aspect-square" : `aspect-[4/5] ${tone.poster}`
+              }`}
             >
               <Image
-                src={event.image}
-                alt={`${event.title} — event poster`}
+                src={green ? albumCoverFor(event) : event.image}
+                alt={
+                  green
+                    ? `${event.title} album cover`
+                    : `${event.title} — event poster`
+                }
                 fill
                 sizes="(min-width: 1024px) 46vw, 92vw"
                 className="object-contain transition-transform duration-700 ease-[var(--ease-editorial)] group-hover:scale-[1.02]"
