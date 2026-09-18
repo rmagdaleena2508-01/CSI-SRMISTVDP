@@ -20,20 +20,14 @@ by whatever page they land on first, and a stock template says nobody did.
 
 ## Versions
 
-**v1** was the first public version: hero, current session, photographs from the
-sessions, the full event archive with a page per session, the team, a few
-takeaways, and the social links.
+Every version is kept here as history: what it had, what changed and why. The
+newest is at the bottom.
 
-**v2** was a cleanup of v1 rather than a rebuild. The content stayed the same;
-the way it's presented became stricter, calmer and more honest. The full list
-of changes, and the reasons for each, is in
-[What changed in v2](#what-changed-in-v2) below.
-
-**v3 is what's live now.** It's about the experience of using the site: an
-animated hero, a card that opens out of the college seal, a menu that folds
-open like paper, a team rail with momentum, a redesigned photo library and a
-highlight button that catches the light. See
-[What changed in v3](#what-changed-in-v3).
+| Version | Dates | In one line |
+|---|---|---|
+| [v1](#v1-the-first-release) | 21 Aug to 17 Sep 2026 | The first public site: every session, the team and the chapter in one place |
+| [v2](#what-changed-in-v2) | 17 Sep 2026 | A cleanup: stricter type, spacing and buttons, honest copy, one main action |
+| [v3](#what-changed-in-v3) | 17 Sep 2026 onward, **live now** | The feel of using it: an animated hero, a folding menu, a card that opens out of the seal, a team rail with momentum |
 
 Still on the list:
 
@@ -44,6 +38,50 @@ Still on the list:
 - Search across sessions, once there are enough of them to need it.
 
 If you're in the chapter and want something added, open an issue.
+
+## v1: the first release
+
+Built from scratch in August 2026 and live from 21 August. The aim was simple:
+give the chapter's sessions somewhere to live other than a WhatsApp poster that
+scrolls away in a week.
+
+What it had:
+
+- **A sky hero.** A generated sky photograph cropped two ways (tall for
+  phones, wide for laptops), the headline "Where curious students build
+  community and technology together." with "community" and "technology" in a
+  handwritten script, the CSI emblem, and buttons to explore events and follow
+  on LinkedIn.
+- **This month's session and the month's highlight**, as large cards with the
+  poster, date, venue and speaker. The highlight card sat in a green canopy
+  photograph with a grass-and-cloud artwork button.
+- **"Learning looks better in action."** A collage of photographs from the
+  sessions, with a way into the photo library.
+- **An archive of every session**, each with its own page: summary, what we
+  explored, key takeaways, a quote, the speaker, student feedback, a captioned
+  photo gallery and a link to the full report. Filters split sessions by type.
+- **A photo library** with one album per session, shown as a stack of covers,
+  with a curved scroller down the right edge on phones.
+- **The team**, faculty first, in a scrollable rail with arrows, and a full
+  Team page.
+- **Insights**: one idea worth keeping from each session, on the home page.
+- **Social links**: two glass cards over a photograph of rolling hills, one for
+  LinkedIn and one for Instagram.
+- **The college seal** in the navigation, opening a small card that links to
+  the SRMIST Vadapalani website and fades away when closed.
+- **Search and sharing basics**: page titles and descriptions, a square link
+  preview image, structured data for the chapter and each event, and a sitemap.
+
+How it looked: an editorial layout with large headings and a lot of space,
+navy on cream, four to five typefaces (Instrument Sans, Playfair Display and
+later Instrument Serif, Inter, Great Vibes, and Times New Roman on the
+highlight card), a metallic edge on cards that shifts while you scroll, and
+sections that fade and rise as they come into view.
+
+What v1 taught us, and why v2 followed: the type, spacing and buttons had
+drifted into too many sizes and styles; some copy was filler; a few details
+weren't confirmed; the footer credited one person rather than the chapter; and
+the site was fine on a laptop but only adapted, not designed, for phones.
 
 ## What changed in v2
 
