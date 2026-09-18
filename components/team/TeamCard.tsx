@@ -1,6 +1,7 @@
 import { Img as Image } from "@/components/ui/Img";
 import { LinkedinIcon } from "@/components/ui/icons";
 import type { TeamMember } from "@/data/team";
+import { WriteIn } from "@/components/ui/WriteIn";
 
 export function TeamCard({ member }: { member: TeamMember }) {
   const pending = !member.name;
@@ -37,13 +38,16 @@ export function TeamCard({ member }: { member: TeamMember }) {
           {member.role}
         </span>
 
-        <h3
+        {/* The name writes itself in, like a signature, as the card comes
+            into view. */}
+        <WriteIn
+          as="h3"
           className={`script-accent text-[1.375rem] leading-tight font-normal ${
             pending ? "text-slate-blue" : "text-navy"
           }`}
         >
           {member.name ?? "Announcing soon"}
-        </h3>
+        </WriteIn>
 
         {member.detail ? (
           <p className="text-[0.875rem] leading-snug text-slate-blue">

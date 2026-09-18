@@ -754,3 +754,12 @@ body {
     animation: none;
   }
 }
+
+/* Team names written in like a signature (see WriteIn). The clip is inset
+   past the script's swashes on every side except the leading edge. */
+.name-write[data-write="armed"] {
+  clip-path: inset(-0.4em 100% -0.5em -0.3em);
+}
+.name-write[data-write="written"] {
+  animation: script-write 1.2s cubic-bezier(0.55, 0.1, 0.35, 1) both;
+}

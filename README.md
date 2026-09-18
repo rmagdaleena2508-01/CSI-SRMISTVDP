@@ -24,10 +24,16 @@ by whatever page they land on first, and a stock template says nobody did.
 sessions, the full event archive with a page per session, the team, a few
 takeaways, and the social links.
 
-**v2 is what's live now.** It's a cleanup of v1 rather than a rebuild. The
-content is the same; the way it's presented is stricter, calmer and more
-honest. The full list of changes, and the reasons for each, is in
+**v2** was a cleanup of v1 rather than a rebuild. The content stayed the same;
+the way it's presented became stricter, calmer and more honest. The full list
+of changes, and the reasons for each, is in
 [What changed in v2](#what-changed-in-v2) below.
+
+**v3 is what's live now.** It's about the experience of using the site: an
+animated hero, a card that opens out of the college seal, a menu that folds
+open like paper, a team rail with momentum, a redesigned photo library and a
+highlight button that catches the light. See
+[What changed in v3](#what-changed-in-v3).
 
 Still on the list:
 
@@ -144,93 +150,15 @@ same metallic edge and shadow everywhere, including the team photos, which
 used to have a plain border. Before, corners ranged across six different
 values and buttons came in several heights.
 
-**The highlight button.** The month's highlight card is the one place that
-breaks the button rule, on purpose. It used to have a grass-and-cloud artwork
-button. It looked like a sticker rather than something to press, and the
-cloud clashed with the green card. I compared options from three button
-libraries, [Magic UI](https://magicui.design/docs/components/shimmer-button),
-[Aceternity UI](https://ui.aceternity.com/components/moving-border) and
-[Uiverse](https://github.com/uiverse-io/galaxy), mocked each one on the real
-card, and picked Magic UI's Shimmer Button with a sun glint added.
-
-- It's a lime pill, taken from the card's own highlight colour, so it belongs
-  to the card instead of being pasted on top.
-- A white spark keeps travelling round its edge, which echoes the metallic
-  shine that moves around the site's cards as you scroll.
-- Every few seconds a streak of light sweeps across the face, like sun on
-  glass. It passes underneath the label, so the words never wash out.
-- Hovering speeds both up, so the button answers the pointer. With reduced
-  motion turned on, both stop.
-
-It's still 48px tall like every other button, and full width on phones. The
-highlight is the one card we want people to open each month, so it's the one
-button allowed to move. Everywhere else, buttons stay still.
-
 **Home page.** It's now hero, the month's highlight, what's happening this
 month, recent sessions, the team, and a closing section. The photo collage and
 the insights list were taken off the home page. The home page should answer
 "what is this chapter and what's it doing", and six sections do that without
 the scroll getting long.
 
-**Keeping the month current.** Two flags in `data/events.ts` decide what the
-top of the home page shows: `highlight` picks the month's highlight card and
-`featured` picks "Happening this month". The highlight is ENTRESPARK 2026,
-and "Happening this month" is Cyber Security Unlocked, the second September
-session (15 September, Knowledge Updates Series #9, with IEEE CS). It had
-still been showing Beyond the CGPA from August, which made the page look out
-of date. When a new session runs, move the flags to it.
-
-Adding a session is only data: an entry in `data/events.ts` with its poster,
-details from the poster, and its photographs with captions. Its page, its
-album in the photo library and the session count in "Nine sessions. One
-chapter." all follow from that entry.
-
-The highlight card also changed in two small ways:
-
-- It shows the event's album cover, the same artwork as in the photo library,
-  instead of the poster. The cover is designed to be looked at; the poster is
-  mostly text. The "Happening this month" card still shows the poster, so the
-  two cards don't repeat the same image.
-- The heading "Highlight of September 2026." fills its letters with a green
-  gradient, and a gradient only paints inside the text's own box. At the tight
-  line height, the tail of the "g" hung below that box and was cut off. The
-  heading now has a little padding at the bottom, balanced by a negative
-  margin, so the letters show in full without moving anything around it.
-
 **Insights page.** The takeaways moved to their own page at `/insights`, and
 the nav links there. The photos are still in the photo library, linked from
 the footer.
-
-**Photo library.** Every session has an album, shown as a stack of covers you
-scroll through, with the poster on the front and the photos inside. When the
-home page lost its photo section, the library lost its way in, so a small
-camera button now sits right beside "Eight sessions. One chapter." A camera
-says "photos" at a glance, so it can stay small without needing a label. It
-uses [Lucide](https://lucide.dev/icons/camera)'s camera icon, the same icon set
-as the rest of the site.
-
-The library page itself was simplified:
-
-- The stack is sized to the screen, so covers are big enough to look at
-  without zooming. On a laptop the front cover is about 400px and the whole
-  stack fits in the window. On a phone it's about three quarters of the screen
-  wide.
-- On a laptop the whole library is one screen: the title and the current
-  album's details sit on the left, the stack on the right. Scrolling the stack
-  updates the details beside it, and "Open this album" stays in view, so
-  nobody scrolls the page between looking at a cover and opening it. Checked
-  at 1440×900, 1366×768 and 1280×720.
-- Laptops still scroll the stack up and down with the wheel or by dragging.
-  Phones now swipe it sideways. A vertical stack on a phone filled the screen
-  and caught the thumb that was trying to scroll the page, which is why it used
-  to need a curved scroller down the right edge. Swiping sideways removes that
-  conflict, so the curved scroller is gone.
-- On phones the album details and "Open this album" button sit in one centred
-  panel under the stack.
-- An album with no photos yet opens on an illustration of a duckling on a lake
-  that says "Oops! No photos of this event yet", instead of showing the poster
-  again with nothing else to see. Because that picture is what you see inside,
-  the album's count reads "1 photograph" rather than "0 photographs".
 
 **Closing section.** Every page ends with the same band: "Be part of what's
 next.", the "Join the chapter" button, and the trust line again. The sky-filled
@@ -268,43 +196,45 @@ balanced text wrapping or shorter wording. Two titles still break with one
 word alone on the smallest phones, because they only have three words:
 "Ideas to keep." and "SKILLSHONE Orientation Programme".
 
-## Design decisions
+## What changed in v3
 
-I went for an editorial layout — large headings, a lot of whitespace, few
-things per screen. Club websites usually go the other way and cram six widgets
-above the fold. Keeping it sparse was easier to build and looks better.
+v2 fixed how the site looks. v3 is about how it feels to use: the site
+responds when you touch it, things arrive instead of appearing, and the few
+places that felt stiff or slow were smoothed out. Every effect below is
+switched off for people who turn on reduced motion, and none of them hide
+content while scripts load.
 
-Each section does one job. The hero says who we are, the next sections show
-this month's highlight and what's happening now, then recent sessions, then
-the team, then one closing line with the main button. Someone who leaves after
-two screens still knows what the chapter is.
+### The hero comes alive
 
-The photographs do most of the work. A packed lab with a speaker in front of a
-slide says more about an active chapter than any description would, so real
-photos get more space than anything else on the page. Event posters are shown
-whole and uncropped, since the poster is what people actually saw.
+The hero used to be a still picture. Three small things now make it feel
+live, without turning it into a show:
 
-There are two typefaces. Inter sets everything, from the hero to the footer.
-Great Vibes appears only for the handwritten words: two in the hero and the
-names on the team cards. Colour is almost entirely navy on cream, so the
-hierarchy comes from size and spacing.
+- **The headline writes itself.** Each word rises into place from a soft blur,
+  one after another, and then "community" and "technology" are written in from
+  left to right, like a pen crossing the page. It's done with CSS keyframes
+  rather than JavaScript, so the full headline is in the HTML from the first
+  byte and is never hidden while scripts load. The script words' clip is inset
+  past their swashes so no curl of a letter is cut.
+- **The emblem follows you.** On a laptop the CSI emblem leans up to 14 degrees
+  toward the pointer, wherever it is on the screen, and a patch of light slides
+  across its face on the side facing the pointer, like sun on a metal badge.
+  The light is masked to the emblem's own shape so it never spills onto the
+  sky. It follows the Tilted Card idea from
+  [React Bits](https://reactbits.dev), built with Motion and a spring so it
+  settles smoothly. Touch screens keep the still emblem.
+- **The chapter in numbers.** A band just under the hero shows sessions,
+  students and speakers, counting up from zero the first time it scrolls into
+  view. Sessions and speakers are counted from `data/events.ts`, so they stay
+  true as events are added; "400+ students" is the chapter's own figure. The
+  final numbers are in the HTML, so they're right even before the count runs.
 
-Sizes and spacing are fixed at both ends. Body copy is 16px on phones and 18px
-on laptops, section headings 32px and 48px, page titles 40px and 72px, with
-72px between sections on phones and 120px on laptops. Every button is 48px tall
-with 14px corners, and every card uses the same edge and shadow.
+With reduced motion turned on, the headline, emblem and counters all stay
+still.
 
-Each page ends the same way: one line, one "Join the chapter" button that goes
-to LinkedIn, and the facts about joining underneath it.
+### The college card opens out of the seal and dissolves into pixels
 
-Animation is kept small. Sections fade and rise 20px as they come into view,
-the cards have a metallic edge that shifts while you scroll, and in-page jumps
-use a fixed 520ms scroll. That last one exists because Chrome's own smooth
-scroll gets slower the further it travels, and jumping to the bottom of the page
-felt broken. Everything is disabled under `prefers-reduced-motion`.
-
-The one bigger effect is on the SRMIST seal in the top left. It opens a small
-card linking to the college site.
+The SRMIST seal in the top left opens a small card linking to the college
+site.
 
 Opening it works like a window coming out of its icon in the macOS Dock. The
 card starts shrunk to the size of the seal, sitting exactly on top of it, then
@@ -361,40 +291,6 @@ The idea comes from [React Bits](https://github.com/DavidHDev/react-bits)'
 Pixel Transition, which covers content with a grid of squares and then removes
 them. That component uses GSAP; this version is built with Motion, which the
 site already uses, so nothing extra is downloaded.
-
-### The hero comes alive
-
-The hero used to be a still picture. Three small things now make it feel
-live, without turning it into a show:
-
-- **The headline writes itself.** Each word rises into place from a soft blur,
-  one after another, and then "community" and "technology" are written in from
-  left to right, like a pen crossing the page. It's done with CSS keyframes
-  rather than JavaScript, so the full headline is in the HTML from the first
-  byte and is never hidden while scripts load. The script words' clip is inset
-  past their swashes so no curl of a letter is cut.
-- **The emblem follows you.** On a laptop the CSI emblem leans up to 14 degrees
-  toward the pointer, wherever it is on the screen, and a patch of light slides
-  across its face on the side facing the pointer, like sun on a metal badge.
-  The light is masked to the emblem's own shape so it never spills onto the
-  sky. It follows the Tilted Card idea from
-  [React Bits](https://reactbits.dev), built with Motion and a spring so it
-  settles smoothly. Touch screens keep the still emblem.
-- **The chapter in numbers.** A band just under the hero shows sessions,
-  students and speakers, counting up from zero the first time it scrolls into
-  view. Sessions and speakers are counted from `data/events.ts`, so they stay
-  true as events are added; "400+ students" is the chapter's own figure. The
-  final numbers are in the HTML, so they're right even before the count runs.
-
-With reduced motion turned on, the headline, emblem and counters all stay
-still.
-
-### Running two dev servers
-
-Next.js locks its build folder, so a second `next dev` in the same project
-refuses to start. Setting `NEXT_DIST_DIR` gives a server its own folder:
-`NEXT_DIST_DIR=.next-preview npx next dev`. Normal builds and Vercel don't set
-it. `.next-preview/` is ignored by git and by ESLint.
 
 ### The phone menu folds open like paper
 
@@ -458,6 +354,145 @@ slicing the element into copies, which is heavy for a menu with a blurred
 glass background, so the fold here is built with Motion using 3D rotation on
 the real rows. Nothing extra is downloaded.
 
+### The team rail and names
+
+- **Names write themselves.** Each team member's name is written in from left
+  to right, like a signature, the first time their card comes into view. On
+  the home page rail, names on cards still waiting off to the side stay hidden
+  until the card slides in, so each one writes as it arrives. The name is in
+  the page from the start and is only hidden once the browser is ready to write
+  it in, so it never goes missing if scripts are slow. One detail made this
+  work: a name clipped to nothing counts as out of view to the browser, so the
+  card around the name is what's watched.
+- **The rail has momentum.** The team rail now uses Swiper's free mode, which
+  the site already had for the photo library. Flick or drag it and it keeps
+  gliding, slowing to a stop the way an iPhone list does, then settles on the
+  nearest card so nobody is left half in view. It works with a mouse drag, a
+  sideways trackpad swipe or a finger, while scrolling up and down over it
+  still scrolls the page. The arrows still move one person at a time. About
+  one and a quarter cards show on phones, two on tablets and three on laptops.
+
+### The highlight button
+
+The month's highlight card is the one place that
+breaks the button rule, on purpose. It used to have a grass-and-cloud artwork
+button. It looked like a sticker rather than something to press, and the
+cloud clashed with the green card. I compared options from three button
+libraries, [Magic UI](https://magicui.design/docs/components/shimmer-button),
+[Aceternity UI](https://ui.aceternity.com/components/moving-border) and
+[Uiverse](https://github.com/uiverse-io/galaxy), mocked each one on the real
+card, and picked Magic UI's Shimmer Button with a sun glint added.
+
+- It's a lime pill, taken from the card's own highlight colour, so it belongs
+  to the card instead of being pasted on top.
+- A white spark keeps travelling round its edge, which echoes the metallic
+  shine that moves around the site's cards as you scroll.
+- Every few seconds a streak of light sweeps across the face, like sun on
+  glass. It passes underneath the label, so the words never wash out.
+- Hovering speeds both up, so the button answers the pointer. With reduced
+  motion turned on, both stop.
+
+It's still 48px tall like every other button, and full width on phones. The
+highlight is the one card we want people to open each month, so it's the one
+button allowed to move. Everywhere else, buttons stay still.
+
+### The photo library
+
+Every session has an album, shown as a stack of covers you
+scroll through, with the poster on the front and the photos inside. When the
+home page lost its photo section, the library lost its way in, so a small
+camera button now sits right beside "Eight sessions. One chapter." A camera
+says "photos" at a glance, so it can stay small without needing a label. It
+uses [Lucide](https://lucide.dev/icons/camera)'s camera icon, the same icon set
+as the rest of the site.
+
+The library page itself was simplified:
+
+- The stack is sized to the screen, so covers are big enough to look at
+  without zooming. On a laptop the front cover is about 400px and the whole
+  stack fits in the window. On a phone it's about three quarters of the screen
+  wide.
+- On a laptop the whole library is one screen: the title and the current
+  album's details sit on the left, the stack on the right. Scrolling the stack
+  updates the details beside it, and "Open this album" stays in view, so
+  nobody scrolls the page between looking at a cover and opening it. Checked
+  at 1440×900, 1366×768 and 1280×720.
+- Laptops still scroll the stack up and down with the wheel or by dragging.
+  Phones now swipe it sideways. A vertical stack on a phone filled the screen
+  and caught the thumb that was trying to scroll the page, which is why it used
+  to need a curved scroller down the right edge. Swiping sideways removes that
+  conflict, so the curved scroller is gone.
+- On phones the album details and "Open this album" button sit in one centred
+  panel under the stack.
+- An album with no photos yet opens on an illustration of a duckling on a lake
+  that says "Oops! No photos of this event yet", instead of showing the poster
+  again with nothing else to see. Because that picture is what you see inside,
+  the album's count reads "1 photograph" rather than "0 photographs".
+
+### Keeping the month current
+
+Two flags in `data/events.ts` decide what the
+top of the home page shows: `highlight` picks the month's highlight card and
+`featured` picks "Happening this month". The highlight is ENTRESPARK 2026,
+and "Happening this month" is Cyber Security Unlocked, the second September
+session (15 September, Knowledge Updates Series #9, with IEEE CS). It had
+still been showing Beyond the CGPA from August, which made the page look out
+of date. When a new session runs, move the flags to it.
+
+Adding a session is only data: an entry in `data/events.ts` with its poster,
+details from the poster, and its photographs with captions. Its page, its
+album in the photo library and the session count in "Nine sessions. One
+chapter." all follow from that entry.
+
+The highlight card also changed in two small ways:
+
+- It shows the event's album cover, the same artwork as in the photo library,
+  instead of the poster. The cover is designed to be looked at; the poster is
+  mostly text. The "Happening this month" card still shows the poster, so the
+  two cards don't repeat the same image.
+- The heading "Highlight of September 2026." fills its letters with a green
+  gradient, and a gradient only paints inside the text's own box. At the tight
+  line height, the tail of the "g" hung below that box and was cut off. The
+  heading now has a little padding at the bottom, balanced by a negative
+  margin, so the letters show in full without moving anything around it.
+
+## Design decisions
+
+I went for an editorial layout — large headings, a lot of whitespace, few
+things per screen. Club websites usually go the other way and cram six widgets
+above the fold. Keeping it sparse was easier to build and looks better.
+
+Each section does one job. The hero says who we are, the next sections show
+this month's highlight and what's happening now, then recent sessions, then
+the team, then one closing line with the main button. Someone who leaves after
+two screens still knows what the chapter is.
+
+The photographs do most of the work. A packed lab with a speaker in front of a
+slide says more about an active chapter than any description would, so real
+photos get more space than anything else on the page. Event posters are shown
+whole and uncropped, since the poster is what people actually saw.
+
+There are two typefaces. Inter sets everything, from the hero to the footer.
+Great Vibes appears only for the handwritten words: two in the hero and the
+names on the team cards. Colour is almost entirely navy on cream, so the
+hierarchy comes from size and spacing.
+
+Sizes and spacing are fixed at both ends. Body copy is 16px on phones and 18px
+on laptops, section headings 32px and 48px, page titles 40px and 72px, with
+72px between sections on phones and 120px on laptops. Every button is 48px tall
+with 14px corners, and every card uses the same edge and shadow.
+
+Each page ends the same way: one line, one "Join the chapter" button that goes
+to LinkedIn, and the facts about joining underneath it.
+
+Animation is kept small. Sections fade and rise 20px as they come into view,
+the cards have a metallic edge that shifts while you scroll, and in-page jumps
+use a fixed 520ms scroll. That last one exists because Chrome's own smooth
+scroll gets slower the further it travels, and jumping to the bottom of the page
+felt broken. Everything is disabled under `prefers-reduced-motion`. The
+bigger effects added later are described in
+[What changed in v3](#what-changed-in-v3).
+
 ## Tech stack
 
 **Next.js 16 with the App Router.** Every page is prerendered to static HTML at
@@ -508,6 +543,13 @@ npm run dev     # localhost:8790
 npm run build
 npm run lint
 ```
+
+### Running two dev servers
+
+Next.js locks its build folder, so a second `next dev` in the same project
+refuses to start. Setting `NEXT_DIST_DIR` gives a server its own folder:
+`NEXT_DIST_DIR=.next-preview npx next dev`. Normal builds and Vercel don't set
+it. `.next-preview/` is ignored by git and by ESLint.
 
 ## Deploying
 
