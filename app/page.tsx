@@ -3,13 +3,33 @@ import { FeatureEvent } from "@/components/sections/FeatureEvent";
 import { RecentEvents } from "@/components/sections/RecentEvents";
 import { TeamSection } from "@/components/sections/TeamSection";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { featuredEvent, formatEventMonth, highlightEvent } from "@/data/events";
+import {
+  allEvents,
+  featuredEvent,
+  formatEventMonth,
+  highlightEvent,
+} from "@/data/events";
+import { ChapterStats } from "@/components/sections/ChapterStats";
 import { site } from "@/data/site";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
+
+      <ChapterStats
+        stats={[
+          { value: allEvents.length, label: "sessions" },
+          // Confirmed by the chapter; update as attendance grows.
+          { value: 400, suffix: "+", label: "students" },
+          {
+            value: new Set(
+              allEvents.flatMap((e) => (e.speaker ? [e.speaker.name] : [])),
+            ).size,
+            label: "speakers",
+          },
+        ]}
+      />
 
       {highlightEvent ? (
         <FeatureEvent

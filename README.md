@@ -362,6 +362,40 @@ Pixel Transition, which covers content with a grid of squares and then removes
 them. That component uses GSAP; this version is built with Motion, which the
 site already uses, so nothing extra is downloaded.
 
+### The hero comes alive
+
+The hero used to be a still picture. Three small things now make it feel
+live, without turning it into a show:
+
+- **The headline writes itself.** Each word rises into place from a soft blur,
+  one after another, and then "community" and "technology" are written in from
+  left to right, like a pen crossing the page. It's done with CSS keyframes
+  rather than JavaScript, so the full headline is in the HTML from the first
+  byte and is never hidden while scripts load. The script words' clip is inset
+  past their swashes so no curl of a letter is cut.
+- **The emblem follows you.** On a laptop the CSI emblem leans up to 14 degrees
+  toward the pointer, wherever it is on the screen, and a patch of light slides
+  across its face on the side facing the pointer, like sun on a metal badge.
+  The light is masked to the emblem's own shape so it never spills onto the
+  sky. It follows the Tilted Card idea from
+  [React Bits](https://reactbits.dev), built with Motion and a spring so it
+  settles smoothly. Touch screens keep the still emblem.
+- **The chapter in numbers.** A band just under the hero shows sessions,
+  students and speakers, counting up from zero the first time it scrolls into
+  view. Sessions and speakers are counted from `data/events.ts`, so they stay
+  true as events are added; "400+ students" is the chapter's own figure. The
+  final numbers are in the HTML, so they're right even before the count runs.
+
+With reduced motion turned on, the headline, emblem and counters all stay
+still.
+
+### Running two dev servers
+
+Next.js locks its build folder, so a second `next dev` in the same project
+refuses to start. Setting `NEXT_DIST_DIR` gives a server its own folder:
+`NEXT_DIST_DIR=.next-preview npx next dev`. Normal builds and Vercel don't set
+it. `.next-preview/` is ignored by git and by ESLint.
+
 ### The phone menu folds open like paper
 
 On phones and tablets, the three-line button in the top right opens the quick

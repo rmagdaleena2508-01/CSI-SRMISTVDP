@@ -7,6 +7,17 @@ import { CSIMark } from "./CSIMark";
 import { AnchorLink } from "@/components/ui/AnchorLink";
 import { site } from "@/data/site";
 
+const headline: { text: string; style?: "inter" | "script" }[] = [
+  { text: "Where" },
+  { text: "curious" },
+  { text: "students", style: "inter" },
+  { text: "build" },
+  { text: "community", style: "script" },
+  { text: "and" },
+  { text: "technology", style: "script" },
+  { text: "together." },
+];
+
 export function Hero() {
   return (
     <section className="relative isolate flex min-h-svh flex-col overflow-hidden">
@@ -14,13 +25,25 @@ export function Hero() {
 
       <div className="container-editorial flex flex-1 flex-col justify-center pt-[clamp(5.25rem,11vh,7rem)] pb-[clamp(1rem,2vh,2rem)]">
         <div className="flex justify-center">
-          <h1 className="font-display text-hero max-w-[16ch] text-center font-normal text-balance text-white sm:max-w-[24ch]">
-            Where curious <span className="inter-accent">students</span>{" "}
-            <span>
-              build <span className="script-accent text-white">community</span>{" "}
-              and <span className="script-accent text-white">technology</span>{" "}
-              together.
-            </span>
+          {/* The headline builds itself on load: each word rises out of its
+              line in turn, and the two script words are written in from left
+              to right as if by hand. It is plain CSS, so the text is in the
+              HTML from the first byte and never waits on JavaScript. */}
+          <h1 className="hero-headline font-display text-hero max-w-[16ch] text-center font-normal text-balance text-white sm:max-w-[24ch]">
+            {headline.map((word, i) => (
+              <span key={i}>
+                <span
+                  className={
+                    word.style === "script"
+                      ? "script-write script-accent text-white"
+                      : `word-rise ${word.style === "inter" ? "inter-accent" : ""}`
+                  }
+                  style={{ "--i": i } as React.CSSProperties}
+                >
+                  {word.text}
+                </span>{" "}
+              </span>
+            ))}
           </h1>
         </div>
 

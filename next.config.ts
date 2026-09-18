@@ -11,7 +11,12 @@ import type { NextConfig } from "next";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const isStaticExport = process.env.STATIC_EXPORT === "true";
 
+// Lets a second dev server run beside another one in this folder: Next locks
+// its build directory, so each server needs its own.
+const distDir = process.env.NEXT_DIST_DIR;
+
 const nextConfig: NextConfig = {
+  ...(distDir ? { distDir } : {}),
   ...(basePath ? { basePath, assetPrefix: basePath } : {}),
   ...(isStaticExport
     ? {

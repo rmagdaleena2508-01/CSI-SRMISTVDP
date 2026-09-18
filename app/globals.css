@@ -706,3 +706,51 @@ body {
     animation: none;
   }
 }
+
+/* Hero headline. Each word rises into place in turn; the two script words are
+   then written in from left to right, like a pen crossing the page. The clip
+   is inset past the letters on every side except the leading edge, so the
+   swashes of the script face are never cut. --i is the word's position. */
+.word-rise,
+.script-write {
+  display: inline-block;
+}
+.word-rise {
+  animation: word-rise 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(0.12s + var(--i) * 0.08s);
+}
+.script-write {
+  animation: script-write 1.15s cubic-bezier(0.55, 0.1, 0.35, 1) both;
+  animation-delay: calc(0.3s + var(--i) * 0.08s);
+}
+@keyframes word-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+@keyframes script-write {
+  from {
+    opacity: 0.2;
+    clip-path: inset(-0.4em 100% -0.5em -0.3em);
+  }
+  15% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(-0.4em -0.3em -0.5em -0.3em);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-rise,
+  .script-write {
+    animation: none;
+  }
+}
