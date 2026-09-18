@@ -70,7 +70,7 @@ export function CSIMark() {
     <div className="relative flex justify-center [perspective:900px]">
       <div
         aria-hidden
-        className="absolute top-1/2 left-1/2 size-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        className="emblem-glow absolute top-1/2 left-1/2 size-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           background:
             "radial-gradient(closest-side, rgba(255,255,255,0.8), rgba(255,255,255,0))",
@@ -85,25 +85,41 @@ export function CSIMark() {
             : { rotateX, rotateY, transformStyle: "preserve-3d" }
         }
       >
-        <Image
-          src="/images/brand/csi-emblem.png"
-          alt="Computer Society of India emblem"
-          width={447}
-          height={447}
-          priority
-          className="w-full drop-shadow-[0_18px_40px_rgba(18,38,92,0.28)]"
-        />
-        {reduced ? null : (
-          <motion.span
+        {/* Two faces on a card that turns over with the theme: the flat
+            emblem in light mode, and in dark mode the card turns around to
+            reveal the brushed-metal emblem on its back. */}
+        <div className="emblem-flip relative">
+          <div className="emblem-face">
+            <Image
+              src="/images/brand/csi-emblem.png"
+              alt="Computer Society of India emblem"
+              width={447}
+              height={447}
+              priority
+              className="w-full drop-shadow-[0_18px_40px_rgba(18,38,92,0.28)]"
+            />
+            {reduced ? null : (
+              <motion.span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 mix-blend-screen"
+                style={{
+                  backgroundImage: sheen,
+                  mask: emblemMask,
+                  WebkitMask: emblemMask,
+                }}
+              />
+            )}
+          </div>
+          <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 mix-blend-screen"
-            style={{
-              backgroundImage: sheen,
-              mask: emblemMask,
-              WebkitMask: emblemMask,
-            }}
+            className="emblem-face emblem-back absolute inset-[4%] rounded-full"
+            style={
+              {
+                "--metal": `url(${asset("/images/brand/csi-emblem-metal.webp")})`,
+              } as React.CSSProperties
+            }
           />
-        )}
+        </div>
       </motion.div>
     </div>
   );

@@ -468,6 +468,49 @@ the real rows. Nothing extra is downloaded.
   [canvas-confetti](https://github.com/catdad/canvas-confetti), which skips the
   burst for anyone with reduced motion turned on; the note still appears.
 
+### Dark mode
+
+A sun and moon button in the top bar, beside "Join the chapter", switches the
+site to dark mode for the current visit. The site always opens in light and
+nothing is stored, so every visit starts the same way; moving between pages
+keeps whichever theme you picked.
+
+- **The button** is the "Expand" toggle from
+  [toggles.dev](https://toggles.dev) (`@theme-toggles/react`): the sun's rays
+  pull in and it becomes a moon. It's a glass circle to match the menu button.
+- **How the colours change.** Every colour on the site comes from a small set
+  of named tokens (navy, cream, ivory, sky, slate). Dark mode re-points those
+  tokens on `<html data-theme="dark">`: the page becomes deep navy, cards a
+  step lighter, text light, and navy buttons turn pale with dark text. Glass
+  surfaces lose most of their white sheen so they read as dark glass. A
+  Tailwind `dark:` variant follows the same toggle for the few one-off cases.
+- **What stays the same on purpose.** The closing "Be part of what's next."
+  band stays navy, the hero's two buttons keep their cream and navy (they
+  stand out best against the night sky), and the green highlight card keeps
+  its greens. These areas carry a `theme-fixed` class that restores the light
+  tokens inside them.
+- **The night sky.** Dark mode swaps the hero's day sky for a night sky. It's a
+  background that only exists under the dark theme, so light-mode visitors
+  never download it.
+- **The emblem turns around.** In dark mode the CSI emblem in the hero turns
+  over like a card, with a slight overshoot, to reveal a brushed-metal version
+  of the emblem on its back; switching back turns it round again. The metal
+  artwork was cut from its square tile to just the circle and its background.
+  It still tilts toward the cursor, and the five-click hidden feature still
+  works on it.
+- **Smaller fixes.** The "Highlight of" heading uses lighter greens, the
+  crushed-paper panel behind album titles is dimmed, the college card's
+  backdrop stays navy, the footer emblem sits on a white disc, and the
+  phone's browser bar follows the theme.
+- **The switch is quick.** The page crossfades between themes in about a third
+  of a second using the View Transitions API. The first version spread the new
+  theme out as a growing circle from the button, but animating a clip-path over
+  the whole page makes the browser repaint it on every frame, and it stalled
+  halfway for a couple of seconds on busy pages. A crossfade runs on the
+  graphics card instead. The night sky and metal emblem are also fetched
+  quietly once the page is idle, so the first switch never waits on a
+  download. With reduced motion turned on, the theme changes in one step.
+
 ### The highlight button
 
 The month's highlight card is the one place that

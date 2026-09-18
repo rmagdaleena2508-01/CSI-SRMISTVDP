@@ -16,6 +16,7 @@ import { InstagramIcon, LinkedinIcon } from "@/components/ui/icons";
 import { navigation, site } from "@/data/site";
 import { scrollToTop } from "@/lib/scroll";
 import { CollegeCard } from "./CollegeCard";
+import { ThemeToggle } from "./ThemeToggle";
 
 /** Seconds between one row unfolding and the next. */
 const FOLD_STAGGER = 0.065;
@@ -255,6 +256,7 @@ export function Navbar() {
 
         {/* Socials + mobile trigger */}
         <div className="flex items-center gap-1.5">
+          <ThemeToggle />
           <a
             href={site.join.href}
             target="_blank"

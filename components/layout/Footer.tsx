@@ -43,6 +43,9 @@ export function Footer() {
                 alt=""
                 width={40}
                 height={40}
+                // The emblem is navy line work; in dark mode it sits on a
+                // white disc so it stays visible.
+                className="rounded-full dark:bg-white dark:p-0.5"
               />
               <div>
                 <p className="text-[1.0625rem] leading-tight font-semibold tracking-[-0.02em] text-navy">

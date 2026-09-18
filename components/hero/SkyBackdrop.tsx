@@ -30,6 +30,18 @@ export function SkyBackdrop() {
         />
       </picture>
 
+      {/* The night sky, laid over the day sky in dark mode. It is a CSS
+          background that only exists under the dark theme, so the image is
+          downloaded only if someone switches to dark. */}
+      <div
+        className="sky-night absolute inset-0"
+        style={
+          {
+            "--night": `url(${asset("/images/brand/sky-night.jpg")})`,
+          } as React.CSSProperties
+        }
+      />
+
       {/* Legibility scrim — deepens the sky behind the headline only. */}
       <div className="absolute inset-x-0 top-0 h-[62%] bg-gradient-to-b from-navy/50 via-navy/20 to-transparent" />
       {/* Hand-off into the page's ivory. */}

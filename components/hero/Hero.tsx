@@ -52,7 +52,9 @@ export function Hero() {
           Student Chapter at SRMIST Vadapalani.
         </p>
 
-        <div className="mx-auto mt-8 flex w-full max-w-[22rem] flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center">
+        {/* The buttons keep their light colours in dark mode too: cream and navy
+            stand out best against the night sky. */}
+        <div className="theme-fixed mx-auto mt-8 flex w-full max-w-[22rem] flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center">
           <Button
             href={site.join.href}
             variant="light"

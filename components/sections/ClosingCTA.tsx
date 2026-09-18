@@ -13,7 +13,7 @@ export function ClosingCTA() {
   return (
     <section
       aria-labelledby="closing-heading"
-      className="relative isolate overflow-hidden bg-navy text-cream"
+      className="theme-fixed relative isolate overflow-hidden bg-navy text-cream"
     >
       {/* Rolling hills, laptops and up. A phone shows so narrow a slice of the
           photo that the hills stop reading as a landscape, so it keeps the navy
@@ -71,7 +71,10 @@ export function ClosingCTA() {
             <LinkedinIcon size={16} strokeWidth={1.7} />
             {site.join.label}
           </Button>
-          <TrustLine tone="light" className="mt-5 [text-shadow:0_1px_2px_rgba(18,38,92,0.6),0_0_14px_rgba(18,38,92,0.55)]" />
+          <TrustLine
+            tone="light"
+            className="mt-5 [text-shadow:0_1px_2px_rgba(18,38,92,0.6),0_0_14px_rgba(18,38,92,0.55)]"
+          />
         </Reveal>
       </div>
     </section>

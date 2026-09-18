@@ -173,7 +173,7 @@ export function CollegeCard({
               first frames of the opening stall, most of all on phones. The
               blur is set once and only the layer's opacity moves. */}
           <motion.div
-            className="absolute inset-0 bg-navy/45 backdrop-blur-[8px]"
+            className="absolute inset-0 bg-[rgba(18,38,92,0.45)] backdrop-blur-[8px]"
             onClick={requestClose}
             aria-hidden
             initial={reduced ? undefined : { opacity: 0 }}
