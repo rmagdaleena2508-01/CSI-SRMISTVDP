@@ -242,6 +242,36 @@ places that felt stiff or slow were smoothed out. Every effect below is
 switched off for people who turn on reduced motion, and none of them hide
 content while scripts load.
 
+### The page arrives instead of appearing
+
+Opening the site from a link used to show the whole hero at once: sky,
+navigation, buttons and emblem were all there on the first frame, and only the
+headline moved. It felt abrupt. The home page now assembles itself in one
+short sequence of about 1.4 seconds:
+
+1. The sky fades up out of the ivory page, settling from a slight zoom.
+2. The top bar drops in (from 0.15s).
+3. The headline writes itself, word by word and then the two script words
+   (from 0.2s).
+4. The line under it, "Join a session…", rises in (0.8s).
+5. The two buttons rise in one after the other (0.95s and 1.05s).
+6. The facts line appears (1.1s), then the emblem floats up into place
+   (1.15s), and the "Est. 1965" note and the Scroll hint arrive last (1.3s).
+
+Running every piece on one timeline is what makes it read as a single
+entrance rather than separate things popping in, the approach used in GSAP
+intro showcases such as
+[Animaxxing](https://github.com/johnpolacek/animaxxing) and
+[TweenPages](https://github.com/johnpolacek/TweenPages). At this size it
+doesn't need GSAP: it's plain CSS keyframes with a start time per piece, so
+nothing waits on JavaScript and the page is never left blank if scripts are
+slow. There's no loading screen; the content starts arriving immediately.
+
+It plays once per visit. After it has run, `ArrivalMarker` marks the page as
+arrived, so coming back to the home page from another page shows it straight
+away with the normal crossfade instead of replaying the entrance. With reduced
+motion turned on, the page appears at once.
+
 ### The hero comes alive
 
 The hero used to be a still picture. Three small things now make it feel

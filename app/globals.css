@@ -717,11 +717,11 @@ body {
 }
 .word-rise {
   animation: word-rise 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  animation-delay: calc(0.12s + var(--i) * 0.08s);
+  animation-delay: calc(0.2s + var(--i) * 0.08s);
 }
 .script-write {
   animation: script-write 1.15s cubic-bezier(0.55, 0.1, 0.35, 1) both;
-  animation-delay: calc(0.3s + var(--i) * 0.08s);
+  animation-delay: calc(0.38s + var(--i) * 0.08s);
 }
 @keyframes word-rise {
   from {
@@ -841,5 +841,83 @@ body {
   100% {
     opacity: 0;
     transform: scale(1.9);
+  }
+}
+
+/* Opening sequence. On arrival the page is assembled in one 1.4s timeline
+   instead of appearing all at once: the sky fades up out of the ivory page
+   while settling from a slight zoom, the top bar drops in, the headline
+   writes itself (above), then the line under it, the two buttons, the facts
+   line and the emblem follow in turn. --d is each piece's start time. It is
+   plain CSS, so nothing waits on JavaScript and nothing is left hidden if
+   scripts are slow. Once the visitor has arrived (data-arrived, set by
+   ArrivalMarker), coming back to the home page skips the sequence and uses
+   the ordinary page crossfade. */
+.intro-sky {
+  animation: intro-sky 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.intro-drop {
+  animation: intro-drop 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.15s both;
+}
+.intro-rise {
+  animation: intro-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0s) both;
+}
+.intro-float {
+  animation: intro-float 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0s)
+    both;
+}
+@keyframes intro-sky {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes intro-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.875rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes intro-float {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+html[data-arrived] :is(
+    .intro-sky,
+    .intro-drop,
+    .intro-rise,
+    .intro-float,
+    .word-rise,
+    .script-write
+  ) {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.intro-sky, .intro-drop, .intro-rise, .intro-float) {
+    animation: none;
   }
 }

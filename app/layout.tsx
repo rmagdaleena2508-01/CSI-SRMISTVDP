@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ShineDriver } from "@/components/ui/ShineDriver";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { EasterEgg } from "@/components/layout/EasterEgg";
+import { ArrivalMarker } from "@/components/layout/ArrivalMarker";
 import { site } from "@/data/site";
 
 // The one text face: hero, headings and body copy. Loaded as the variable
@@ -92,6 +93,7 @@ export default function RootLayout({
         <ShineDriver />
         <SmoothScroll />
         <EasterEgg />
+        <ArrivalMarker />
         <Navbar />
         <main id="main">{children}</main>
         <Footer />

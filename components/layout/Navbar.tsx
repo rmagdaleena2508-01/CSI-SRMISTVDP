@@ -186,7 +186,7 @@ export function Navbar() {
       className="fixed inset-x-0 top-0 z-50"
       style={{ viewTransitionName: "site-header" }}
     >
-      <div className="container-editorial flex items-center justify-between gap-4 py-4 sm:py-5">
+      <div className="intro-drop container-editorial flex items-center justify-between gap-4 py-4 sm:py-5">
         {/* Wordmark. The seal is its own control, so it sits beside the home
             link rather than inside it — a button nested in an anchor is invalid
             and swallows one of the two actions. */}

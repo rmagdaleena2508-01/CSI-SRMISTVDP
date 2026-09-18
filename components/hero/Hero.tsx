@@ -47,17 +47,25 @@ export function Hero() {
           </h1>
         </div>
 
-        <p className="text-lead mx-auto mt-6 max-w-[40ch] text-center text-white/90 text-pretty">
+        <p className="intro-rise text-lead mx-auto mt-6 max-w-[40ch] [--d:0.8s] text-center text-white/90 text-pretty">
           Join a session, ask the speaker, take the notes home. Run by the CSI
           Student Chapter at SRMIST Vadapalani.
         </p>
 
         <div className="mx-auto mt-8 flex w-full max-w-[22rem] flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center">
-          <Button href={site.join.href} variant="light">
+          <Button
+            href={site.join.href}
+            variant="light"
+            className="intro-rise [--d:0.95s]"
+          >
             <LinkedinIcon size={16} strokeWidth={1.7} />
             {site.join.label}
           </Button>
-          <Button href="/events" variant="glass">
+          <Button
+            href="/events"
+            variant="glass"
+            className="intro-rise [--d:1.05s]"
+          >
             Explore events
             <ArrowRight
               size={16}
@@ -68,9 +76,12 @@ export function Hero() {
           </Button>
         </div>
 
-        <TrustLine tone="light" className="mt-5 [text-shadow:0_1px_2px_rgba(18,38,92,0.6),0_0_14px_rgba(18,38,92,0.55)]" />
+        <TrustLine
+          tone="light"
+          className="intro-rise mt-5 [--d:1.1s] [text-shadow:0_1px_2px_rgba(18,38,92,0.6),0_0_14px_rgba(18,38,92,0.55)]"
+        />
 
-        <div className="relative mt-10">
+        <div className="intro-float relative mt-10 [--d:1.15s]">
           <div className="flex h-full items-center justify-center">
             <CSIMark />
           </div>
@@ -78,7 +89,7 @@ export function Hero() {
       </div>
 
       <div className="container-editorial pointer-events-none relative z-10 pb-[clamp(1.5rem,3vh,2.75rem)]">
-        <div className="flex items-end justify-between gap-6">
+        <div className="intro-rise flex items-end justify-between gap-6 [--d:1.3s]">
           <div className="pointer-events-auto hidden max-w-[42ch] sm:block">
             <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
               Est. 1965 · Student Chapter
