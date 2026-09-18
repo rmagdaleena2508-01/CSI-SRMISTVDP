@@ -763,3 +763,83 @@ body {
 .name-write[data-write="written"] {
   animation: script-write 1.2s cubic-bezier(0.55, 0.1, 0.35, 1) both;
 }
+
+/* Page transitions (app/template.tsx). The page crossfades; the header is
+   pinned so it doesn't fade with it; an event poster morphs from its card to
+   the event page's hero with a touch of blur mid-flight to hide scaling
+   artefacts. The overlay lets clicks through so a click during the fade is
+   never lost. */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+::view-transition-group(.poster-morph) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+::view-transition-image-pair(.poster-morph) {
+  animation-name: poster-blur;
+}
+@keyframes poster-blur {
+  35% {
+    filter: blur(3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Camera link beside "Nine sessions. One chapter.": hovering or focusing it
+   takes a picture. The body dips and rights itself like a shutter press, and
+   a blue ring flashes out from the lens. */
+.camera-flash {
+  position: absolute;
+  inset: 25%;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 2px rgba(43, 82, 168, 0.6);
+  opacity: 0;
+  pointer-events: none;
+}
+.camera-link:hover .camera-body,
+.camera-link:focus-visible .camera-body {
+  animation: camera-shutter 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.camera-link:hover .camera-flash,
+.camera-link:focus-visible .camera-flash {
+  animation: camera-flash 0.55s ease-out 0.12s;
+}
+@keyframes camera-shutter {
+  30% {
+    transform: translateY(1px) rotate(-8deg) scale(0.9);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes camera-flash {
+  0% {
+    opacity: 0.95;
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}

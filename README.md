@@ -410,6 +410,34 @@ the real rows. Nothing extra is downloaded.
   still scrolls the page. The arrows still move one person at a time. About
   one and a quarter cards show on phones, two on tablets and three on laptops.
 
+### The whole site: smooth scroll, page transitions, a camera and a secret
+
+- **Smooth scrolling.** On a laptop, wheel and trackpad scrolling now glides to
+  a stop instead of jumping in steps, using
+  [Lenis](https://lenis.darkroom.engineering). It makes every scroll-linked
+  effect on the site move more smoothly too. The "Scroll" and "Home" jumps use
+  it with the same half-second timing as before. Phones keep their native
+  scrolling, which already has momentum. It pauses whenever something locks the
+  page (the college card, the phone menu, the photo viewer) so the page can't
+  drift underneath, and the album stack keeps the wheel to itself.
+- **Page transitions.** Moving between pages crossfades the old page into the
+  new one, using the browser's built-in View Transitions through React's
+  `<ViewTransition>` in `app/template.tsx`. The top bar is pinned so it stays
+  still. Opening a session from its card makes the poster fly from the card
+  into the event page's hero, with a touch of blur mid-flight. This replaced
+  the earlier fade-and-rise page animation. Browsers without View Transitions
+  simply swap pages.
+- **A camera that takes a picture.** Hovering the camera link beside "Nine
+  sessions. One chapter." makes it dip like a shutter being pressed while a
+  ring flashes out from the lens. It's plain CSS; a Lottie or Rive file would
+  have meant a heavier download for one small icon.
+- **The hidden feature.** The v1 launch post promised hidden features. Type
+  "csi" anywhere on the page, or click the CSI emblem in the hero five times,
+  and confetti in the chapter's colours bursts from both sides of the screen
+  with a note: "You found a hidden feature. Welcome to CSI." It uses
+  [canvas-confetti](https://github.com/catdad/canvas-confetti), which skips the
+  burst for anyone with reduced motion turned on; the note still appears.
+
 ### The highlight button
 
 The month's highlight card is the one place that
@@ -547,7 +575,8 @@ the fluid type scale, spacing, easing. Changing the look means editing that
 block. Deleting a component also deletes its styles, which matters when you're
 still figuring out the layout.
 
-**Motion** for scroll reveals and the college dialog. Everything else is plain
+**Motion** for scroll reveals and the college dialog. **Lenis** for smooth
+scrolling and **canvas-confetti** for the hidden feature. Everything else is plain
 CSS, since pulling in an animation library for a fade isn't worth the bytes.
 
 **next/font** self-hosts and inlines both typefaces at build time, so

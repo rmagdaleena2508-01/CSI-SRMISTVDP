@@ -53,7 +53,7 @@ export function CollegeCard({
   const timer = useRef(0);
   // Set when a close starts; the grid it holds is what the dissolve draws.
   const [grid, setGrid] = useState<{ rows: number; pixels: Pixel[] } | null>(
-    null
+    null,
   );
   const dissolving = grid !== null;
 

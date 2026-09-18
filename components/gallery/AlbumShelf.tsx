@@ -195,6 +195,8 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
           onSwiper={(s) => {
             swiperRef.current = s;
             s.el.addEventListener("wheel", stopPageScroll, { passive: false });
+            // Tells the smooth-scroll layer to leave the wheel to the stack.
+            s.el.setAttribute("data-lenis-prevent", "");
           }}
           onSlideChange={(s) => setActive(s.activeIndex)}
           direction="vertical"

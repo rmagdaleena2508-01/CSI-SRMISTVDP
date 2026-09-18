@@ -77,6 +77,7 @@ export function CSIMark() {
         }}
       />
       <motion.div
+        data-easter-egg
         className="relative w-[min(56vw,28vh,15rem)] sm:w-[min(28vw,26vh,17rem)]"
         style={
           reduced

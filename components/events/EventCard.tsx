@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ViewTransition } from "react";
 import { Img as Image } from "@/components/ui/Img";
 import { ArrowRight } from "lucide-react";
 import { formatEventDate, type ChapterEvent } from "@/data/events";
@@ -16,17 +17,25 @@ export function EventCard({ event, priority = false }: Props) {
         href={`/events/${event.slug}`}
         className="flex h-full flex-col rounded-card outline-offset-4"
       >
-        <div className="metal-frame relative aspect-[3/4] overflow-hidden rounded-card bg-navy/5 shadow-card">
-          <Image
-            src={event.image}
-            alt={`${event.title} — session photograph`}
-            fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
-            loading={priority ? "eager" : "lazy"}
-            priority={priority}
-            className="object-contain transition-transform duration-700 ease-[var(--ease-editorial)] group-hover:scale-[1.02]"
-          />
-        </div>
+        {/* Named so the poster flies from this card into the event page's
+            hero when the card is opened (see app/template.tsx). */}
+        <ViewTransition
+          name={`poster-${event.slug}`}
+          share="poster-morph"
+          default="none"
+        >
+          <div className="metal-frame relative aspect-[3/4] overflow-hidden rounded-card bg-navy/5 shadow-card">
+            <Image
+              src={event.image}
+              alt={`${event.title} — session photograph`}
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
+              loading={priority ? "eager" : "lazy"}
+              priority={priority}
+              className="object-contain transition-transform duration-700 ease-[var(--ease-editorial)] group-hover:scale-[1.02]"
+            />
+          </div>
+        </ViewTransition>
 
         <div className="flex flex-1 flex-col gap-3 px-1 pt-5">
           <span className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">

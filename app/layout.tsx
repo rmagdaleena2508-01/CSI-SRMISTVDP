@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ShineDriver } from "@/components/ui/ShineDriver";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { EasterEgg } from "@/components/layout/EasterEgg";
 import { site } from "@/data/site";
 
 // The one text face: hero, headings and body copy. Loaded as the variable
@@ -79,10 +81,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en-IN"
-      className={`${inter.variable} ${script.variable}`}
-    >
+    <html lang="en-IN" className={`${inter.variable} ${script.variable}`}>
       <body className="grain antialiased">
         <a
           href="#main"
@@ -91,6 +90,8 @@ export default function RootLayout({
           Skip to content
         </a>
         <ShineDriver />
+        <SmoothScroll />
+        <EasterEgg />
         <Navbar />
         <main id="main">{children}</main>
         <Footer />

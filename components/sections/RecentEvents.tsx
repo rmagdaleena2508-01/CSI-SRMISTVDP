@@ -24,9 +24,17 @@ export function RecentEvents() {
             href="/gallery"
             aria-label="Open the photo library"
             title="Photo library"
-            className="grid size-10 shrink-0 place-items-center rounded-full bg-navy/6 text-navy ring-1 ring-navy/10 transition-[background-color,transform] duration-300 ease-[var(--ease-editorial)] hover:-translate-y-0.5 hover:bg-navy/12 sm:size-11"
+            className="camera-link group relative grid size-10 shrink-0 place-items-center rounded-full bg-navy/6 text-navy ring-1 ring-navy/10 transition-[background-color,transform] duration-300 ease-[var(--ease-editorial)] hover:-translate-y-0.5 hover:bg-navy/12 sm:size-11"
           >
-            <Camera size={19} strokeWidth={1.7} aria-hidden />
+            {/* On hover the camera takes a picture: it dips as if the shutter
+                were pressed and a flash ring pops from the lens. */}
+            <span aria-hidden className="camera-flash" />
+            <Camera
+              size={19}
+              strokeWidth={1.7}
+              aria-hidden
+              className="camera-body"
+            />
           </Link>
         }
       >

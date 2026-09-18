@@ -4,7 +4,12 @@ import Link from "next/link";
 import { Img as Image } from "@/components/ui/Img";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useReducedMotion, type Variants } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "motion/react";
 import type { ReactNode } from "react";
 import { Menu, X } from "lucide-react";
 import { InstagramIcon, LinkedinIcon } from "@/components/ui/icons";
@@ -177,7 +182,10 @@ export function Navbar() {
   ];
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header
+      className="fixed inset-x-0 top-0 z-50"
+      style={{ viewTransitionName: "site-header" }}
+    >
       <div className="container-editorial flex items-center justify-between gap-4 py-4 sm:py-5">
         {/* Wordmark. The seal is its own control, so it sits beside the home
             link rather than inside it — a button nested in an anchor is invalid
@@ -253,7 +261,11 @@ export function Navbar() {
             rel="noopener noreferrer"
             className="inline-flex h-11 items-center justify-center gap-2 rounded-control bg-navy px-4 text-[0.875rem] font-medium tracking-[-0.01em] whitespace-nowrap text-cream shadow-card transition-colors duration-300 hover:bg-navy-700 sm:px-5"
           >
-            <LinkedinIcon size={15} strokeWidth={1.7} className="hidden sm:block" />
+            <LinkedinIcon
+              size={15}
+              strokeWidth={1.7}
+              className="hidden sm:block"
+            />
             {site.join.label}
           </a>
 

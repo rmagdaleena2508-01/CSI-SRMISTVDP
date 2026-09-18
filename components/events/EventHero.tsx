@@ -1,5 +1,6 @@
 import { Img as Image } from "@/components/ui/Img";
 import Link from "next/link";
+import { ViewTransition } from "react";
 import { ArrowLeft } from "lucide-react";
 import { formatEventDate, type ChapterEvent } from "@/data/events";
 
@@ -43,16 +44,22 @@ export function EventHero({ event }: { event: ChapterEvent }) {
         ))}
       </dl>
 
-      <div className="metal-frame relative mt-10 aspect-[4/5] overflow-hidden rounded-panel bg-navy/5 shadow-card sm:mt-14 sm:aspect-[16/9]">
-        <Image
-          src={event.image}
-          alt={`${event.title} — photograph from the session`}
-          fill
-          priority
-          sizes="(min-width: 1440px) 88rem, 100vw"
-          className="object-contain"
-        />
-      </div>
+      <ViewTransition
+        name={`poster-${event.slug}`}
+        share="poster-morph"
+        default="none"
+      >
+        <div className="metal-frame relative mt-10 aspect-[4/5] overflow-hidden rounded-panel bg-navy/5 shadow-card sm:mt-14 sm:aspect-[16/9]">
+          <Image
+            src={event.image}
+            alt={`${event.title} — photograph from the session`}
+            fill
+            priority
+            sizes="(min-width: 1440px) 88rem, 100vw"
+            className="object-contain"
+          />
+        </div>
+      </ViewTransition>
     </header>
   );
 }

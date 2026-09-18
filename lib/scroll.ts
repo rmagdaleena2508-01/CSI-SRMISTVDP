@@ -1,3 +1,5 @@
+import { getLenis } from "./lenis";
+
 const DURATION = 520;
 /** Nav pill height plus breathing room, so a section never lands under it. */
 const OFFSET = 88;
@@ -17,8 +19,17 @@ export function scrollToId(id: string) {
   const start = window.scrollY;
   const target = Math.max(
     0,
-    Math.round(el.getBoundingClientRect().top + start - OFFSET)
+    Math.round(el.getBoundingClientRect().top + start - OFFSET),
   );
+
+  const lenis = getLenis();
+  if (lenis) {
+    lenis.scrollTo(target, {
+      duration: DURATION / 1000,
+      easing: easeInOutCubic,
+    });
+    return true;
+  }
 
   if (
     window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
@@ -46,6 +57,12 @@ export function scrollToTop() {
   const start = window.scrollY;
   if (start < 2) return;
 
+  const lenis = getLenis();
+  if (lenis) {
+    lenis.scrollTo(0, { duration: DURATION / 1000, easing: easeInOutCubic });
+    return;
+  }
+
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     window.scrollTo({ top: 0, behavior: "instant" });
     return;
@@ -54,7 +71,10 @@ export function scrollToTop() {
   const began = performance.now();
   const step = (now: number) => {
     const p = Math.min(1, (now - began) / DURATION);
-    window.scrollTo({ top: start * (1 - easeInOutCubic(p)), behavior: "instant" });
+    window.scrollTo({
+      top: start * (1 - easeInOutCubic(p)),
+      behavior: "instant",
+    });
     if (p < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
