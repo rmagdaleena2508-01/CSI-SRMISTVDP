@@ -1016,27 +1016,64 @@ html[data-arrived] :is(
   color: #ffffff;
 }
 
-/* Theme switch: a quick crossfade of the whole page. The browser takes a
-   picture of the old theme and fades it into the new one, which it can do
-   entirely on the graphics card. The earlier circle reveal animated a
-   clip-path across the whole page, which is repainted on every frame and
-   stalled halfway on busy pages. The header joins the fade rather than
-   switching on its own. */
+/* Theme switch: the new theme grows as a soft-edged circle from the toggle
+   (ThemeToggle animates --reveal). The circle is a radial mask rather than a
+   clip-path, so its rim feathers over 64px instead of being a hard line. It
+   starts fast and eases to a stop. The old page is held still underneath
+   with no fade, and the header joins the reveal instead of switching on its
+   own. Glass blurs keep running throughout, so nothing pops at the end. */
+@property --reveal {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
 html.theme-reveal header {
   view-transition-name: none !important;
 }
 html.theme-reveal::view-transition-old(root),
 html.theme-reveal::view-transition-new(root) {
-  animation-duration: 320ms;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation: none;
+  mix-blend-mode: normal;
+}
+html.theme-reveal::view-transition-new(root) {
+  z-index: 1;
+  --reveal: 0px;
+  -webkit-mask-image: radial-gradient(
+    circle at var(--reveal-x) var(--reveal-y),
+    #000 max(0px, calc(var(--reveal) - 64px)),
+    transparent var(--reveal)
+  );
+  mask-image: radial-gradient(
+    circle at var(--reveal-x) var(--reveal-y),
+    #000 max(0px, calc(var(--reveal) - 64px)),
+    transparent var(--reveal)
+  );
+}
+
+/* The hero emblem gets its own layer during the switch, so it is never
+   frozen into the page picture: only the live emblem shows, turning once. */
+/* Named on the untransformed stage around the emblem, not the card itself,
+   so the turning card is part of the live picture rather than a transform the
+   transition would freeze. */
+html.theme-reveal .emblem-stage {
+  view-transition-name: hero-emblem;
+}
+::view-transition-old(hero-emblem) {
+  display: none;
+}
+::view-transition-group(hero-emblem),
+::view-transition-new(hero-emblem) {
+  animation: none;
 }
 
 /* Hero emblem: a two-sided card. Dark mode turns it around to show the
    brushed-metal emblem on the back. The metal image is a background that
    only exists in dark mode, so light-mode visitors never download it. */
+/* One smooth half turn, with no overshoot: the old curve swung past and
+   settled back, which read as a second turn. */
 .emblem-flip {
   transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(0.34, 1.3, 0.64, 1);
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .emblem-face {
   backface-visibility: hidden;

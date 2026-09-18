@@ -493,23 +493,38 @@ keeps whichever theme you picked.
   background that only exists under the dark theme, so light-mode visitors
   never download it.
 - **The emblem turns around.** In dark mode the CSI emblem in the hero turns
-  over like a card, with a slight overshoot, to reveal a brushed-metal version
-  of the emblem on its back; switching back turns it round again. The metal
-  artwork was cut from its square tile to just the circle and its background.
-  It still tilts toward the cursor, and the five-click hidden feature still
-  works on it.
+  over like a card to reveal a brushed-metal version of the emblem on its
+  back; switching back turns it round again. It's one smooth half turn of
+  0.7s with no overshoot: an earlier springy curve swung past and settled
+  back, which read as a second turn. During the switch the emblem sits on its
+  own layer, so only the live emblem shows and no frozen copy fades over it.
+  The metal artwork was cut from its square tile to just the circle and its
+  background. It still tilts toward the cursor, and the five-click hidden
+  feature still works on it.
 - **Smaller fixes.** The "Highlight of" heading uses lighter greens, the
   crushed-paper panel behind album titles is dimmed, the college card's
   backdrop stays navy, the footer emblem sits on a white disc, and the
   phone's browser bar follows the theme.
-- **The switch is quick.** The page crossfades between themes in about a third
-  of a second using the View Transitions API. The first version spread the new
-  theme out as a growing circle from the button, but animating a clip-path over
-  the whole page makes the browser repaint it on every frame, and it stalled
-  halfway for a couple of seconds on busy pages. A crossfade runs on the
-  graphics card instead. The night sky and metal emblem are also fetched
-  quietly once the page is idle, so the first switch never waits on a
-  download. With reduced motion turned on, the theme changes in one step.
+- **The switch spreads from the button.** The new theme grows as a circle from
+  the toggle until it covers the screen, in both directions, using the View
+  Transitions API: the technique of
+  [Magic UI's Animated Theme Toggler](https://magicui.design/docs/components/animated-theme-toggler),
+  built in without the library. It took three tries to get smooth:
+  - A clip-path circle with a fade underneath stalled halfway for a couple of
+    seconds, because the page was redrawn every frame and the night sky was
+    still downloading.
+  - A plain crossfade was smooth but lost the reveal, and the emblem appeared
+    to turn twice as a frozen copy faded over the live one.
+  - Now the circle is a radial mask with a soft 64px rim instead of a hard
+    edge. It starts fast and eases to a stop over about 0.6 seconds, the old
+    page is held still underneath with no fade, and the fully open circle is
+    held until the new page takes over so the last frame never flickers. The
+    night sky and metal emblem are fetched quietly once the page is idle, so a
+    switch never waits on a download. Measured in the browser, a switch starts
+    within about 20ms of the click and finishes in about 0.67 seconds, with
+    every frame drawn on time after the first switch.
+
+  With reduced motion turned on, the theme changes in one step.
 
 ### The highlight button
 

@@ -67,7 +67,7 @@ export function CSIMark() {
   const emblemMask = `url(${asset("/images/brand/csi-emblem.png")}) center / contain no-repeat`;
 
   return (
-    <div className="relative flex justify-center [perspective:900px]">
+    <div className="emblem-stage relative flex justify-center [perspective:900px]">
       <div
         aria-hidden
         className="emblem-glow absolute top-1/2 left-1/2 size-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full"
