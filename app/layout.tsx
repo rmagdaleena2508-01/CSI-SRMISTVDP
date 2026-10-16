@@ -29,7 +29,9 @@ const script = Great_Vibes({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | ${site.institution}`,
+    // The full society name is in the home title because students search
+    // "computer society of india" as often as they search "CSI".
+    default: `${site.name} — Computer Society of India, ${site.institution}`,
     template: `%s | ${site.name}`,
   },
   description: site.description,

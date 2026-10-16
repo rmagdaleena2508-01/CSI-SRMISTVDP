@@ -135,9 +135,9 @@ export default async function EventPage({
                   {event.speaker.role}
                 </p>
                 <p className="text-lead mt-6 max-w-[52ch] text-navy/75 text-pretty">
-                  Learn from people doing the work: practitioners,
-                  researchers and senior students who bring the problem, not
-                  just the slides.
+                  Learn from people doing the work: practitioners, researchers
+                  and senior students who bring the problem, not just the
+                  slides.
                 </p>
               </div>
             </section>
@@ -239,14 +239,30 @@ export default async function EventPage({
             "@type": "Event",
             name: event.title,
             startDate: event.date,
+            endDate: event.date,
             description: event.summary,
+            url: `${site.url}/events/${event.slug}`,
+            image: `${site.url}${event.image}`,
+            eventStatus: "https://schema.org/EventScheduled",
             eventAttendanceMode:
               "https://schema.org/OfflineEventAttendanceMode",
             location: {
               "@type": "Place",
               name: event.venue ?? site.institution,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "SRMIST Vadapalani Campus",
+                addressLocality: "Chennai",
+                addressRegion: "Tamil Nadu",
+                postalCode: "600026",
+                addressCountry: "IN",
+              },
             },
-            organizer: { "@type": "Organization", name: site.legalName },
+            organizer: {
+              "@type": "Organization",
+              name: site.legalName,
+              url: site.url,
+            },
             ...(event.speaker
               ? { performer: { "@type": "Person", name: event.speaker.name } }
               : {}),

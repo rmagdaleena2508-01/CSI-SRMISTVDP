@@ -33,6 +33,13 @@ const blocks = [
     body: "Every session digs into one topic instead of skimming ten. You walk out with something you can use: a working example, a clear picture of how it fits together, or a good reason to go read more.",
   },
   {
+    // Answers the "clubs at SRM Vadapalani" search in the words students use:
+    // which campus, which department, and who is allowed in.
+    label: "Where we sit",
+    title: "A student club inside CSE.",
+    body: "We are one of the technical student chapters at the SRMIST Vadapalani campus in Chennai, run out of the Department of Computer Science and Engineering. Any CSE student on campus can come to a session; you do not need to be a CSI member to attend.",
+  },
+  {
     label: "Continuity",
     title: "Names change. The habit stays.",
     body: "Faculty coordinators guide the chapter. Student office bearers run it, then hand it over each year. Everything we put here stays as a record for whoever comes next.",

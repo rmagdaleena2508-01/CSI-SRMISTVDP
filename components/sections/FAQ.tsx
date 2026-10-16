@@ -35,6 +35,24 @@ export function FAQ() {
         ))}
       </ul>
 
+      {/* The same questions and answers the page shows, marked up so search
+          engines can surface them. Built from the data file, so the markup can
+          never drift from what a reader sees. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          }),
+        }}
+      />
+
       <p className="mt-10 text-center text-[0.9375rem] text-slate-blue">
         Still have a question?{" "}
         <a

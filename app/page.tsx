@@ -60,15 +60,36 @@ export default function HomePage() {
             "@context": "https://schema.org",
             "@type": "Organization",
             name: site.legalName,
-            alternateName: `${site.name}, ${site.institution}`,
+            // Every form students actually type, so searches for any of them
+            // resolve to this chapter rather than one at another college.
+            alternateName: [
+              "CSI SRMIST Vadapalani",
+              "CSI SRM Vadapalani",
+              "CSI Student Chapter SRM",
+              "Computer Society of India SRMIST Vadapalani",
+            ],
             url: site.url,
             logo: `${site.url}/images/brand/csi-emblem.png`,
             image: `${site.url}/images/brand/og.jpg`,
             description: site.description,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "SRMIST Vadapalani Campus",
+              addressLocality: "Chennai",
+              addressRegion: "Tamil Nadu",
+              postalCode: "600026",
+              addressCountry: "IN",
+            },
             parentOrganization: {
               "@type": "CollegeOrUniversity",
               name: "SRM Institute of Science and Technology, Vadapalani Campus",
               url: "https://srmistvdp.edu.in/",
+            },
+            memberOf: {
+              "@type": "Organization",
+              name: "Computer Society of India",
+              url: "https://csi-india.org/",
+              foundingDate: "1965",
             },
             sameAs: [site.socials.linkedin, site.socials.instagram],
           }),

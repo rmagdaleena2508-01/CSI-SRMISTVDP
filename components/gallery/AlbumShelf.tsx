@@ -180,9 +180,12 @@ export function AlbumShelf({ albums }: { albums: PhotoAlbum[] }) {
           <p className="text-eyebrow font-medium tracking-[0.18em] text-slate-blue uppercase">
             Photo library
           </p>
-          <h1 className="display-heading text-display mt-5 max-w-[14ch] font-semibold text-navy text-balance">
+          {/* The page's one h1 is in the phone header above; this is the same
+              line repeated for the laptop layout, so it is a paragraph rather
+              than a second h1 in the markup. */}
+          <p className="display-heading text-display mt-5 max-w-[14ch] font-semibold text-navy text-balance">
             Every session. Its own record.
-          </h1>
+          </p>
           <p className="text-lead mt-5 max-w-[42ch] text-slate-blue text-pretty">
             Scroll the stack to pick an album, then open it. The poster is the
             cover and the photos are inside.

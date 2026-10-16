@@ -6,8 +6,22 @@ import { events } from "@/data/events";
 import { site } from "@/data/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/events", "/team", "/about", "/insights", "/gallery"].map((path) => ({
+  // The newest session dates the static pages too: they all list sessions, so
+  // a new event is the thing that changes them.
+  const lastModified = new Date(
+    `${[...events].sort((a, b) => b.date.localeCompare(a.date))[0].date}T00:00:00Z`,
+  );
+
+  const staticRoutes = [
+    "",
+    "/events",
+    "/team",
+    "/about",
+    "/insights",
+    "/gallery",
+  ].map((path) => ({
     url: `${site.url}${path}`,
+    lastModified,
     changeFrequency: "monthly" as const,
     priority: path === "" ? 1 : 0.8,
   }));
