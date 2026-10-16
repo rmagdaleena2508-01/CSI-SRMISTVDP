@@ -68,6 +68,11 @@ export const metadata: Metadata = {
     images: ["/images/brand/og.jpg"],
   },
   alternates: { canonical: "/" },
+  // Proves to Google Search Console that we own this site. The vercel.app
+  // subdomain cannot be verified by DNS, so the tag goes in the page head.
+  verification: {
+    google: "f8ZhZRxl-W4MRuMHWmbdmRSCp5Ru5qnrqr4yf2_teys",
+  },
   // The GitHub Pages copy is a mirror. Only one of the two may be indexed, or
   // they compete as duplicates of each other.
   robots: site.noindex
