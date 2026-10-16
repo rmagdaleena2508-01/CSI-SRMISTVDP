@@ -40,6 +40,32 @@ export type ChapterEvent = {
  */
 export const events: ChapterEvent[] = [
   {
+    // October's highlight, waiting on the session's own details. Replace each
+    // line below from the poster and the report once the session has run; the
+    // event page, its album and the session count all follow from this entry.
+    slug: "october-2026-session",
+    title: "October session",
+    date: "2026-10-31",
+    category: "Knowledge Session",
+    description: "Details to be announced.",
+    summary:
+      "This session's write-up is being prepared. The details will be filled in from the poster and the report once it has run.",
+    tagline: "Details coming soon.",
+    highlights: [
+      "Session title and date, from the poster.",
+      "Who it was held with, if anyone.",
+      "What the session covered, in a line or two.",
+      "What students took away from it.",
+      "How it ended: winners, a closing note, or what comes next.",
+    ],
+    speaker: { name: "To be announced", role: "To be announced" },
+    venue: "To be announced",
+    image: "/images/brand/no-photos.jpg",
+    explored: ["To be filled in from the session's poster."],
+    takeaways: ["To be filled in from the session's report."],
+    highlight: true,
+  },
+  {
     slug: "entrespark-2026",
     title: "ENTRESPARK 2026",
     date: "2026-09-02",
@@ -124,7 +150,6 @@ export const events: ChapterEvent[] = [
         attribution: "Student participant",
       },
     ],
-    highlight: true,
   },
   {
     slug: "cyber-security-unlocked",
