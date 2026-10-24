@@ -40,29 +40,77 @@ export type ChapterEvent = {
  */
 export const events: ChapterEvent[] = [
   {
-    // October's highlight, waiting on the session's own details. Replace each
-    // line below from the poster and the report once the session has run; the
-    // event page, its album and the session count all follow from this entry.
-    slug: "october-2026-session",
-    title: "October session",
-    date: "2026-10-31",
-    category: "Knowledge Session",
-    description: "Details to be announced.",
+    slug: "design-that-speaks",
+    title: "Design That Speaks",
+    date: "2026-10-13",
+    category: "Workshop",
+    description: "Knowledge Update Series #11: graphic design basics, then a Canva design contest.",
     summary:
-      "This session's write-up is being prepared. The details will be filled in from the poster and the report once it has run.",
-    tagline: "Details coming soon.",
+      "The flagship session of semester three, held with IEEE CS. Deepikaa S and A. Sasank Veera Sadhu took first-year students through design basics and colour theory, the room debated whether content or visual appeal matters more, and then everyone built a poster in Canva against the clock. The brief: your club has an event next week, design a poster that makes people stop, look and actually register.",
+    tagline: "A basic guide on graphic design.",
     highlights: [
-      "Session title and date, from the poster.",
-      "Who it was held with, if anyone.",
-      "What the session covered, in a line or two.",
-      "What students took away from it.",
-      "How it ended: winners, a closing note, or what comes next.",
+      "Held with IEEE CS as Knowledge Update Series #11, open to first-year students.",
+      "Deepikaa S, Secretary, and A. Sasank Veera Sadhu, President, taught design basics and colour theory.",
+      "A debate on what matters more in a design: the content or the visual appeal.",
+      "Students then designed a poster in Canva, using minimal AI, making their own design choices.",
+      "The winning posters stood out for clarity, aesthetics and attention to detail.",
+      "Team Parallax and Team Dolu Bolu shared Best Overall Design.",
     ],
-    speaker: { name: "To be announced", role: "To be announced" },
-    venue: "To be announced",
-    image: "/images/brand/no-photos.jpg",
-    explored: ["To be filled in from the session's poster."],
-    takeaways: ["To be filled in from the session's report."],
+    speaker: {
+      name: "Deepikaa S and A. Sasank Veera Sadhu",
+      role: "Secretary and President, CSI Student Chapter, SRMIST Vadapalani",
+    },
+    venue: "Lab 2, 1st Floor, 9:00 AM",
+    image: "/images/events/design-that-speaks.jpg",
+    explored: [
+      "What makes a visual design effective",
+      "Colour theory and how colour carries a mood",
+      "Typography, and why the same word feels different in another typeface",
+      "Content against visual appeal, argued both ways",
+      "Designing a poster in Canva from a real brief",
+    ],
+    takeaways: [
+      "A poster has one job: make someone stop, look and act. Everything on it either serves that or gets in the way.",
+      "Colour and type carry meaning before anyone reads a word.",
+      "Clarity beats decoration. The winning posters were the ones you could read at a glance.",
+      "The tool is not the skill. Canva with your own choices beats a template filled in.",
+    ],
+    gallery: [
+      {
+        src: "/images/events/design-that-speaks-1.jpg",
+        caption:
+          "Deepikaa S, A. Sasank Veera Sadhu, Dr. Rajasekhar and Dr. K. Akila at the head table",
+      },
+      {
+        src: "/images/events/design-that-speaks-2.jpg",
+        caption: "First-year students at the start of the session",
+      },
+      {
+        src: "/images/events/design-that-speaks-3.jpg",
+        caption: "Deepikaa S on what makes a poster work",
+      },
+      {
+        src: "/images/events/design-that-speaks-4.jpg",
+        caption: "A. Sasank Veera Sadhu on why typography matters",
+      },
+      {
+        src: "/images/events/design-that-speaks-5.jpg",
+        caption:
+          "A. Sasank Veera Sadhu, judging, clearing a doubt during the Canva contest",
+      },
+      {
+        src: "/images/events/design-that-speaks-6.jpg",
+        caption: "The host team running the contest",
+      },
+      {
+        src: "/images/events/design-that-speaks-7.jpg",
+        caption: "Closing the session in front of the judges",
+      },
+    ],
+    quote: {
+      text: "Your club has an event next week. Can you design a poster that makes people stop, look and actually register?",
+      attribution: "The brief given to the room",
+    },
     highlight: true,
   },
   {
@@ -446,6 +494,7 @@ export type PhotoAlbum = {
  * back to its poster, so a new session works before its cover is designed.
  */
 const albumCovers: Record<string, string> = {
+  "design-that-speaks": "/images/events/design-that-speaks.jpg",
   "entrespark-2026": "/images/albums/entrespark-2026.jpg",
   "beyond-the-cgpa": "/images/albums/beyond-the-cgpa.jpg",
   "vibe-coding": "/images/albums/vibe-coding.jpg",
