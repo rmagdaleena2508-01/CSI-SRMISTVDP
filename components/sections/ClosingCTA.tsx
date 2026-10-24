@@ -15,31 +15,13 @@ export function ClosingCTA() {
       aria-labelledby="closing-heading"
       className="theme-fixed relative isolate overflow-hidden bg-navy text-cream"
     >
-      {/* Rolling hills, laptops and up. A phone shows so narrow a slice of the
-          photo that the hills stop reading as a landscape, so it keeps the navy
-          band instead. Navy also stays underneath while the photo loads. */}
+      {/* Plain navy with a single soft horizon glow, at every width. The band
+          used to carry a photograph of rolling hills on laptops; the navy
+          reads as one closing block instead of a second picture at the end of
+          every page. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 hidden md:block"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element -- a backdrop
-            that needs the base-path prefix, already sized and compressed */}
-        <img
-          src={asset("/images/brand/hills.jpg")}
-          alt=""
-          width={1600}
-          height={900}
-          loading="lazy"
-          decoding="async"
-          className="size-full object-cover object-[50%_70%]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/60 via-navy/25 via-45% to-navy/5" />
-      </div>
-
-      {/* Phones: a single soft horizon glow over navy. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-1/3 left-1/2 -z-10 h-[70rem] w-[70rem] -translate-x-1/2 rounded-full opacity-40 md:hidden"
+        className="pointer-events-none absolute -top-1/3 left-1/2 -z-10 h-[70rem] w-[70rem] -translate-x-1/2 rounded-full opacity-40"
         style={{
           background:
             "radial-gradient(closest-side, rgba(150,192,221,0.55), rgba(18,38,92,0))",

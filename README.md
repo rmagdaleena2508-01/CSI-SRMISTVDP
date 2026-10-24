@@ -27,7 +27,7 @@ newest is at the bottom.
 |---|---|---|
 | [v1](#v1-the-first-release) | 21 Aug to 17 Sep 2026 | The first public site: every session, the team and the chapter in one place |
 | [v2](#what-changed-in-v2) | 17 Sep 2026 | A cleanup: stricter type, spacing and buttons, honest copy, one main action |
-| [v3](#what-changed-in-v3) | 17 Sep 2026 onward, **live now** | The feel of using it: an animated hero, a folding menu, a card that opens out of the seal, a team rail with momentum |
+| [v3](#what-changed-in-v3) | 17 Sep 2026 onward, **live now** | The feel of using it: an animated hero, a folding menu, a card that opens out of the seal, a team rail with momentum, dark mode, and the work to make the site findable in search |
 
 Still on the list:
 
@@ -587,15 +587,15 @@ The library page itself was simplified:
 
 Two flags in `data/events.ts` decide what the
 top of the home page shows: `highlight` picks the month's highlight card and
-`featured` picks "Happening this month". The highlight is ENTRESPARK 2026,
-and "Happening this month" is Cyber Security Unlocked, the second September
-session (15 September, Knowledge Updates Series #9, with IEEE CS). It had
-still been showing Beyond the CGPA from August, which made the page look out
-of date. When a new session runs, move the flags to it.
+`featured` picks "Happening this month". The highlight is Design That Speaks
+from October, and "Happening this month" is Cyber Security Unlocked, the
+second September session (15 September, Knowledge Updates Series #9, with
+IEEE CS). It had still been showing Beyond the CGPA from August, which made
+the page look out of date. When a new session runs, move the flags to it.
 
 Adding a session is only data: an entry in `data/events.ts` with its poster,
 details from the poster, and its photographs with captions. Its page, its
-album in the photo library and the session count in "Nine sessions. One
+album in the photo library and the session count in "Ten sessions. One
 chapter." all follow from that entry.
 
 The highlight card also changed in two small ways:
@@ -609,6 +609,93 @@ The highlight card also changed in two small ways:
   line height, the tail of the "g" hung below that box and was cut off. The
   heading now has a little padding at the bottom, balanced by a negative
   margin, so the letters show in full without moving anything around it.
+
+### Design That Speaks, and October's card
+
+October's session is Design That Speaks, the flagship session of semester
+three, held on 13 October with IEEE CS as Knowledge Update Series #11.
+Deepikaa S and A. Sasank Veera Sadhu taught first-year students design basics
+and colour theory, the room argued over whether content or visual appeal
+matters more, and then everyone built a poster in Canva against the clock from
+a real brief: your club has an event next week, design a poster that makes
+people stop, look and actually register. Team Parallax and Team Dolu Bolu
+shared Best Overall Design. The entry carries the poster, seven photographs
+with captions, and the brief as a pull quote; the poster is also its album
+cover in the photo library.
+
+Before the session ran, the same card sat on the home page as a placeholder:
+every line said what would replace it, and the bullets named which fact went
+on each line. That is worth repeating next month. An empty highlight card
+reads as a chapter that has something coming; a missing one reads as a chapter
+that has stopped.
+
+The highlight card also gained two fields in `data/events.ts`. `tagline` is
+the line under the title, and `highlights` is a list of bullets that replaces
+the summary on that card only. The event page keeps the full write-up. A
+session without either field falls back to its summary, so nothing breaks for
+the older entries.
+
+### The closing band is plain navy now
+
+"Be part of what's next." sat on a photograph of rolling hills on laptops and
+on plain navy on phones, so the same band looked like two different endings
+depending on the screen. It is navy everywhere now, with the soft horizon glow
+it already had on phones. Every page already ends with a photograph or two
+above it; the navy reads as a close rather than one more picture. The hills
+image is no longer used anywhere and has been removed.
+
+### Being findable
+
+The site was invisible in search. Searching the chapter's own name returned
+CSI chapters at other colleges, because nothing on the web linked here and
+Google had never been told the site existed.
+
+One thing worth saying plainly, because it shaped everything else: this site
+will not rank first for "SRM Institute of Science and Technology" or "SRM
+college". Those are navigational searches that Google answers with the
+university's own domain and its knowledge panel, and a chapter inside that
+institution does not displace its parent. The work aims at what the site can
+actually win: the chapter's own name in every form students type it, each
+session by title, and searches that pair the college with a student activity,
+such as "SRM Vadapalani clubs".
+
+What changed on the site:
+
+- **The home title** now reads "CSI Student Chapter — Computer Society of
+  India, SRMIST Vadapalani". Students search the society's full name as often
+  as the initials.
+- **The chapter's entity** in the home page's structured data lists every name
+  people use for it — CSI SRMIST Vadapalani, CSI SRM Vadapalani, CSI Student
+  Chapter SRM — plus the campus address and the national society it belongs
+  to. Those details are what let a search engine tie this chapter to this
+  campus rather than to a chapter elsewhere.
+- **Session pages** carry a fuller `Event` entry: its own address, the poster,
+  the end date, the status and the organiser's URL. The missing fields were
+  keeping them out of event results.
+- **The About page's questions** are marked up as questions, generated from
+  `data/faq.ts` so the markup and what a reader sees can never drift apart.
+  Markup describing content the page does not show is what earns a penalty.
+- **A block on the About page** says in plain words that we are a student club
+  inside the CSE department at the Vadapalani campus, and who may attend. No
+  page answered that before.
+- **One `h1` per page.** The photo library had two in its markup, one for the
+  phone header and one for the laptop layout. The laptop one is now a
+  paragraph with the same styling.
+- **The sitemap** dates the six static pages from the newest session, since a
+  new event is what changes them.
+
+What has to happen off the site, because for a brand-new site it decides the
+outcome: verify the site in Google Search Console, submit the sitemap, and get
+a link from an srmist.edu.in page. One link from the parent domain is worth
+more than every change above.
+
+Verification lives in the page head rather than in DNS. The site sits on a
+`vercel.app` address, which belongs to Vercel and is on the Public Suffix
+List, so a Domain property can never be verified from here. A URL prefix
+property with the HTML tag is the route that works.
+
+`docs/seo-specialist-prompt.md` holds the prompt this work came from, so the
+next pass can start where this one finished.
 
 ## Design decisions
 
