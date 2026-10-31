@@ -635,6 +635,31 @@ the summary on that card only. The event page keeps the full write-up. A
 session without either field falls back to its summary, so nothing breaks for
 the older entries.
 
+### Search, on Cmd+K
+
+The archive had no way in except scrolling. Ten sessions is already enough
+that finding "the one about interviews" means opening the events page and
+reading titles; at thirty it stops working altogether. The magnifying glass in
+the top bar, or Cmd+K on a Mac and Ctrl+K on Windows, opens a search panel
+over whatever page you are on.
+
+It searches everything the site knows: sessions by title, speaker, venue,
+topic, takeaway and winner; the people on the team; the insights; the
+questions on the About page; and the pages themselves. Typing "akila" finds
+the faculty coordinator, "canva" and "typography" both find Design That
+Speaks, "certificate" finds the question that answers it.
+
+- **The index is built from the same data files the pages render**, in
+  `lib/search.ts`. It cannot describe a session the site does not have, and a
+  new entry in `data/events.ts` is searchable with nothing else to update.
+- **It ships inside the page.** The site is a static export with no server to
+  call, and the whole chapter's content is a few kilobytes of text, so there
+  is nothing to fetch and it works offline.
+- **Every word has to match**, so "akila october" narrows rather than widens.
+  A hit in a title outranks one buried in a takeaway.
+- **Keyboard throughout**: arrows move, Enter opens, Escape closes. The page
+  behind is locked, Lenis included, so nothing drifts underneath.
+
 ### The closing band is plain navy now
 
 "Be part of what's next." sat on a photograph of rolling hills on laptops and
